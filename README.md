@@ -1,13 +1,14 @@
 # Alkalmazásfejlesztés (VIAUMA09) házi feladat
 
 Alapadatok:
-- A csapat neve:
-- Csapattagok (név, neptun kód): aaa (abc123), bbb (def123), ccc (ghi123)
-- Leadáshoz videó URL:
+- A csapat neve: CryptoBros
+- Csapattagok (név, neptun kód): Berky Bence EHLXA6
+                                 Horváth Patrik JN50TD
+- Leadáshoz videó URL: TBA
 
 A videó későbbi evfolyamok számára bemutatható/felhasználható videó vágásra?
-- [x] Igen, névtelenül
-- [ ] Igen, szerzőket megnevezve
+- [ ] Igen, névtelenül
+- [x] Igen, szerzőket megnevezve
 - [ ] Nem
 
 Leadáshoz checklist:
