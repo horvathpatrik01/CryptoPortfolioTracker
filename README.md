@@ -2,8 +2,9 @@
 
 Alapadatok:
 - A csapat neve: CryptoBros
-- Csapattagok (név, neptun kód): Berky Bence EHLXA6
-                                 Horváth Patrik JN50TD
+- Csapattagok (név, neptun kód):
+  - Berky Bence EHLXA6
+  - Horváth Patrik JN50TD
 - Leadáshoz videó URL: TBA
 
 A videó későbbi evfolyamok számára bemutatható/felhasználható videó vágásra?
