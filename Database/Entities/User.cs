@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Database.Entities
 {
-    public class User : IdentityUser<int>
+    public class User : IdentityUser<Guid>
     {
         [MaxLength(30)]
         public string? FirstName { get; set; }
