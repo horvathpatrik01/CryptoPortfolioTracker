@@ -5,17 +5,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.DbContext
 {
-    public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
+        public DbSet<Portfolio> Portfolios { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Configure the database connection string
+            optionsBuilder.UseSqlServer("YourConnectionString");
         }
 
-        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // Define relationships
+            modelBuilder.Entity<Portfolio>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // If a user is deleted, delete associated portfolios
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Portfolio)
+                .WithMany()
+                .HasForeignKey(t => t.PortfolioId)
+                .OnDelete(DeleteBehavior.Cascade); // If a portfolio is deleted, delete associated transactions
         }
     }
 }
