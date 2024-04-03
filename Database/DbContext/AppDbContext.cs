@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Database.DbContext
+namespace Database.DatabaseContext
 {
     public class AppDbContext : DbContext
     {
