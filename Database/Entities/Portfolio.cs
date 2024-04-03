@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Database.Entities
 {
@@ -13,5 +15,8 @@ namespace Database.Entities
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Icon { get; set; }
+
+        [ForeignKey("UserId")] // Specify the foreign key property
+        public User User { get; set; } // Navigation property to User
     }
 }
