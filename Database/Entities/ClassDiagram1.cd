@@ -44,7 +44,6 @@
     <AssociationLine Name="ApiKey" Type="Database.Entities.ApiKey" ManuallyRouted="true" FixedToPoint="true">
       <Path>
         <Point X="4.812" Y="3.75" />
-        <Point X="4.812" Y="3.75" />
         <Point X="4.812" Y="1.988" />
       </Path>
     </AssociationLine>
