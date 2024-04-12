@@ -2,9 +2,10 @@
 {
     public interface IPortfolioRepository
     {
-        Task<Portfolio> GetPortfolio(int? portfolioId);
-        Task<Portfolio> EditPortFolioName(int? portfolioId, string newName);
-        Task<Portfolio> DeletePortfolio(int? portfolioId);
-        Task<Portfolio> AddPortfolio(PortfolioToAddDto portfolioToAddDto);
+        Task<IEnumerable<Portfolio>?> GetPortfolios(Guid? id);
+        Task<Portfolio?> GetPortfolio(int? portfolioId);
+        Task<Portfolio?> EditPortFolioName(int? portfolioId, string newName);
+        Task<Portfolio?> DeletePortfolio(Guid? id,int? portfolioId);
+        Task<Portfolio?> AddPortfolio(Guid? id,PortfolioToAddDto portfolioToAddDto);
     }
 }

@@ -17,6 +17,8 @@ namespace Database.DatabaseContext
         public DbSet<Address> Addresses { get; set; }
         public DbSet<ApiKey> ApiKeys { get; set; }
 
+        public DbSet<Asset> Assets { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

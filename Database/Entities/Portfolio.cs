@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+using Shared;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,12 +22,5 @@ namespace Database.Entities
         public List<Asset>? Assets { get; set; }
         public Address? Address { get; set; }
         public ApiKey? ApiKey { get; set; }
-    }
-
-    public enum PortfolioType
-    {
-        Default,
-        CexAccount,
-        Wallet
     }
 }

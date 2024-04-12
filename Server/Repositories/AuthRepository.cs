@@ -1,19 +1,14 @@
-﻿using Database.DatabaseContext;
-using Database.Entities;
-using Microsoft.AspNetCore.Identity;
-using Server.DTOs.Auth;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Server.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
         private readonly UserManager<User> _userManager;
-        private readonly AppDbContext _appDbContext;
 
-        public AuthRepository(UserManager<User> userManager,AppDbContext appDbContext)
+        public AuthRepository(UserManager<User> userManager)
         {
             this._userManager = userManager;
-            this._appDbContext = appDbContext;
         }
 
         public async Task<RegisterResult> CreateAccount(RegisterModel registerModel)
@@ -22,12 +17,11 @@ namespace Server.Repositories
             {
                 var newUser = new User
                 {
-                    UserName = registerModel.Email,
+                    UserName = registerModel.UserName,
                     Email = registerModel.Email,
                     CreatedTimeStamp = DateTime.Now,
                 };
                 var result = await this._userManager.CreateAsync(newUser, registerModel.Password);
-
 
                 if (!result.Succeeded)
                 {
