@@ -1,4 +1,4 @@
-﻿namespace Server.DTOs.Auth
+﻿namespace Shared.Auth
 {
     public class LoginResult
     {

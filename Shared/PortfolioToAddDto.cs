@@ -1,4 +1,4 @@
-﻿namespace Server.DTOs
+﻿namespace Shared
 {
     public class PortfolioToAddDto
     {

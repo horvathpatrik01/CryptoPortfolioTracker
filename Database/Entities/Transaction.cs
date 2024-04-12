@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Shared;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -17,6 +14,8 @@ namespace Database.Entities
         [Precision(32, 16)]
         public decimal Fee { get; set; }
 		public string? Note { get; set; }
+        [Precision(32, 16)]
+        public decimal Amount { get; set; }
 
 		public TransactionType TransactionType { get; set; }
 
@@ -27,11 +26,5 @@ namespace Database.Entities
 		public Asset Asset { get; set; } = null!;
     }
 
-	public enum TransactionType
-	{
-		Buy,
-		Sell,
-		TransferIn,
-		TransferOut
-	}
+    
 }

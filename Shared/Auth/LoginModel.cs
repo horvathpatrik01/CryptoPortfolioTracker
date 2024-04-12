@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Server.DTOs.Auth
+namespace Shared.Auth
 {
     public class LoginModel
     {
