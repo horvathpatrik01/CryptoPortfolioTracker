@@ -15,6 +15,16 @@ namespace CryptoPortfolioTracker
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<IPlatformHttpMessageHandler>(sp =>
+            {
+#if ANDROID
+                return new AndroidHttpMessageHandler();
+#else
+                return null;
+#endif
+            });
+
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
