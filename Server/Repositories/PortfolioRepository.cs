@@ -43,7 +43,8 @@ namespace Server.Repositories
                         portfolio.ApiKey = new ApiKey
                         {
                             PublicKey = portfolioToAddDto.PublicKey,
-                            PrivateKey = portfolioToAddDto.PrivateKey
+                            PrivateKey = portfolioToAddDto.PrivateKey,
+                            CexIdentifier = portfolioToAddDto.CexIdentifier ?? CexIdentifier.Binance
                         };
                         portfolio.Icon = "ship";
                         break;

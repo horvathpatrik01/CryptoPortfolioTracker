@@ -7,13 +7,14 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CryptoPortfolioTracker">
 
-    <TabBar>
-        <ShellContent Title="Home"
-            ContentTemplate="{DataTemplate views:MainPage}"
-            Route="MainPage"/>
-        <ShellContent Title="Login"
-            ContentTemplate="{DataTemplate views:LoginPage}"
-            Route="LoginPage"/>
-    </TabBar>
+    <ShellContent Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"/>
+    <ShellContent Title="Login"
+        ContentTemplate="{DataTemplate views:RegisterPage}"
+        Route="RegisterPage"/>
+    <ShellContent Title="Home"
+        ContentTemplate="{DataTemplate views:MainPage}"
+        Route="MainPage"/>
 
 </Shell>

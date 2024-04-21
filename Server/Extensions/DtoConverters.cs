@@ -62,7 +62,8 @@
             return new ApiKeyDto
             {
                 ApiKey = apikeys.PublicKey,
-                ApiSecret = apikeys.PrivateKey
+                ApiSecret = apikeys.PrivateKey,
+                CexIdentifier = apikeys.CexIdentifier
             };
         }
 
