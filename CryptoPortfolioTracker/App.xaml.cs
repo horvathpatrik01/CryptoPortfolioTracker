@@ -1,12 +1,15 @@
-﻿namespace CryptoPortfolioTracker
+﻿using CryptoPortfolioTracker.Services.Navigation;
+
+namespace CryptoPortfolioTracker
 {
     public partial class App : Application
     {
-        public App()
+
+        public App(INavigationService navigationService)
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new AppShell(navigationService);
         }
     }
 }

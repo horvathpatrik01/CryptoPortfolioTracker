@@ -1,10 +1,13 @@
-﻿namespace CryptoPortfolioTracker.Views;
+﻿using CryptoPortfolioTracker.ViewModels;
+
+namespace CryptoPortfolioTracker.Views;
 public partial class MainPage : ContentPage
 {
     int count = 0;
 
-    public MainPage()
+    public MainPage(MainViewModel mainPageViewModel)
     {
+        BindingContext = mainPageViewModel;
         InitializeComponent();
     }
 
