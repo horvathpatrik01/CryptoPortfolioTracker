@@ -50,7 +50,7 @@ namespace Server.Controllers
         }
 
         [HttpPatch("{newUsername}")]
-        public async Task<ActionResult<UserInfoDto>> ChangeUserName(string newUsername)
+        public async Task<ActionResult<UserInfoDto>> ChangeUsername(string newUsername)
         {
             try
             {

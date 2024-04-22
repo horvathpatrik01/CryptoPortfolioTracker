@@ -59,6 +59,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\mobile.png" />
+	  <None Remove="Resources\Images\nodata.png" />
 	  <None Remove="Resources\Images\password.png" />
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
@@ -69,12 +70,13 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.20" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Helpers\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="ViewModels\" />
+	  <Folder Include="Services\Transaction\" />
+	  <Folder Include="Services\Portfolio\" />
 	</ItemGroup>
 
 	<ItemGroup>

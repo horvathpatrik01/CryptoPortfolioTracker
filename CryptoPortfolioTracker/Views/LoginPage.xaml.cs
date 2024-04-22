@@ -1,14 +1,12 @@
+using CryptoPortfolioTracker.ViewModels;
+
 namespace CryptoPortfolioTracker.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+	public LoginPage(LoginViewModel loginViewModel)
 	{
+		BindingContext = loginViewModel;
 		InitializeComponent();
-	}
-
-	private async void SignUpTappedRecognizer(object sender, EventArgs e)
-	{
-		await Shell.Current.GoToAsync("//RegisterPage");
 	}
 }

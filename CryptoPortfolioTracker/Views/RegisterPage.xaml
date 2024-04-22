@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+             x:DataType="viewmodels:RegisterViewModel"
              x:Class="CryptoPortfolioTracker.Views.RegisterPage"
              Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
              Title="RegisterPage">
     <Grid RowDefinitions="1*,8*,1*">
         <Frame Padding="0" WidthRequest="250" 
@@ -26,42 +29,45 @@
         <Frame BorderColor="Transparent" Grid.Row="1" VerticalOptions="CenterAndExpand" BackgroundColor="AliceBlue"
                Margin="40,0,40,0">
             <ScrollView>
-                <VerticalStackLayout Spacing="25">
+                <VerticalStackLayout Spacing="10">
                     <Label Text="Sign Up" FontSize="28" FontAttributes="Bold" TextColor="{x:StaticResource PrimaryDarkText}"/>
                     <Frame BorderColor="Transparent">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
                             <Image VerticalOptions="Center" Source="user.png" HeightRequest="25" WidthRequest="25"/>
-                            <Entry VerticalOptions="Center" Placeholder="Username" Grid.Column="1"/>
+                            <Entry Text="{Binding RegisterModel.UserName}" VerticalOptions="Center" Placeholder="Username" Grid.Column="1"/>
                         </Grid>
                     </Frame>
                     <Frame BorderColor="Transparent">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
                             <Image VerticalOptions="Center" Source="email.png" HeightRequest="25" WidthRequest="25"/>
-                            <Entry VerticalOptions="Center" Placeholder="Email" Grid.Column="1"/>
+                            <Entry Text="{Binding RegisterModel.Email}" VerticalOptions="Center" Placeholder="Email" Grid.Column="1"/>
                         </Grid>
                     </Frame>
                     <Frame BorderColor="Transparent">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
                             <Image VerticalOptions="Center" Source="password.png" HeightRequest="25" WidthRequest="25"/>
-                            <Entry VerticalOptions="Center" Placeholder="Password" Grid.Column="1" IsPassword="True"/>
+                            <Entry Text="{Binding RegisterModel.Password}" VerticalOptions="Center" Placeholder="Password" Grid.Column="1" IsPassword="True"/>
                         </Grid>
                     </Frame>
 
                     <Frame BorderColor="Transparent">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
                             <Image VerticalOptions="Center" Source="password.png" HeightRequest="25" WidthRequest="25"/>
-                            <Entry VerticalOptions="Center" Placeholder="Confirm Password" Grid.Column="1" IsPassword="True"/>
+                            <Entry Text="{Binding RegisterModel.ConfirmPassword}" VerticalOptions="Center" Placeholder="Confirm Password" Grid.Column="1" IsPassword="True"/>
                         </Grid>
                     </Frame>
 
-                    <Button Text="Sign Up" FontSize="20" 
+                    <Button Text="Register" 
+                            Command="{Binding RegisterCommand}"
+                            FontSize="20" 
                             FontAttributes="Bold"/>
                     <HorizontalStackLayout HorizontalOptions="Center">
-                        <Label Text="Already have an account?" VerticalOptions="Center"/>
-                        <Label Text="SIGN UP" FontSize="20" HorizontalOptions="End" Margin="10,0,0,0" VerticalOptions="Center" TextColor="{x:StaticResource Primary}" />
-                        <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="SignInTappedRecognizer"/>
-                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label Text="Already have an account?" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding GoToLoginPageCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>
