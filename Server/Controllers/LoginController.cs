@@ -33,7 +33,7 @@ namespace EvelineWebshop.Server.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(login.Email);
 
-                if(user == null)
+                if (user == null)
                 {
                     return NotFound("There are no accounts with this email address");
                 }
@@ -45,7 +45,6 @@ namespace EvelineWebshop.Server.Controllers
                 }
                 if (user != null)
                 {
-
                     List<Claim> claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
@@ -66,8 +65,6 @@ namespace EvelineWebshop.Server.Controllers
                 }
                 else
                     return Ok(new LoginResult { Successful = false, Error = "User not found" });
-
-
             }
             catch (Exception ex)
             {

@@ -8,7 +8,6 @@
     Title="CryptoPortfolioTracker">
 
     <ShellContent Title="Home"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage"/>
-
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
 </Shell>

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CryptoPortfolioTracker.Helpers;
 using CryptoPortfolioTracker.Services.Auth;
+using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.Services.User;
 using CryptoPortfolioTracker.Views;
 using Shared;
@@ -13,6 +14,7 @@ namespace CryptoPortfolioTracker.ViewModels
     {
         private readonly IAuthService authService;
         private readonly IUserService userService;
+        private readonly INavigationService navigationService;
 
         [ObservableProperty]
         private UserInfoDto userInfo;
@@ -20,29 +22,38 @@ namespace CryptoPortfolioTracker.ViewModels
         public ObservableCollection<PortfolioDto> PortfolioDtos { get; set; } = [];
 
         public MainViewModel(IAuthService authService,
-                                 IUserService userService)
+                             IUserService userService,
+                             INavigationService navigationService)
         {
             this.authService = authService;
             this.userService = userService;
-            UserInfo = new ();
-            _ = GetUserInfo();
+            this.navigationService = navigationService;
+            UserInfo = new();
         }
 
         [RelayCommand]
         private async Task Logout()
         {
             if (authService.Logout())
-                await Shell.Current.GoToAsync(nameof(LoginPage));
+                await navigationService.NavigateToAsync($"//{nameof(LoginPage)}");
             else
                 await Shell.Current.DisplayAlert("Fail", "failed to logout", "ok");
         }
 
-
+        [RelayCommand]
         private async Task GetUserInfo()
         {
             try
             {
                 UserInfo = await userService.GetUserInformation();
+                PortfolioDtos.Add(new PortfolioDto
+                {
+                    Id = 1,
+                    Icon = "dotnet_bot.png",
+                    Name = "Name",
+                    PortfolioType = PortfolioType.Default,
+                    Assets = new List<AssetDto>()
+                });
             }
             catch (Exception ex)
             {

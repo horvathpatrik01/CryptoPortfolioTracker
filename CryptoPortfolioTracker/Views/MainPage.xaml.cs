@@ -1,25 +1,29 @@
-﻿using CryptoPortfolioTracker.ViewModels;
+﻿using CryptoPortfolioTracker.Services.Auth;
+using CryptoPortfolioTracker.ViewModels;
 
 namespace CryptoPortfolioTracker.Views;
+
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private readonly IAuthService authService;
 
-    public MainPage(MainViewModel mainPageViewModel)
+    public MainPage(MainViewModel mainPageViewModel,
+                    IAuthService authService)
     {
         BindingContext = mainPageViewModel;
         InitializeComponent();
+        this.authService = authService;
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        count++;
+        base.OnAppearing();
+        var viewModel = (MainViewModel)BindingContext;
+        if (await authService.IsTokenExpired())
+        {
+            viewModel.LogoutCommand.Execute(this);
+        }
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        viewModel.GetUserInfoCommand.Execute(this);
     }
 }

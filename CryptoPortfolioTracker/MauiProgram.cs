@@ -32,8 +32,7 @@ namespace CryptoPortfolioTracker
 #endif
             });
 
-
-            builder.Services.AddHttpClient("httpclient", httpClient =>
+            builder.Services.AddHttpClient(AppConstants.HttpClientName, httpClient =>
             {
                 var baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:7169" : "https://localhost:7169";
                 httpClient.BaseAddress = new Uri(baseAddress);
@@ -42,21 +41,22 @@ namespace CryptoPortfolioTracker
 #if ANDROID
                 return builder.GetRequiredService<IPlatformHttpMessageHandler>().GetHttpMessageHandler();
 #else
-                return null;
+                return new HttpClientHandler();
 #endif
             });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
         }
+
         public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddSingleton<IAuthService,AuthService>();
-            mauiAppBuilder.Services.AddSingleton<IUserService,UserService>();
-            mauiAppBuilder.Services.AddSingleton<INavigationService,NavigationService>();
+            mauiAppBuilder.Services.AddSingleton<IAuthService, AuthService>();
+            mauiAppBuilder.Services.AddSingleton<IUserService, UserService>();
+            mauiAppBuilder.Services.AddSingleton<INavigationService, NavigationService>();
 #if DEBUG
             mauiAppBuilder.Logging.AddDebug();
 #endif
@@ -82,5 +82,4 @@ namespace CryptoPortfolioTracker
             return mauiAppBuilder;
         }
     }
-
 }

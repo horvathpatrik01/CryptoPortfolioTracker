@@ -8,16 +8,15 @@ using System.Security.Claims;
 
 namespace Server.Controllers
 {
-    [Authorize]
-    [ValidateAntiForgeryToken]
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserRepository userRepository;
 
-        public UserController(ILogger<UserController> logger, 
+        public UserController(ILogger<UserController> logger,
                               IUserRepository userRepository,
                               IPortfolioRepository portfolioRepository)
         {
@@ -33,13 +32,13 @@ namespace Server.Controllers
                 Guid.TryParse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out Guid UserId);
                 var userInfo = await this.userRepository.GetUser(UserId);
 
-                if(userInfo == null)
+                if (userInfo == null)
                 {
                     return NotFound();
                 }
 
                 var userInfoDto = userInfo.ConvertToDto();
-                
+
                 return Ok(userInfoDto);
             }
             catch (Exception ex)
@@ -74,7 +73,7 @@ namespace Server.Controllers
         }
 
         [HttpPatch]
-        [Route(nameof(ChangeEmailAddress)+"/{newEmailAddress}")]
+        [Route(nameof(ChangeEmailAddress) + "/{newEmailAddress}")]
         public async Task<ActionResult<UserInfoDto>> ChangeEmailAddress(string newEmailAddress)
         {
             try
@@ -121,6 +120,5 @@ namespace Server.Controllers
                 return BadRequest("zsupsz");
             }
         }
-
     }
 }

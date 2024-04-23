@@ -1,6 +1,7 @@
 ﻿using CryptoPortfolioTracker.Services.Auth;
 using Shared;
 using Shared.Auth;
+using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -8,12 +9,14 @@ namespace CryptoPortfolioTracker.Services.User
 {
     public class UserService : IUserService
     {
-        private readonly IHttpClientFactory httpClientFactory;
+        private readonly IAuthService _authService;
 
-        public UserService(IHttpClientFactory httpClientFactory)
+        public UserService(IHttpClientFactory httpClientFactory,
+            IAuthService authService)
         {
-            this.httpClientFactory = httpClientFactory;
+            this._authService = authService;
         }
+
         public Task<UserInfoDto> ChangeEmailAddress()
         {
             throw new NotImplementedException();
@@ -33,10 +36,8 @@ namespace CryptoPortfolioTracker.Services.User
         {
             try
             {
-                var token = await AuthService.GetAuthToken();
-                if (token is null) return null;
-                var httpClient = httpClientFactory.CreateClient("httpclient");
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+                var httpClient = await _authService.GetAuthenticatedHttpClient();
+                if (httpClient is null) return null;
                 var response = await httpClient.GetAsync("api/User");
 
                 if (!response.IsSuccessStatusCode)
@@ -49,8 +50,8 @@ namespace CryptoPortfolioTracker.Services.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return default;
+                Debug.WriteLine(ex.Message);
+                return null;
             }
         }
     }
