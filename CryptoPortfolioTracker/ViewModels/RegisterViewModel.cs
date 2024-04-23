@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptoPortfolioTracker.Services.Auth;
+using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.Views;
 using Shared.Auth;
 
@@ -9,12 +10,16 @@ namespace CryptoPortfolioTracker.ViewModels
     public partial class RegisterViewModel : ObservableObject
     {
         private readonly IAuthService authService;
+        private readonly INavigationService navigationService;
+
         [ObservableProperty]
         private RegisterModel _registerModel;
 
-        public RegisterViewModel(IAuthService authService)
+        public RegisterViewModel(IAuthService authService,
+            INavigationService navigationService)
         {
             this.authService = authService;
+            this.navigationService = navigationService;
             RegisterModel = new();
         }
 
@@ -25,14 +30,14 @@ namespace CryptoPortfolioTracker.ViewModels
             if (registerResult != null && registerResult.Successful)
             {
                 await Shell.Current.DisplayAlert("Hurray", "You are successfully registered in the DB", "Ok");
-                await Shell.Current.GoToAsync(nameof(LoginPage));
+                await navigationService.PopAsync();
             }
         }
 
         [RelayCommand]
         private async Task GoToLoginPage()
         {
-            await Shell.Current.GoToAsync(nameof(LoginPage));
+            await navigationService.PopAsync();
         }
     }
 }

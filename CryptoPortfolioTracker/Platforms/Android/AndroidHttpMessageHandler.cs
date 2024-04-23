@@ -1,4 +1,5 @@
-﻿using Xamarin.Android.Net;
+﻿using System.Net.Security;
+using Xamarin.Android.Net;
 
 namespace CryptoPortfolioTracker
 {
@@ -7,7 +8,7 @@ namespace CryptoPortfolioTracker
         public HttpMessageHandler GetHttpMessageHandler() => new AndroidMessageHandler
         {
             ServerCertificateCustomValidationCallback = (httpRequestMessage, certificate, chain, sslPolicyErrors) =>
-            certificate?.Issuer == "CN==localhost" || sslPolicyErrors == System.Net.Security.SslPolicyErrors.None
+            certificate?.Issuer == "CN=localhost" || sslPolicyErrors == SslPolicyErrors.None
         };
     }
 }

@@ -10,16 +10,15 @@ namespace CryptoPortfolioTracker.Services.Navigation
 {
     public class NavigationService : INavigationService
     {
-
         public NavigationService()
         {
         }
 
-        public async Task InitializeAsync() =>
-            await NavigateToAsync(
-                string.IsNullOrEmpty(await AuthService.GetAuthToken())
-                    ? nameof(LoginPage)
-                    : nameof(MainPage));
+        public async Task InitializeAsync()
+        {
+            if (!string.IsNullOrEmpty(await AuthService.GetAuthToken()))
+                await NavigateToAsync($"{nameof(MainPage)}");
+        }
 
         public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
         {
