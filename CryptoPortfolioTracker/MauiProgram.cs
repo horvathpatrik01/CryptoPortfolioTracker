@@ -1,8 +1,10 @@
-﻿using CryptoPortfolioTracker.Services.Auth;
+﻿using CommunityToolkit.Maui;
+using CryptoPortfolioTracker.Services.Auth;
 using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.Services.User;
 using CryptoPortfolioTracker.ViewModels;
 using CryptoPortfolioTracker.Views;
+using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 
 namespace CryptoPortfolioTracker
@@ -14,6 +16,8 @@ namespace CryptoPortfolioTracker
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

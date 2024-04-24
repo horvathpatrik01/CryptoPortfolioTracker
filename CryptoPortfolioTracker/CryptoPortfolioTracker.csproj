@@ -66,6 +66,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.5" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.20" />
@@ -85,12 +87,36 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml.cs">
+	    <DependentUpon>CreatePortfolioExchangePopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml.cs">
+	    <DependentUpon>CreatePortfolioManualPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml.cs">
+	    <DependentUpon>CreatePortfolioWalletPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml.cs">
+	    <DependentUpon>CreatePortfolioTypePopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
 	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
