@@ -6,9 +6,12 @@ namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
 
 public partial class CreatePortfolioExchangePopup : Popup
 {
+    private readonly PortfolioViewModel portfolioViewModel;
+
     public CreatePortfolioExchangePopup(PortfolioViewModel portfolioViewModel)
     {
         InitializeComponent();
+        this.portfolioViewModel = portfolioViewModel;
     }
 
     private void OnEntryChange(object? sender, TextChangedEventArgs e)
@@ -21,16 +24,16 @@ public partial class CreatePortfolioExchangePopup : Popup
             createButton.IsEnabled = false;
     }
 
-    private async void Create(object? sender, EventArgs e)
-    {
+    private async void Create(object? sender, EventArgs e) {
+
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
     }
 
     private async void Back(object? sender, EventArgs e)
     {
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup());
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
+        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup(portfolioViewModel));
     }
 }

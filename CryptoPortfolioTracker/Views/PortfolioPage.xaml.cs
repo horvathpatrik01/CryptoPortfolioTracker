@@ -12,6 +12,7 @@ namespace CryptoPortfolioTracker.Views;
 
 public partial class PortfolioPage : ContentPage
 {
+    private readonly PortfolioViewModel portfolioViewModel;
     private readonly IAuthService authService;
 
     public PortfolioPage(PortfolioViewModel portfolioPageViewModel,
@@ -19,12 +20,13 @@ public partial class PortfolioPage : ContentPage
     {
         BindingContext = portfolioPageViewModel;
         InitializeComponent();
+        this.portfolioViewModel = portfolioPageViewModel;
         this.authService = authService;
     }
 
     public void CreatePortfolio(object sender, TappedEventArgs args)
     {
-        this.ShowPopup(new CreatePortfolioTypePopup());
+        this.ShowPopup(new CreatePortfolioTypePopup(portfolioViewModel));
     }
 
     protected override async void OnAppearing()

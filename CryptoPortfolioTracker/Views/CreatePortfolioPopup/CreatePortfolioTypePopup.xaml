@@ -4,22 +4,39 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
-    Color="White">
+   >
     <VerticalStackLayout
         Padding="20"
         Spacing="10"
         WidthRequest="500">
-        <Label
-            Margin="10"
-            FontAttributes="Bold"
-            FontSize="25"
-            HorizontalOptions="Start"
-            Text="Create portfolio"
-            VerticalOptions="Center" />
-        <Frame HeightRequest="100">
+        <Grid ColumnDefinitions="Auto,1*">
+            <Label
+                Grid.Column="0"
+                Margin="10"
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="Start"
+                Text="Create portfolio"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                FontAttributes="Bold"
+                FontSize="24"
+                HorizontalOptions="End"
+                Text="{mi:Material Icon=Close}"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Close" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <Frame BackgroundColor="Transparent" HeightRequest="100">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="CreateWalletPortfolio" />
             </Frame.GestureRecognizers>
@@ -51,7 +68,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Frame>
-        <Frame HeightRequest="100">
+        <Frame BackgroundColor="Transparent" HeightRequest="100">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="CreateManualPortfolio" />
             </Frame.GestureRecognizers>
@@ -83,7 +100,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Frame>
-        <Frame HeightRequest="100">
+        <Frame BackgroundColor="Transparent" HeightRequest="100">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="CreateExchangePortfolio" />
             </Frame.GestureRecognizers>
@@ -115,9 +132,5 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Frame>
-        <Button
-            Clicked="Close"
-            HorizontalOptions="End"
-            Text="Cancel" />
     </VerticalStackLayout>
 </mct:Popup>

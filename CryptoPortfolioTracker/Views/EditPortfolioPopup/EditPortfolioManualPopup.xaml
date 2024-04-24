@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup
-    x:Class="CryptoPortfolioTracker.Views.CreatePortfolioPopup.CreatePortfolioManualPopup"
+    x:Class="CryptoPortfolioTracker.Views.EditPortfolioPopup.EditPortfolioManualPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
@@ -8,7 +8,7 @@
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
-    >
+    Color="White">
     <VerticalStackLayout Padding="20" WidthRequest="500">
         <HorizontalStackLayout Margin="0,0,0,20">
             <Label
@@ -24,7 +24,7 @@
             <Label
                 FontAttributes="Bold"
                 FontSize="24"
-                Text="New manual portfolio" />
+                Text="Edit manual portfolio" />
         </HorizontalStackLayout>
         <Label
             FontAttributes="Bold"
@@ -55,6 +55,7 @@
             Text="Portfolio name" />
         <Entry
             x:Name="nameEntry"
+            BackgroundColor="{x:StaticResource Gray100}"
             MaxLength="32"
             Placeholder="Enter your portfolio name"
             PlaceholderColor="{x:StaticResource Gray400}"
@@ -91,10 +92,10 @@
         </Grid>
 
         <Button
-            x:Name="createButton"
+            x:Name="saveButton"
             Margin="0,10,0,00"
-            Clicked="Create"
+            Clicked="Save"
             IsEnabled="False"
-            Text="Create" />
+            Text="Save" />
     </VerticalStackLayout>
 </mct:Popup>

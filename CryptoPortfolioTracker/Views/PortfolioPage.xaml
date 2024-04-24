@@ -3,7 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.PortfolioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:model="clr-namespace:Shared;assembly=Shared"
     xmlns:templates="clr-namespace:CryptoPortfolioTracker.Views.Templates"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
@@ -12,101 +12,124 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
-    <Grid
-        Margin="0"
-        Padding="0"
-        ColumnDefinitions="1*"
-        RowDefinitions="60,1*">
+    <Grid ColumnDefinitions="1*" RowDefinitions="60,1*">
 
         <Grid
             Grid.Row="0"
-            Margin="0"
-            Padding="0"
-            ColumnDefinitions="1*,3*,1*"
-            VerticalOptions="Fill">
-
-            <Frame
+            ColumnDefinitions="Auto,1*"
+            VerticalOptions="StartAndExpand">
+            <Label
                 Grid.Column="0"
-                Margin="0"
-                Padding="0"
+                Padding="20"
                 BackgroundColor="Transparent"
-                CornerRadius="0">
-                <Label
-                    Margin="0"
-                    Padding="18,0,0,0"
-                    FontAttributes="Bold"
-                    FontSize="30"
-                    HorizontalTextAlignment="Start"
-                    VerticalTextAlignment="Center">
-                    Portfolio Tracker
-                </Label>
-            </Frame>
-            <HorizontalStackLayout Grid.Column="1">
-                <Frame Margin="10" Padding="0">
-                    <Label
-                        Padding="8,0,8,0"
-                        BackgroundColor="Transparent"
-                        FontAttributes="None"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                        Portfolio
-                    </Label>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Frame>
-
-                <Frame Margin="10" Padding="0">
-                    <Label
-                        Padding="8,0,8,0"
-                        BackgroundColor="Transparent"
-                        FontAttributes="None"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                        Statistics
-                    </Label>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Frame>
-            </HorizontalStackLayout>
+                FontAttributes="Bold"
+                FontSize="30"
+                HorizontalTextAlignment="Start"
+                VerticalTextAlignment="Center">
+                Portfolio Tracker
+            </Label>
 
             <HorizontalStackLayout
-                Grid.Column="2"
+                Grid.Column="1"
                 HorizontalOptions="End"
                 Spacing="0">
-                <Button Text="Logout"
-                        Command="{Binding LogoutCommand}"
-                        Style="{x:StaticResource LogoutButton}" />
+                <Label
+                    Margin="0,10,0,10"
+                    Padding="8,0,8,0"
+                    BackgroundColor="Transparent"
+                    FontAttributes="None"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Text="{mi:Material Icon=AccountBox}"
+                    TextColor="Black"
+                    VerticalTextAlignment="Center">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
 
-                <Button Text="Account"
-                        Style="{x:StaticResource NavigationButton}" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
+                                    </VisualState.Setters>
+                                </VisualState>
 
-                <Button Text="Settings"
-                        Style="{x:StaticResource NavigationButton}" />
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Label>
 
-                <Button
-                        Text="Theme"
-                        Clicked="ChangeTheme"
->
-                    <Button.GestureRecognizers>
+                <Label
+                    Margin="0,10,0,10"
+                    Padding="8,0,8,0"
+                    BackgroundColor="Transparent"
+                    FontAttributes="None"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Text="{mi:Material Icon=Settings}"
+                    TextColor="Black"
+                    VerticalTextAlignment="Center">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Label>
+
+                <Label
+                    Margin="0,10,0,10"
+                    Padding="8,0,8,0"
+                    BackgroundColor="Transparent"
+                    FontAttributes="None"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center"
+                    Text="{mi:Material Icon=Contrast}"
+                    TextColor="Black"
+                    VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ChangeTheme" />
-                    </Button.GestureRecognizers>
-                </Button>
+                    </Label.GestureRecognizers>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Label>
+
+
+
+
             </HorizontalStackLayout>
         </Grid>
 
@@ -132,15 +155,40 @@
                         Grid.Column="1"
                         FontAttributes="Bold"
                         Text="{Binding portfolioItemSource.Count, StringFormat=' ({0:D})'}" />
-                    <Image
+                    <Label
+                        x:Name="editButton"
                         Grid.Column="2"
-                        HeightRequest="20"
+                        Margin="0,0,10,0"
+                        FontSize="20"
                         HorizontalOptions="End"
-                        Source="pencil.png" />
+                        Text="{mi:Material Icon=Edit}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Edit" />
+                        </Label.GestureRecognizers>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
+                    </Label>
                 </Grid>
 
                 <ScrollView>
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Padding="10">
 
                         <!--  Portfolio list  -->
                         <CollectionView
@@ -163,8 +211,7 @@
                             Padding="18"
                             FontAttributes="Bold"
                             FontSize="14"
-                            Text="+ Create portfolio"
-                            TextColor="{AppThemeBinding Light={x:StaticResource Secondary}}">
+                            Text="+ Create portfolio">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="CreatePortfolio" />
                             </Label.GestureRecognizers>
@@ -205,8 +252,8 @@
                             <Button
                                 Margin="10,0,10,0"
                                 Padding="10,0,10,0"
-                                Text="+Create Portfolio"
-                                TextColor="Black" />
+                                Clicked="CreatePortfolio"
+                                Text="+Create Portfolio" />
                         </VerticalStackLayout>
                     </Grid>
                     <VerticalStackLayout Grid.Row="1" Padding="10">

@@ -7,38 +7,39 @@ namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
 
 public partial class CreatePortfolioTypePopup : Popup
 {
-	public CreatePortfolioTypePopup()
-	{
-		InitializeComponent();
-    }
+    private readonly PortfolioViewModel portfolioViewModel;
 
-	async void Close(object? sender, EventArgs e)
-	{
-        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-        await CloseAsync(token: cts.Token);
-    }
-
-    async void CreateWalletPortfolio(object sender, TappedEventArgs args)
+    public CreatePortfolioTypePopup(PortfolioViewModel portfolioViewModel)
     {
-       
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioWalletPopup());
-        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-        await CloseAsync(token: cts.Token);
-
+        InitializeComponent();
+        this.portfolioViewModel = portfolioViewModel;
     }
-    async void CreateExchangePortfolio(object sender, TappedEventArgs args)
-    {
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioExchangePopup());
-        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-        await CloseAsync(token: cts.Token);
 
+    private async void Close(object? sender, TappedEventArgs e)
+    {
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+        await CloseAsync(token: cts.Token);
     }
-    async void CreateManualPortfolio(object sender, TappedEventArgs args)
+
+    private async void CreateWalletPortfolio(object sender, TappedEventArgs args)
     {
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioManualPopup());
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
+        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioWalletPopup(portfolioViewModel));
+    }
 
+    private async void CreateExchangePortfolio(object sender, TappedEventArgs args)
+    {
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        await CloseAsync(token: cts.Token);
+        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioExchangePopup(portfolioViewModel));
+    }
+
+    private async void CreateManualPortfolio(object sender, TappedEventArgs args)
+    {
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        await CloseAsync(token: cts.Token);
+        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioManualPopup(portfolioViewModel));
     }
 }

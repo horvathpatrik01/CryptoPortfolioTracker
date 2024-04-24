@@ -8,9 +8,12 @@ namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
 
 public partial class CreatePortfolioWalletPopup : Popup
 {
-    public CreatePortfolioWalletPopup()
+    private readonly PortfolioViewModel portfolioViewModel;
+
+    public CreatePortfolioWalletPopup(PortfolioViewModel portfolioViewModel)
     {
         InitializeComponent();
+        this.portfolioViewModel = portfolioViewModel;
     }
 
     private void OnEntryChange(object? sender, TextChangedEventArgs e)
@@ -39,8 +42,8 @@ public partial class CreatePortfolioWalletPopup : Popup
 
     private async void Back(object? sender, EventArgs e)
     {
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup());
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
+        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup(portfolioViewModel));
     }
 }
