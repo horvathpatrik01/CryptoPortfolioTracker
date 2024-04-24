@@ -69,6 +69,7 @@ namespace CryptoPortfolioTracker
             mauiAppBuilder.Services.AddSingleton<MainViewModel>();
             mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
             mauiAppBuilder.Services.AddSingleton<RegisterViewModel>();
+            mauiAppBuilder.Services.AddSingleton<PortfolioViewModel>();
 
             return mauiAppBuilder;
         }
@@ -78,6 +79,7 @@ namespace CryptoPortfolioTracker
             mauiAppBuilder.Services.AddTransient<MainPage>();
             mauiAppBuilder.Services.AddTransient<LoginPage>();
             mauiAppBuilder.Services.AddTransient<RegisterPage>();
+            mauiAppBuilder.Services.AddTransient<PortfolioPage>();
 
             return mauiAppBuilder;
         }
