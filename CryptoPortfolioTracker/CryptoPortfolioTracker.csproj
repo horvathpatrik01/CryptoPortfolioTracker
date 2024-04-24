@@ -61,6 +61,7 @@
 	  <None Remove="Resources\Images\mobile.png" />
 	  <None Remove="Resources\Images\nodata.png" />
 	  <None Remove="Resources\Images\password.png" />
+	  <None Remove="Resources\Images\pencil.svg" />
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 
@@ -84,10 +85,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\PortfolioPage.xaml.cs">
+	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\PortfolioPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\PortfolioItem.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
