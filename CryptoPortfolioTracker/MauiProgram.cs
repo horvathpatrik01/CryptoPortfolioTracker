@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using CryptoPortfolioTracker.Services.Auth;
+using CryptoPortfolioTracker.Services.Exchange;
 using CryptoPortfolioTracker.Services.Navigation;
+using CryptoPortfolioTracker.Services.Portfolio;
+using CryptoPortfolioTracker.Services.Transaction;
 using CryptoPortfolioTracker.Services.User;
+using CryptoPortfolioTracker.Services.Wallet;
 using CryptoPortfolioTracker.ViewModels;
 using CryptoPortfolioTracker.Views;
 using MauiIcons.Material;
@@ -61,6 +65,11 @@ namespace CryptoPortfolioTracker
             mauiAppBuilder.Services.AddSingleton<IAuthService, AuthService>();
             mauiAppBuilder.Services.AddSingleton<IUserService, UserService>();
             mauiAppBuilder.Services.AddSingleton<INavigationService, NavigationService>();
+            mauiAppBuilder.Services.AddSingleton<IPortfolioSevice, PortfolioService>();
+            mauiAppBuilder.Services.AddSingleton<ITransactionService, TransactionService>();
+            mauiAppBuilder.Services.AddSingleton<IExchangeService, ExchangeService>();
+            mauiAppBuilder.Services.AddSingleton<IWalletService, WalletService>();
+
 #if DEBUG
             mauiAppBuilder.Logging.AddDebug();
 #endif

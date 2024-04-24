@@ -3,7 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.PortfolioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    
+
     xmlns:model="clr-namespace:Shared;assembly=Shared"
     xmlns:templates="clr-namespace:CryptoPortfolioTracker.Views.Templates"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
@@ -83,78 +83,30 @@
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
                 </Frame>
-
             </HorizontalStackLayout>
 
             <HorizontalStackLayout
                 Grid.Column="2"
                 HorizontalOptions="End"
                 Spacing="0">
-                <Frame Margin="0,10,0,10" Padding="0">
-                    <Label
-                        Padding="8,0,8,0"
-                        BackgroundColor="Transparent"
-                        FontAttributes="None"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                        Account
-                    </Label>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Frame>
+                <Button Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        Style="{x:StaticResource LogoutButton}" />
 
-                <Frame Margin="0,10,0,10" Padding="0">
-                    <Label
-                        Padding="8,0,8,0"
-                        BackgroundColor="Transparent"
-                        FontAttributes="None"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                        Settings
-                    </Label>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Frame>
-                <Frame Margin="0,10,0,10" Padding="0">
-                    <Label
-                        Padding="8,0,8,0"
-                        BackgroundColor="Transparent"
-                        FontAttributes="None"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                        Theme
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ChangeTheme" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:StaticResource Secondary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Frame>
+                <Button Text="Account"
+                        Style="{x:StaticResource NavigationButton}" />
 
+                <Button Text="Settings"
+                        Style="{x:StaticResource NavigationButton}" />
+
+                <Button
+                        Text="Theme"
+                        Clicked="ChangeTheme"
+>
+                    <Button.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ChangeTheme" />
+                    </Button.GestureRecognizers>
+                </Button>
             </HorizontalStackLayout>
         </Grid>
 
@@ -203,7 +155,6 @@
                                     <templates:PortfolioItem />
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
-
                         </CollectionView>
 
                         <!--  Create new portfolio button  -->
@@ -218,12 +169,8 @@
                                 <TapGestureRecognizer Tapped="CreatePortfolio" />
                             </Label.GestureRecognizers>
                         </Label>
-
-
-
                     </VerticalStackLayout>
                 </ScrollView>
-
             </VerticalStackLayout>
 
             <ScrollView
@@ -380,13 +327,10 @@
                                 HeightRequest="50">
                                 <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
                             </Frame>
-
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Grid>
             </ScrollView>
         </Grid>
     </Grid>
-
 </ContentPage>
-

@@ -6,9 +6,9 @@ using System.Security.Claims;
 
 namespace Server.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PortfolioController : ControllerBase
     {
         private readonly ILogger<UserController> logger;
@@ -52,7 +52,7 @@ namespace Server.Controllers
             {
                 var portfolio = await this.portfolioRepository.GetPortfolio(portfolioId);
 
-                 if (portfolio == null)
+                if (portfolio == null)
                 {
                     return NotFound();
                 }
@@ -70,11 +70,11 @@ namespace Server.Controllers
 
         [HttpPatch]
         [Route("{portfolioId}/{newPortfolioName}")]
-        public async Task<ActionResult<PortfolioDto>> ChangePortfolioName(int portfolioId,string newPortfolioName)
+        public async Task<ActionResult<PortfolioDto>> ChangePortfolioName(int portfolioId, string newPortfolioName)
         {
             try
             {
-                var portfolio = await this.portfolioRepository.EditPortFolioName(portfolioId,newPortfolioName);
+                var portfolio = await this.portfolioRepository.EditPortFolioName(portfolioId, newPortfolioName);
 
                 if (portfolio == null)
                 {
@@ -93,14 +93,14 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PortfolioDto>> AddNewPortfolio([FromBody]PortfolioToAddDto portfolioDto)
+        public async Task<ActionResult<PortfolioDto>> AddNewPortfolio([FromBody] PortfolioToAddDto portfolioDto)
         {
             try
             {
                 Guid.TryParse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out Guid UserId);
                 var newPortfolio = await this.portfolioRepository.AddPortfolio(UserId, portfolioDto);
 
-                if(newPortfolio == null)
+                if (newPortfolio == null)
                     return BadRequest("Portfolio couldn't be added to the database!");
 
                 var newportfolioDto = newPortfolio.ConvertToDto();
@@ -120,7 +120,7 @@ namespace Server.Controllers
             try
             {
                 Guid.TryParse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out Guid UserId);
-                var deletedPortfolio = await this.portfolioRepository.DeletePortfolio(UserId,portfolioId);
+                var deletedPortfolio = await this.portfolioRepository.DeletePortfolio(UserId, portfolioId);
 
                 if (deletedPortfolio == null)
                 {

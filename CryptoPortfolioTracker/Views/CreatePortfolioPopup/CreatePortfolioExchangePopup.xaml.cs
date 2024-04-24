@@ -6,12 +6,12 @@ namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
 
 public partial class CreatePortfolioExchangePopup : Popup
 {
-	public CreatePortfolioExchangePopup()
-	{
-		InitializeComponent();
-	}
+    public CreatePortfolioExchangePopup(PortfolioViewModel portfolioViewModel)
+    {
+        InitializeComponent();
+    }
 
-    private async void OnEntryChange(object? sender, TextChangedEventArgs e)
+    private void OnEntryChange(object? sender, TextChangedEventArgs e)
     {
         if (sender == nameEntry)
             nameEntryCharCount.Text = $"{e.NewTextValue.Length}/32 characters";

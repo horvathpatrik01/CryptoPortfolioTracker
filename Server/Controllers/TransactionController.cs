@@ -5,9 +5,9 @@ using System.Security.Claims;
 
 namespace Server.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionController : ControllerBase
     {
         private readonly ILogger<TransactionController> logger;
@@ -21,7 +21,7 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route(nameof(GetTransactionsForAsset)+"/{assetId:int}")]
+        [Route(nameof(GetTransactionsForAsset) + "/{assetId:int}")]
         public async Task<ActionResult<IEnumerable<TransactionDto>>> GetTransactionsForAsset(int assetId)
         {
             try
