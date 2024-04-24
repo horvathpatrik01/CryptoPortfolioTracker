@@ -1,6 +1,7 @@
 ﻿using CryptoPortfolioTracker.Services.Auth;
 using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.Views;
+using Microsoft.Maui.Hosting;
 
 namespace CryptoPortfolioTracker
 {
