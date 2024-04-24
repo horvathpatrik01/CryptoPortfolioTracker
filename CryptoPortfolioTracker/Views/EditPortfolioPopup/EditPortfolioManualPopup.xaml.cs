@@ -3,29 +3,26 @@ using CommunityToolkit.Maui.Views;
 using CryptoPortfolioTracker.ViewModels;
 using System.Text.RegularExpressions;
 
-namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
+namespace CryptoPortfolioTracker.Views.EditPortfolioPopup;
 
-public partial class CreatePortfolioManualPopup : Popup
+public partial class EditPortfolioManualPopup : Popup
 {
-    private readonly PortfolioViewModel portfolioViewModel;
-
-    public CreatePortfolioManualPopup(PortfolioViewModel portfolioViewModel)
+    public EditPortfolioManualPopup()
     {
         InitializeComponent();
-        this.portfolioViewModel = portfolioViewModel;
     }
 
-    private void OnEntryChange(object? sender, TextChangedEventArgs e)
+    private async void OnEntryChange(object? sender, TextChangedEventArgs e)
     {
         if (sender == nameEntry)
             nameEntryCharCount.Text = $"{e.NewTextValue.Length}/32 characters";
         if (nameEntry.Text?.Length > 0)
-            createButton.IsEnabled = true;
+            saveButton.IsEnabled = true;
         else
-            createButton.IsEnabled = false;
+            saveButton.IsEnabled = false;
     }
 
-    private async void Create(object? sender, EventArgs e)
+    private async void Save(object? sender, EventArgs e)
     {
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
@@ -35,6 +32,5 @@ public partial class CreatePortfolioManualPopup : Popup
     {
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
-        Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup(portfolioViewModel));
     }
 }

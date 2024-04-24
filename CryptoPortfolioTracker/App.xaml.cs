@@ -10,10 +10,6 @@ namespace CryptoPortfolioTracker
         {
 
             InitializeComponent();
-
-            // Start in light mode
-            UserAppTheme = AppTheme.Light;
-
             MainPage = new AppShell(navigationService, authService);
         }
 

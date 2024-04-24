@@ -7,8 +7,7 @@
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="False"
-    Color="White">
+    Shell.TabBarIsVisible="False">
     <VerticalStackLayout Padding="20" WidthRequest="500">
         <HorizontalStackLayout Margin="0,0,0,20">
             <Label
@@ -55,7 +54,6 @@
             Text="Portfolio name" />
         <Entry
             x:Name="nameEntry"
-            BackgroundColor="{x:StaticResource Gray100}"
             MaxLength="32"
             Placeholder="Enter your portfolio name"
             PlaceholderColor="{x:StaticResource Gray400}"
@@ -73,7 +71,6 @@
             Text="API key" />
         <Entry
             x:Name="apiEntry"
-            BackgroundColor="{x:StaticResource Gray100}"
             Placeholder="Enter your wallett address"
             PlaceholderColor="{x:StaticResource Gray400}"
             TextChanged="OnEntryChange" />
@@ -84,7 +81,6 @@
             Text="Secret phrase" />
         <Entry
             x:Name="secretEntry"
-            BackgroundColor="{x:StaticResource Gray100}"
             Placeholder="Enter your wallett address"
             PlaceholderColor="{x:StaticResource Gray400}"
             TextChanged="OnEntryChange" />

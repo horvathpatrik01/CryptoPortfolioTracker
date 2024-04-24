@@ -87,6 +87,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml.cs">
+	    <DependentUpon>EditPortfolioExchangePopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml.cs">
+	    <DependentUpon>EditPortfolioManualPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml.cs">
+	    <DependentUpon>EditPortfolioWalletPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml.cs">
 	    <DependentUpon>CreatePortfolioExchangePopup.xaml</DependentUpon>
 	  </Compile>
@@ -105,6 +114,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
