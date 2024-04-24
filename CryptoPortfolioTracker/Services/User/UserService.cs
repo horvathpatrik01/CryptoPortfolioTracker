@@ -11,25 +11,78 @@ namespace CryptoPortfolioTracker.Services.User
     {
         private readonly IAuthService _authService;
 
-        public UserService(IHttpClientFactory httpClientFactory,
-            IAuthService authService)
+        public UserService(IAuthService authService)
         {
             this._authService = authService;
         }
 
-        public Task<UserInfoDto> ChangeEmailAddress()
+        public async Task<UserInfoDto?> ChangeEmailAddress(string newEmailAddress)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var httpClient = await _authService.GetAuthenticatedHttpClient();
+                if (httpClient is null) return null;
+                var response = await httpClient.PatchAsync($"api/User/ChangeEmailAddress/{newEmailAddress}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                UserInfoDto? userInfo = await response.Content.ReadFromJsonAsync<UserInfoDto>();
+                return userInfo;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
 
-        public Task<UserInfoDto> ChangeUsername(string newUsername)
+        public async Task<UserInfoDto?> ChangeUsername(string newUsername)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var httpClient = await _authService.GetAuthenticatedHttpClient();
+                if (httpClient is null) return null;
+                var response = await httpClient.PatchAsync($"api/User/{newUsername}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                UserInfoDto? userInfo = await response.Content.ReadFromJsonAsync<UserInfoDto>();
+                return userInfo;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
 
-        public Task<UserInfoDto> DeleteAccount()
+        public async Task<UserInfoDto?> DeleteAccount()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var httpClient = await _authService.GetAuthenticatedHttpClient();
+                if (httpClient is null) return null;
+                var response = await httpClient.DeleteAsync("api/User");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                UserInfoDto? userInfo = await response.Content.ReadFromJsonAsync<UserInfoDto>();
+                return userInfo;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public async Task<UserInfoDto?> GetUserInformation()

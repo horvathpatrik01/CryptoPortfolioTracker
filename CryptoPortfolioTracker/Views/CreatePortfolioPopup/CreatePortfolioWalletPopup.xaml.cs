@@ -8,13 +8,12 @@ namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
 
 public partial class CreatePortfolioWalletPopup : Popup
 {
-   
     public CreatePortfolioWalletPopup()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 
-    async void OnEntryChange(object? sender, TextChangedEventArgs e)
+    private void OnEntryChange(object? sender, TextChangedEventArgs e)
     {
         if (sender == nameEntry)
             nameEntryCharCount.Text = $"{e.NewTextValue.Length}/32 characters";
@@ -24,9 +23,8 @@ public partial class CreatePortfolioWalletPopup : Popup
             createButton.IsEnabled = false;
     }
 
-    async void Create(object? sender, EventArgs e)
+    private async void Create(object? sender, EventArgs e)
     {
-
         if (!Regex.IsMatch(addressEntry.Text, "^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$|^0x[a-fA-F0-9]{40}$"))
         {
             addressEntryLabel.Text = "This address is invalid or not supported. Please connect an other wallet.";
@@ -38,11 +36,11 @@ public partial class CreatePortfolioWalletPopup : Popup
             await CloseAsync(token: cts.Token);
         }
     }
-    async void Back(object? sender, EventArgs e)
+
+    private async void Back(object? sender, EventArgs e)
     {
         Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioTypePopup());
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
     }
-
 }
