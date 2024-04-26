@@ -11,36 +11,36 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
     <VerticalStackLayout Padding="20" WidthRequest="500">
-        <HorizontalStackLayout Margin="0,0,0,20">
+        <Grid ColumnDefinitions="Auto,1*">
             <Label
-                Grid.Column="1"
-                Margin="0,0,10,0"
+                Grid.Column="0"
                 FontAttributes="Bold"
                 FontSize="24"
+                Text="Edit portfolio" />
+            <Label
+                Grid.Column="1"
                 HorizontalOptions="End"
-                Text="{mi:Material Icon=Close}"
-                VerticalOptions="Center">
+                Style="{x:StaticResource LabelButton}"
+                Text="{mi:Material Icon=Close,
+                                   IconSize=30}">
 
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="Close" />
                 </Label.GestureRecognizers>
             </Label>
-            <Label
-                FontAttributes="Bold"
-                FontSize="24"
-                Text="Edit portfolio" />
-        </HorizontalStackLayout>
+        </Grid>
         <Label
+            Margin="0,30,0,10"
             FontAttributes="Bold"
             FontSize="16"
             Text="Portfolio avatar" />
-        <Grid Margin="0,10,0,10" ColumnDefinitions="1*,1*">
+        <Grid ColumnDefinitions="1*,1*">
             <Image
                 Grid.Column="0"
                 Margin="10"
                 HeightRequest="60"
                 HorizontalOptions="Start"
-                Source="User.png"
+                Source="dotnet_bot.png"
                 VerticalOptions="Center" />
             <Button
                 x:Name="changeAvatarButton"
@@ -52,27 +52,23 @@
         </Grid>
 
         <Label
-            Margin="0,0,0,5"
+            Margin="0,10,0,20"
             FontAttributes="Bold"
             FontSize="16"
             Text="Portfolio name" />
         <Entry
             x:Name="nameEntry"
-            BackgroundColor="{x:StaticResource Gray100}"
             MaxLength="32"
             Placeholder="Enter your portfolio name"
-            PlaceholderColor="{x:StaticResource Gray400}"
             Text="{Binding NewPortfolioName}"
             TextChanged="OnEntryChange" />
         <Label
             x:Name="nameEntryCharCount"
-            Margin="0,3,0,0"
-            FontSize="12"
-            Text="0/32 characters"
-            TextColor="DimGray" />
+            Style="{x:StaticResource EntryHelp}"
+            Text="0/32 characters" />
         <Button
             x:Name="saveButton"
-            Margin="0,10,0,00"
+            Margin="0,20,0,20"
             Clicked="Close"
             Command="{Binding EditPortfolioCommand}"
             IsEnabled="False"

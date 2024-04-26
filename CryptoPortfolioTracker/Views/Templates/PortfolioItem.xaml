@@ -5,12 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels">
-
     <ContentView.Content>
 
         <Frame
-            Margin="8"
-            Padding="0"
+            Padding="10"
             BackgroundColor="Transparent"
             BorderColor="Transparent"
             CornerRadius="5"
@@ -22,45 +20,51 @@
                     HeightRequest="40"
                     Source="{Binding Icon}"
                     WidthRequest="40" />
-                <VerticalStackLayout
-                    Grid.Column="1"
-                    Margin="8,0,0,0"
-                    Spacing="0"
-                    VerticalOptions="CenterAndExpand">
+                <Grid Grid.Column="1" RowDefinitions="Auto,1*">
                     <!--  Name  -->
                     <Label
-                        Margin="0,5,0,0"
+                        Grid.Row="0"
                         FontAttributes="Bold"
                         FontSize="15"
-                        Text="{Binding Name}" />
+                        Text="{Binding Name}"
+                        VerticalOptions="Center" />
                     <!--  Value  -->
-                    <Label FontAttributes="None" FontSize="12">
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="None"
+                        FontSize="12"
+                        VerticalOptions="Center">
                         123$
                     </Label>
-                </VerticalStackLayout>
+                </Grid>
+
                 <Grid
                     Grid.Column="2"
                     ColumnDefinitions="Auto,Auto"
+                    ColumnSpacing="10"
                     HorizontalOptions="End"
                     VerticalOptions="Center">
 
+                    <!--  Edit button  -->
                     <Label
                         x:Name="editButton"
-                        FontSize="20"
                         IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=IsEditing}"
-                        Text="{mi:Material Icon=Edit}"
-                        VerticalOptions="Center">
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=Edit,
+                                           IconSize=20}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnEditTapped" />
                         </Label.GestureRecognizers>
                     </Label>
+
+                    <!--  Delete button  -->
                     <Label
                         x:Name="deleteButton"
                         Grid.Column="2"
-                        FontSize="20"
                         IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=IsEditing}"
-                        Text="{mi:Material Icon=Delete}"
-                        VerticalOptions="Center">
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=Delete,
+                                           IconSize=20}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDeleteTapped" />
                         </Label.GestureRecognizers>
@@ -68,26 +72,28 @@
                 </Grid>
             </Grid>
 
-            <!--  Hover animation  -->
             <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Transparent" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Selected">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="DimGray" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="PointerOver">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{x:StaticResource Primary}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{x:StaticResource Transparent}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightTertiary}, Dark={StaticResource DarkTertiary}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
         </Frame>
+
     </ContentView.Content>
 </ContentView>

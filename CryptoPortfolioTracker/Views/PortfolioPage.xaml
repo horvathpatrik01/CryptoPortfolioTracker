@@ -11,179 +11,54 @@
     x:DataType="viewmodels:PortfolioViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto,1*">
 
-    <Grid ColumnDefinitions="1*" RowDefinitions="60,1*">
-
-        <Grid
-            Grid.Row="0"
-            ColumnDefinitions="Auto,1*"
-            VerticalOptions="StartAndExpand">
-            <Label
-                Grid.Column="0"
-                Padding="20"
-                BackgroundColor="Transparent"
-                FontAttributes="Bold"
-                FontSize="30"
-                HorizontalTextAlignment="Start"
-                VerticalTextAlignment="Center">
-                Portfolio Tracker
-            </Label>
-
-            <HorizontalStackLayout
-                Grid.Column="1"
-                HorizontalOptions="End"
-                Spacing="0">
-                <Label
-                    Margin="0,10,0,10"
-                    Padding="8,0,8,0"
-                    BackgroundColor="Transparent"
-                    FontAttributes="None"
-                    FontSize="20"
-                    HorizontalTextAlignment="Center"
-                    Text="{mi:Material Icon=AccountBox}"
-                    TextColor="Black"
-                    VerticalTextAlignment="Center">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-                </Label>
-
-                <Label
-                    Margin="0,10,0,10"
-                    Padding="8,0,8,0"
-                    BackgroundColor="Transparent"
-                    FontAttributes="None"
-                    FontSize="20"
-                    HorizontalTextAlignment="Center"
-                    Text="{mi:Material Icon=Settings}"
-                    TextColor="Black"
-                    VerticalTextAlignment="Center">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-                </Label>
-
-                <Label
-                    Margin="0,10,0,10"
-                    Padding="8,0,8,0"
-                    BackgroundColor="Transparent"
-                    FontAttributes="None"
-                    FontSize="16"
-                    HorizontalTextAlignment="Center"
-                    Text="{mi:Material Icon=Contrast}"
-                    TextColor="Black"
-                    VerticalTextAlignment="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeThemeCommand}" />
-                    </Label.GestureRecognizers>
-
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-                </Label>
-            </HorizontalStackLayout>
-        </Grid>
+        <!--  Header  -->
+        <templates:Header Grid.Row="0" />
 
         <Grid
             Grid.Row="1"
-            Margin="0"
-            Padding="0"
             ColumnDefinitions="1*,4*"
             RowDefinitions="auto,1*"
             VerticalOptions="Fill">
 
-            <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+            <!--  Left column with portfolio list  -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Padding="20"
+                Spacing="15">
+
                 <Grid
                     Grid.Row="0"
-                    Padding="18"
-                    ColumnDefinitions="Auto,Auto,1*"
+                    ColumnDefinitions="Auto,1*"
                     HorizontalOptions="Fill">
+
+                    <!--  "My portfolios" label with counter  -->
                     <Label
                         Grid.Column="0"
                         FontAttributes="Bold"
-                        Text="My portfolios " />
+                        FontSize="16"
+                        Text="{Binding Portfolios.Count, StringFormat='My portfolios ({0:D})'}" />
+
+                    <!--  Edit button  -->
                     <Label
                         Grid.Column="1"
-                        FontAttributes="Bold"
-                        Text="{Binding Portfolios.Count, StringFormat=' ({0:D})'}" />
-                    <Label
-                        x:Name="editButton"
-                        Grid.Column="2"
-                        Margin="0,0,10,0"
-                        FontSize="20"
                         HorizontalOptions="End"
-                        Text="{mi:Material Icon=Edit}"
-                        VerticalOptions="Center">
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=Edit,
+                                           IconSize=20}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ToggleEditCommand}" />
                         </Label.GestureRecognizers>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
                     </Label>
+
                 </Grid>
 
+                <!--  Portfolio list  -->
                 <ScrollView>
-                    <VerticalStackLayout Padding="10">
+                    <VerticalStackLayout Spacing="10">
 
-                        <!--  Portfolio list  -->
                         <CollectionView
                             x:Name="PortfolioCollectionView"
                             ItemsLayout="VerticalList"
@@ -193,16 +68,22 @@
                             SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
                             SelectionMode="Single">
 
+                            <!--  Element if empty  -->
                             <CollectionView.EmptyView>
-                                <StackLayout Padding="10" Orientation="Vertical">
+                                <StackLayout
+                                    Padding="10"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
                                     <Image
-                                        Margin="10"
                                         HeightRequest="50"
                                         HorizontalOptions="Center"
                                         Source="nodata.png"
                                         VerticalOptions="Center"
                                         WidthRequest="50" />
-                                    <Label Text="Add your first portfolio to your account!" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Text="Add your first portfolio!"
+                                        VerticalOptions="Center" />
                                 </StackLayout>
                             </CollectionView.EmptyView>
 
@@ -217,173 +98,141 @@
                         <!--  Create new portfolio button  -->
 
                         <Label
-                            Padding="18"
+                           
                             FontAttributes="Bold"
                             FontSize="14"
+                            HorizontalOptions="Start"
+                            Style="{x:StaticResource LabelButton}"
                             Text="+ Create portfolio">
+
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding CreatePortfolioCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
+
                     </VerticalStackLayout>
                 </ScrollView>
             </VerticalStackLayout>
 
-            <ScrollView
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="0,0,0,0"
-                Padding="0">
+            <!--  Content  -->
+            <ScrollView Grid.Row="1" Grid.Column="1">
                 <Grid
                     ColumnDefinitions="1*"
                     HorizontalOptions="Fill"
-                    RowDefinitions="Auto,1*"
+                    RowDefinitions="Auto,Auto,1*"
                     VerticalOptions="Fill">
+
                     <Grid
                         Grid.Row="0"
-                        ColumnDefinitions="1*,1*"
+                        Margin="20"
+                        ColumnDefinitions="Auto,1*"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill">
+
                         <VerticalStackLayout
                             Grid.Column="0"
-                            Padding="10"
                             HorizontalOptions="StartAndExpand"
+                            Spacing="5"
                             VerticalOptions="Start">
-                            <Label FontSize="15">Total value</Label>
-                            <Label FontAttributes="Bold" FontSize="25">$214832.12</Label>
-                            <Label FontSize="15" TextColor="Green">+ $14.11 +3.06% (24ó)</Label>
+                            <HorizontalStackLayout Spacing="10">
+                                <!--  Portfolio icon  -->
+                                <Image
+                                    HeightRequest="20"
+                                    Source="{Binding SelectedPortfolio.Icon}"
+                                    WidthRequest="20" />
+                                <!--  Portfolio name  -->
+                                <Label FontSize="18" Text="{Binding SelectedPortfolio.Name}" />
+                            </HorizontalStackLayout>
+                            <!--  Portfolio value  -->
+                            <Label FontAttributes="Bold" FontSize="32">$214832.12</Label>
+                            <!--  Value changing  -->
+                            <Label FontSize="18" TextColor="Green">+ $14.11 +3.06% (24ó)</Label>
                         </VerticalStackLayout>
-                        <VerticalStackLayout
+
+                        <!--  Create portfolio  -->
+                        <Button
+                            HeightRequest="32"
                             Grid.Column="1"
-                            Padding="10"
+                            Padding="10,0,10,0"
+                            Command="{Binding CreatePortfolioCommand}"
                             HorizontalOptions="End"
-                            VerticalOptions="Start">
-                            <Button
-                                Margin="10,0,10,0"
-                                Padding="10,0,10,0"
-                                Command="{Binding CreatePortfolioCommand}"
-                                Text="+Create Portfolio" />
-                        </VerticalStackLayout>
+                            Text="+ Create Portfolio"
+                            VerticalOptions="Start" />
+
                     </Grid>
-                    <VerticalStackLayout Grid.Row="1" Padding="10">
-                        <Label Margin="10,0,10,0" FontSize="18">Holdings</Label>
-                        <VerticalStackLayout
-                            Margin="10"
-                            HorizontalOptions="Fill"
-                            Spacing="8">
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                            <Frame
-                                Margin="0"
-                                Padding="10"
-                                BackgroundColor="Transparent"
-                                HeightRequest="50">
-                                <Label Margin="10,0,0,0" VerticalTextAlignment="Center">Asset 1</Label>
-                            </Frame>
-                        </VerticalStackLayout>
+
+                    <!--  Holding asset list  -->
+                    <VerticalStackLayout Grid.Row="2" Margin="20">
+                        <Label FontAttributes="Bold" FontSize="18">Holdings</Label>
+                        <BoxView Margin="0,10,0,20" Style="{x:StaticResource Separator}" />
+                        <Grid
+                            Padding="10,0,10,0"
+                            ColumnDefinitions="4*,3*,1*,1*,1*,1*,2*,2*"
+                            ColumnSpacing="20">
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                Text="Asset" />
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                Text="Portfolio allocation" />
+                            <Label
+                                Grid.Column="2"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="Price" />
+                            <Label
+                                Grid.Column="3"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="1h%" />
+                            <Label
+                                Grid.Column="4"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="24h%" />
+                            <Label
+                                Grid.Column="5"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="7d%" />
+                            <Label
+                                Grid.Column="6"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="Balance" />
+                            <Label
+                                Grid.Column="7"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                Text="Value" />
+                        </Grid>
+                        <BoxView Margin="0,20,0,20" Style="{x:StaticResource Separator}" />
+
+                        <CollectionView
+                            x:Name="PortfolioAssetView"
+                            ItemsLayout="VerticalList"
+                            SelectionMode="Single">
+
+                            <!--  Element if empty  -->
+                            <CollectionView.EmptyView>
+                                <Label
+                                    Padding="10"
+                                    HorizontalOptions="Start"
+                                    Text="No assets yet!"
+                                    VerticalOptions="Center" />
+                            </CollectionView.EmptyView>
+
+                            <!--  Portfolio template  -->
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:AssetDto">
+                                    <templates:AssetItem />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
                     </VerticalStackLayout>
                 </Grid>
             </ScrollView>

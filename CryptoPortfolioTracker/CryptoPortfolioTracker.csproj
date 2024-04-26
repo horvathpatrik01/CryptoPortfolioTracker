@@ -79,7 +79,6 @@
 	<ItemGroup>
 	  <Folder Include="Models\" />
 	  <Folder Include="Services\Transaction\" />
-	  <Folder Include="Services\Portfolio\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -92,6 +91,9 @@
 	  </Compile>
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
 	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Templates\Header.xaml.cs">
+	    <DependentUpon>Header.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -109,6 +111,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\AssetItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Templates\PortfolioItem.xaml">

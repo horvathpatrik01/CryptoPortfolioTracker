@@ -11,7 +11,8 @@
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
-    <ScrollView MaximumHeightRequest="500" WidthRequest="500">
+    <VerticalStackLayout HeightRequest="{Binding PopupHeight}" WidthRequest="500">
+
 
         <Grid x:Name="PopupGrid">
             <VerticalStackLayout
@@ -142,6 +143,7 @@
                     </VisualStateManager.VisualStateGroups>
                 </Frame>
             </VerticalStackLayout>
+
             <VerticalStackLayout
                 x:Name="CreateLayout"
                 Padding="20"
@@ -199,10 +201,8 @@
                     TextChanged="OnEntryChange" />
                 <Label
                     x:Name="nameEntryCharCount"
-                    Margin="0,3,0,0"
-                    FontSize="12"
-                    Text="0/32 characters"
-                    TextColor="DimGray" />
+                    Style="{x:StaticResource EntryHelp}"
+                    Text="0/32 characters" />
                 <VerticalStackLayout IsVisible="{Binding WalletPortfolioSelected}">
                     <Label
                         Margin="0,10,0,5"
@@ -217,10 +217,8 @@
                         TextChanged="OnEntryChange" />
                     <Label
                         x:Name="addressEntryLabel"
-                        Margin="0,3,0,0"
-                        Padding="5,0"
-                        FontSize="12"
                         HeightRequest="34"
+                        Style="{x:StaticResource EntryHelp}"
                         Text="{Binding WalletAddressLabel, Mode=TwoWay}"
                         TextColor="Red" />
                 </VerticalStackLayout>
@@ -263,8 +261,8 @@
                             Text="Included in total value" />
                         <Label
                             FontSize="12"
-                            Text="Assets in this portfolio will be included in total value"
-                            TextColor="DimGray" />
+                            Style="{x:StaticResource EntryHelp}"
+                            Text="Assets in this portfolio will be included in total value" />
                     </VerticalStackLayout>
                     <CheckBox
                         Grid.Column="1"
@@ -275,12 +273,12 @@
 
                 <Button
                     x:Name="createButton"
-                    Margin="0,10,0,00"
+                    Margin="0,20,0,10"
                     Clicked="Close"
                     Command="{Binding AddPortfolioCommand}"
                     IsEnabled="False"
                     Text="Create" />
             </VerticalStackLayout>
         </Grid>
-    </ScrollView>
+    </VerticalStackLayout>
 </mct:Popup>
