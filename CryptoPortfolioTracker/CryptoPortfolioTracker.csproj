@@ -87,26 +87,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml.cs">
-	    <DependentUpon>EditPortfolioExchangePopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml.cs">
-	    <DependentUpon>EditPortfolioManualPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml.cs">
-	    <DependentUpon>EditPortfolioWalletPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioExchangePopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioManualPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioWalletPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioTypePopup.xaml</DependentUpon>
+	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioPopup.xaml.cs">
+	    <DependentUpon>EditPortfolioPopup.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
 	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
@@ -114,25 +96,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml">
+	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml">
+	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">

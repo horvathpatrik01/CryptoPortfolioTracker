@@ -12,32 +12,20 @@ namespace CryptoPortfolioTracker.Views;
 
 public partial class PortfolioPage : ContentPage
 {
-    private readonly PortfolioViewModel portfolioViewModel;
     private readonly IAuthService authService;
 
-    public PortfolioPage(PortfolioViewModel portfolioPageViewModel,
-                         IAuthService authService)
+    public PortfolioPage(PortfolioViewModel portfolioPageViewModel)
     {
-        BindingContext = portfolioPageViewModel;
         InitializeComponent();
-        this.portfolioViewModel = portfolioPageViewModel;
+        BindingContext = portfolioPageViewModel;
         this.authService = authService;
-    }
-
-    public void CreatePortfolio(object sender, TappedEventArgs args)
-    {
-        this.ShowPopup(new CreatePortfolioTypePopup(portfolioViewModel));
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         var viewModel = (PortfolioViewModel)BindingContext;
-        if (await authService.IsTokenExpired())
-        {
-            await viewModel.LogoutCommand.ExecuteAsync(this);
-        }
 
-        await viewModel.GetUserInfoCommand.ExecuteAsync(this);
+        await viewModel.IsUserAuthenticated();
     }
 }

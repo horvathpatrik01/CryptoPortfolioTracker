@@ -57,7 +57,6 @@
                                         <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
@@ -87,7 +86,6 @@
                                         <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
@@ -104,7 +102,7 @@
                     TextColor="Black"
                     VerticalTextAlignment="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ChangeTheme" />
+                        <TapGestureRecognizer Command="{Binding ChangeThemeCommand}" />
                     </Label.GestureRecognizers>
 
                     <VisualStateManager.VisualStateGroups>
@@ -121,15 +119,10 @@
                                         <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
                 </Label>
-
-
-
-
             </HorizontalStackLayout>
         </Grid>
 
@@ -154,7 +147,7 @@
                     <Label
                         Grid.Column="1"
                         FontAttributes="Bold"
-                        Text="{Binding portfolioItemSource.Count, StringFormat=' ({0:D})'}" />
+                        Text="{Binding Portfolios.Count, StringFormat=' ({0:D})'}" />
                     <Label
                         x:Name="editButton"
                         Grid.Column="2"
@@ -164,8 +157,9 @@
                         Text="{mi:Material Icon=Edit}"
                         VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Edit" />
+                            <TapGestureRecognizer Command="{Binding ToggleEditCommand}" />
                         </Label.GestureRecognizers>
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -180,7 +174,6 @@
                                             <Setter Property="TextColor" Value="{x:StaticResource Primary}" />
                                         </VisualState.Setters>
                                     </VisualState>
-
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
@@ -194,8 +187,24 @@
                         <CollectionView
                             x:Name="PortfolioCollectionView"
                             ItemsLayout="VerticalList"
-                            ItemsSource="{Binding portfolioItemSource, Mode=TwoWay}"
+                            ItemsSource="{Binding Portfolios, Mode=TwoWay}"
+                            SelectedItem="{Binding SelectedPortfolio, Mode=TwoWay}"
+                            SelectionChangedCommand="{Binding GetPortfolioCommand}"
+                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
                             SelectionMode="Single">
+
+                            <CollectionView.EmptyView>
+                                <StackLayout Padding="10" Orientation="Vertical">
+                                    <Image
+                                        Margin="10"
+                                        HeightRequest="50"
+                                        HorizontalOptions="Center"
+                                        Source="nodata.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="50" />
+                                    <Label Text="Add your first portfolio to your account!" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
 
                             <!--  Portfolio template  -->
                             <CollectionView.ItemTemplate>
@@ -213,7 +222,7 @@
                             FontSize="14"
                             Text="+ Create portfolio">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="CreatePortfolio" />
+                                <TapGestureRecognizer Command="{Binding CreatePortfolioCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
                     </VerticalStackLayout>
@@ -252,7 +261,7 @@
                             <Button
                                 Margin="10,0,10,0"
                                 Padding="10,0,10,0"
-                                Clicked="CreatePortfolio"
+                                Command="{Binding CreatePortfolioCommand}"
                                 Text="+Create Portfolio" />
                         </VerticalStackLayout>
                     </Grid>

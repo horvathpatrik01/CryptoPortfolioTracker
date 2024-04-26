@@ -3,7 +3,8 @@
     x:Class="CryptoPortfolioTracker.Views.Templates.PortfolioItem"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels">
 
     <ContentView.Content>
 
@@ -37,18 +38,34 @@
                         123$
                     </Label>
                 </VerticalStackLayout>
-                <Label
-                    x:Name="moreButton"
+                <Grid
                     Grid.Column="2"
-                    FontSize="20"
+                    ColumnDefinitions="Auto,Auto"
                     HorizontalOptions="End"
-                    IsVisible="False"
-                    Text="{mi:Material Icon=MoreHoriz}"
                     VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <!--<TapGestureRecognizer Tapped="More" />-->
-                    </Label.GestureRecognizers>
-                </Label>
+
+                    <Label
+                        x:Name="editButton"
+                        FontSize="20"
+                        IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=IsEditing}"
+                        Text="{mi:Material Icon=Edit}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnEditTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        x:Name="deleteButton"
+                        Grid.Column="2"
+                        FontSize="20"
+                        IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=IsEditing}"
+                        Text="{mi:Material Icon=Delete}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDeleteTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
             </Grid>
 
             <!--  Hover animation  -->
@@ -72,6 +89,5 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Frame>
-
     </ContentView.Content>
 </ContentView>
