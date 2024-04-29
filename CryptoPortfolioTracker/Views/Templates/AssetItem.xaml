@@ -2,11 +2,39 @@
 <ContentView
     x:Class="CryptoPortfolioTracker.Views.Templates.AssetItem"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
     <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
+        <Grid
+            Padding="10,0,10,0"
+            ColumnDefinitions="4*,2*,1*,1*,1*,2*,2*"
+            ColumnSpacing="20">
+            <Label Grid.Column="0" Text="{Binding}" />
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                Text="{Binding}" />
+            <Label
+                Grid.Column="2"
+                HorizontalOptions="End"
+                Text="{Binding}" />
+            <Label
+                Grid.Column="3"
+                HorizontalOptions="End"
+                Text="{Binding}" />
+            <Label
+                Grid.Column="4"
+                HorizontalOptions="End"
+                Text="{Binding}" />
+            <Label
+                Grid.Column="5"
+                HorizontalOptions="End"
+                Text="{Binding}" />
+            <Label
+                Grid.Column="6"
+                HorizontalOptions="End"
+                Text="{Binding}" />
+        </Grid>
+        <BoxView Margin="0,10,0,10" Style="{x:StaticResource Separator}" />
     </VerticalStackLayout>
 </ContentView>
