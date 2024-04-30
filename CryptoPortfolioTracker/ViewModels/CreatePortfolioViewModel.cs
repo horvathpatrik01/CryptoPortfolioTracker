@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.ViewModels.Base;
-using CryptoPortfolioTracker.Views.CreatePortfolioPopup;
+using CryptoPortfolioTracker.Views.Popups;
 using Microsoft.Maui.Controls.Shapes;
 using Shared;
 using System;

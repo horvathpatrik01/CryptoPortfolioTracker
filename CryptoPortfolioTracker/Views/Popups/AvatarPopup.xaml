@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="CryptoPortfolioTracker.Views.Popups.AvatarPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+    x:DataType="viewmodels:EditPortfolioViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <mct:Popup.Resources>
+        <ResourceDictionary>
+
+            <!--  Selectable avatar background colors  -->
+
+            <Color x:Key="AvatarColor1">#9146FF</Color>
+            <Color x:Key="AvatarColor2">#4BF5DC</Color>
+            <Color x:Key="AvatarColor3">#28D7FA</Color>
+            <Color x:Key="AvatarColor4">#FAB478</Color>
+            <Color x:Key="AvatarColor5">#FA7D64</Color>
+            <Color x:Key="AvatarColor6">#F03C4B</Color>
+            <Color x:Key="AvatarColor7">#8791A0</Color>
+            <Color x:Key="AvatarColor8">#50AA5A</Color>
+
+
+
+
+            <!--  Color selector button  -->
+            <Style
+                x:Name="selectableColor"
+                ApplyToDerivedTypes="False"
+                TargetType="Ellipse">
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="StrokeThickness" Value="4" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkSecondary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkSecondary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style
+                x:Name="emojiLabel"
+                ApplyToDerivedTypes="False"
+                TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="FontSize" Value="36" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="FontSize" Value="36" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="FontSize" Value="32" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </mct:Popup.Resources>
+
+
+    <VerticalStackLayout
+        x:Name="CreateLayout"
+        Padding="20"
+        VerticalOptions="Center"
+        WidthRequest="500">
+
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <Label
+                Margin="0,0,10,0"
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="{mi:Material Icon=ArrowBack}"
+                VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <!-- <TapGestureRecognizer Command="{Binding BackCommand}" /> -->
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="Change avatar" />
+
+        </HorizontalStackLayout>
+
+        <Grid Margin="10">
+            <Ellipse
+                Fill="{x:StaticResource AvatarColor1}"
+                HeightRequest="80"
+                HorizontalOptions="Center"
+                WidthRequest="80" />
+            <Label FontSize="36" Text="🚀" />
+
+        </Grid>
+
+        <!--  Select background color  -->
+        <HorizontalStackLayout
+            Margin="20"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Ellipse Fill="{x:StaticResource AvatarColor1}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor2}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor3}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor4}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor5}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor6}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor7}" Style="{x:StaticResource selectableColor}" />
+            <Ellipse Fill="{x:StaticResource AvatarColor8}" Style="{x:StaticResource selectableColor}" />
+
+
+        </HorizontalStackLayout>
+
+        <!--  Select emoji  -->
+
+        <toolkit:UniformItemsLayout Margin="10" MaxColumns="7">
+            <Label Style="{x:StaticResource emojiLabel}" Text="🚀" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🔥" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="❤️" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="👻" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="⚡" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🔑" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="⚒️" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🔶" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🔷" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="💎" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="💰" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🏦" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="💵" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🔔" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🦄" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🦊" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🐶" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🐰" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🐯" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🐻" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🐮" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🍕" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🍔" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="💊" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="👑" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🌈" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🤖" />
+            <Label Style="{x:StaticResource emojiLabel}" Text="🌕" />
+        </toolkit:UniformItemsLayout>
+
+
+        <Button
+            x:Name="saveButton"
+            Margin="0,20,0,20"
+            Clicked="SaveAvatar"
+            IsEnabled="True"
+            Text="Save" />
+    </VerticalStackLayout>
+</mct:Popup>

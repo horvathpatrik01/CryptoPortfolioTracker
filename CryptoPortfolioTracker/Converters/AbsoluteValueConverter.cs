@@ -8,10 +8,10 @@ namespace CryptoPortfolioTracker.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double doubleValue)
+            if (value is float floatValue)
             {
                 // Format the absolute value with two decimal places
-                return Math.Abs(doubleValue);
+                return Math.Abs(floatValue);
             }
             return value;
         }

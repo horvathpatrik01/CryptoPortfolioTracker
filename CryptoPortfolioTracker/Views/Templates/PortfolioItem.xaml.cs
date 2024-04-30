@@ -10,6 +10,8 @@ public partial class PortfolioItem : ContentView
         InitializeComponent();
     }
 
+
+
     private void OnDeleteTapped(object sender, EventArgs e)
     {
         // Get the data context of the tapped item
@@ -21,9 +23,9 @@ public partial class PortfolioItem : ContentView
 
             while (parent != null)
             {
-                if (parent.BindingContext is PortfolioViewModel)
+                if (parent.BindingContext is PortfolioViewModel model)
                 {
-                    viewModel = (PortfolioViewModel)parent.BindingContext;
+                    viewModel = model;
                     break;
                 }
                 parent = parent.Parent;
@@ -47,9 +49,9 @@ public partial class PortfolioItem : ContentView
 
             while (parent != null)
             {
-                if (parent.BindingContext is PortfolioViewModel)
+                if (parent.BindingContext is PortfolioViewModel model)
                 {
-                    viewModel = (PortfolioViewModel)parent.BindingContext;
+                    viewModel = model;
                     break;
                 }
                 parent = parent.Parent;

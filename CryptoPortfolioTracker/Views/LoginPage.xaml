@@ -9,41 +9,53 @@
     x:DataType="viewmodels:LoginViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
-    <Grid RowDefinitions="1*">
-
+    <Grid>
+        <Grid.Shadow>
+            <Shadow
+                    Brush="Black"
+                    Opacity="0.8"
+                    Radius="50"/>
+        </Grid.Shadow>
         <Frame
-            Grid.Row="1"
-            Margin="40,0,40,0"
-            BackgroundColor="{AppThemeBinding Light={StaticResource LightTertiary},
-                                              Dark={StaticResource DarkTertiary}}"
-            BorderColor="Transparent"
+            Margin="20"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Light4},
+                                              Dark={StaticResource Gray900}}"
+            BorderColor="{AppThemeBinding Light={StaticResource Gray200},
+                                          Dark={StaticResource Gray600}}"
+            MaximumWidthRequest="500"
             VerticalOptions="CenterAndExpand">
             <VerticalStackLayout Spacing="25">
                 <Label
                     FontAttributes="Bold"
                     FontSize="28"
                     Text="Sign In" />
-                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                    <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                        <Label Text="{mi:Material Icon=Email, IconSize=25}" TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" VerticalOptions="Center" />
-                        <Entry
-                            Grid.Column="1"
-                            Placeholder="Email"
-                            Text="{Binding LoginModel.Email}"
-                            VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
-                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                    <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                        <Label Text="{mi:Material Icon=Lock, IconSize=25}" TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"  VerticalOptions="Center" />
-                        <Entry
-                            Grid.Column="1"
-                            IsPassword="True"
-                            Placeholder="Password"
-                            Text="{Binding LoginModel.Password}"
-                            VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
+                <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                    <Label
+                        Text="{mi:Material Icon=Email,
+                                           IconSize=25}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                    Dark={StaticResource White}}"
+                        VerticalOptions="Center" />
+                    <Entry
+                        Grid.Column="1"
+                        Placeholder="Email"
+                        Text="{Binding LoginModel.Email}"
+                        VerticalOptions="Center" />
+                </Grid>
+                <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                    <Label
+                        Text="{mi:Material Icon=Lock,
+                                           IconSize=25}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                    Dark={StaticResource White}}"
+                        VerticalOptions="Center" />
+                    <Entry
+                        Grid.Column="1"
+                        IsPassword="True"
+                        Placeholder="Password"
+                        Text="{Binding LoginModel.Password}"
+                        VerticalOptions="Center" />
+                </Grid>
 
                 <Button
                     Command="{Binding LoginCommand}"

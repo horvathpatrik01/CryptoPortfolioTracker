@@ -9,101 +9,78 @@
     x:DataType="viewmodels:RegisterViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
-    <Grid RowDefinitions="1*">
-
-
+    <Grid>
+        <Grid.Shadow>
+            <Shadow
+                Brush="Black"
+                Opacity="0.8"
+                Radius="50" />
+        </Grid.Shadow>
         <Frame
-            Grid.Row="1"
-            Margin="40,0,40,0"
-            BackgroundColor="{AppThemeBinding Light={StaticResource LightTertiary},
-                                              Dark={StaticResource DarkTertiary}}"
-            BorderColor="Transparent"
+            Margin="20"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Light4},
+                                              Dark={StaticResource Gray900}}"
+            BorderColor="{AppThemeBinding Light={StaticResource Gray200},
+                                          Dark={StaticResource Gray600}}"
+            MaximumWidthRequest="500"
             VerticalOptions="CenterAndExpand">
-            <ScrollView>
-                <VerticalStackLayout Spacing="10">
+            <ScrollView Orientation="Horizontal">
+                <VerticalStackLayout Spacing="25">
                     <Label
                         FontAttributes="Bold"
                         FontSize="28"
                         Text="Sign Up" />
-                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                        <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                            <Label
-                                Text="{mi:Material Icon=Person,
-                                                   IconSize=25}"
-                                TextColor="{AppThemeBinding Light={StaticResource White},
-                                                            Dark={StaticResource Black}}"
-                                VerticalOptions="Center" />
-                            <Entry
-                                Grid.Column="1"
-                                Placeholder="Username"
-                                Text="{Binding RegisterModel.UserName}"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </Frame>
-                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                        <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                            <Label
-                                Text="{mi:Material Icon=Email,
-                                                   IconSize=25}"
-                                TextColor="{AppThemeBinding Light={StaticResource White},
-                                                            Dark={StaticResource Black}}"
-                                VerticalOptions="Center" />
-                            <Entry
-                                Grid.Column="1"
-                                Placeholder="Email"
-                                Text="{Binding RegisterModel.Email}"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </Frame>
-                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                        <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                            <Label
-                                Text="{mi:Material Icon=Lock,
-                                                   IconSize=25}"
-                                TextColor="{AppThemeBinding Light={StaticResource White},
-                                                            Dark={StaticResource Black}}"
-                                VerticalOptions="Center" />
-                            <Entry
-                                Grid.Column="1"
-                                IsPassword="True"
-                                Placeholder="Password"
-                                Text="{Binding RegisterModel.Password}"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </Frame>
+                    <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                        <Label Text="{mi:Material Icon=Person, IconSize=25}" VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            Placeholder="Username"
+                            Text="{Binding RegisterModel.UserName}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                        <Label Text="{mi:Material Icon=Email, IconSize=25}" VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            Placeholder="Email"
+                            Text="{Binding RegisterModel.Email}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                        <Label Text="{mi:Material Icon=Lock, IconSize=25}" VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            IsPassword="True"
+                            Placeholder="Password"
+                            Text="{Binding RegisterModel.Password}"
+                            VerticalOptions="Center" />
+                    </Grid>
 
-                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" BorderColor="Transparent">
-                        <Grid ColumnDefinitions="25,*" ColumnSpacing="20">
-                            <Label
-                                Text="{mi:Material Icon=Lock,
-                                                   IconSize=25}"
-                                TextColor="{AppThemeBinding Light={StaticResource White},
-                                                            Dark={StaticResource Black}}"
-                                VerticalOptions="Center" />
-                            <Entry
-                                Grid.Column="1"
-                                IsPassword="True"
-                                Placeholder="Confirm Password"
-                                Text="{Binding RegisterModel.ConfirmPassword}"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </Frame>
+                    <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                        <Label Text="{mi:Material Icon=Lock, IconSize=25}" VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            IsPassword="True"
+                            Placeholder="Confirm Password"
+                            Text="{Binding RegisterModel.ConfirmPassword}"
+                            VerticalOptions="Center" />
+                    </Grid>
 
                     <Button
                         Command="{Binding RegisterCommand}"
                         FontAttributes="Bold"
                         FontSize="20"
                         Text="Register" />
-                    <HorizontalStackLayout HorizontalOptions="Center">
-                        <Label Text="Already have an account?" VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToLoginPageCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </HorizontalStackLayout>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Already have an account?"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToLoginPageCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </VerticalStackLayout>
             </ScrollView>
         </Frame>
-
     </Grid>
 </ContentPage>

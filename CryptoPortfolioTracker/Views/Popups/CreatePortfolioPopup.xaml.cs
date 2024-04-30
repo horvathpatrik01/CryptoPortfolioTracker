@@ -2,7 +2,7 @@ using CommunityToolkit.Maui.Views;
 using CryptoPortfolioTracker.ViewModels;
 using System.Text.RegularExpressions;
 
-namespace CryptoPortfolioTracker.Views.CreatePortfolioPopup;
+namespace CryptoPortfolioTracker.Views.Popups;
 
 public partial class CreatePortfolioPopup : Popup
 {
@@ -20,6 +20,7 @@ public partial class CreatePortfolioPopup : Popup
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
         await CloseAsync(token: cts.Token);
+        cts.Dispose();
     }
 
     private void OnEntryChange(object? sender, TextChangedEventArgs e)

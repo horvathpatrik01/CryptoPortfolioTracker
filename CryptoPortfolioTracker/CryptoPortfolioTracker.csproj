@@ -40,7 +40,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#00000000"/>
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#00000000" />
 
     <!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\AppIcon\appicon.svg" Color="#ffffff" BaseSize="128,128" />
@@ -86,7 +86,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioPopup.xaml.cs">
+	  <Compile Update="Views\Popups\CreateTransactionPopup.xaml.cs">
+	    <DependentUpon>CreateTransactionPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\AvatarPopup.xaml.cs">
+	    <DependentUpon>AvatarPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\EditPortfolioPopup.xaml.cs">
 	    <DependentUpon>EditPortfolioPopup.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
@@ -98,10 +104,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioPopup.xaml">
+	  <MauiXaml Update="Views\Popups\CreateTransactionPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioPopup.xaml">
+	  <MauiXaml Update="Views\Popups\CreatePortfolioPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\AvatarPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EditPortfolioPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">

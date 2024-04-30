@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
 using CryptoPortfolioTracker.Services.Navigation;
 using CommunityToolkit.Maui.Views;
-using CryptoPortfolioTracker.Views.CreatePortfolioPopup;
+using CryptoPortfolioTracker.Views.Popups;
 using CryptoPortfolioTracker.Services.Auth;
 
 namespace CryptoPortfolioTracker.Views;

@@ -11,8 +11,7 @@ using CryptoPortfolioTracker.Services.Portfolio;
 using System.Diagnostics;
 using CryptoPortfolioTracker.Services.Exchange;
 using CommunityToolkit.Maui.Views;
-using CryptoPortfolioTracker.Views.CreatePortfolioPopup;
-using CryptoPortfolioTracker.Views.EditPortfolioPopup;
+using CryptoPortfolioTracker.Views.Popups;
 
 namespace CryptoPortfolioTracker.ViewModels
 {
@@ -229,6 +228,7 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             Shell.Current.CurrentPage.ShowPopup(new EditPortfolioPopup(new EditPortfolioViewModel(_navigationService, this)));
         }
+
 
         [RelayCommand]
         private async Task Logout()

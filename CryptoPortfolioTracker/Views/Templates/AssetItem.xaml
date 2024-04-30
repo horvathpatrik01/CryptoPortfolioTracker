@@ -45,7 +45,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding DailyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}}" />
+                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -56,7 +56,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding WeeklyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}}" />
+                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

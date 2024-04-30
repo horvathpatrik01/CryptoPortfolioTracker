@@ -8,11 +8,11 @@ namespace CryptoPortfolioTracker.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is int intValue)
+            if (value is float Value)
             {
-                if (intValue < 0)
+                if (Value < 0)
                     return Colors.Red;
-                if (intValue > 0)
+                if (Value > 0)
                     return Colors.Green;
                 return Application.Current.UserAppTheme == AppTheme.Light ? Colors.Black : Colors.White;
 

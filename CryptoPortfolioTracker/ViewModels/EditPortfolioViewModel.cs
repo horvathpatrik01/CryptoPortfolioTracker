@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.ViewModels.Base;
+using CryptoPortfolioTracker.Views.Popups;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -36,5 +38,6 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             await _portfolioViewModel.EditPortfolio(_portfolioId, NewPortfolioName, NewPortfolioIcon);
         }
+
     }
 }

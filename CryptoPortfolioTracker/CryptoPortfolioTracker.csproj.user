@@ -11,10 +11,16 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioPopup.xaml">
+    <MauiXaml Update="Views\Popups\CreateTransactionPopup.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioPopup.xaml">
+    <MauiXaml Update="Views\Popups\CreatePortfolioPopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Popups\AvatarPopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Popups\EditPortfolioPopup.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\LoginPage.xaml">
