@@ -224,6 +224,12 @@ namespace CryptoPortfolioTracker.ViewModels
             Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioPopup(new CreatePortfolioViewModel(_navigationService, this)));
         }
 
+        [RelayCommand]
+        public void AddTransaction()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, this)));
+        }
+
         public void StartEditPortfolioPopup()
         {
             Shell.Current.CurrentPage.ShowPopup(new EditPortfolioPopup(new EditPortfolioViewModel(_navigationService, this)));

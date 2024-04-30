@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="CryptoPortfolioTracker.Views.Popups.AddTransactionPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:type="clr-namespace:Shared;assembly=Shared"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+    x:DataType="viewmodels:TransactionViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <VerticalStackLayout
+        Padding="20"
+        HeightRequest="550"
+        Spacing="10"
+        WidthRequest="500">
+
+        <!--  Popup title with back button  -->
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <Label
+                Margin="0,0,10,0"
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="{mi:Material Icon=ArrowBack}"
+                VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Close" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="Add transaction" />
+        </HorizontalStackLayout>
+
+        <!--  Transaction type selection  -->
+        <Frame
+            Padding="0"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondary},
+                                              Dark={StaticResource DarkPrimary}}"
+            BorderColor="Transparent">
+            <Grid ColumnDefinitions="1*,1*,1*">
+                <Button
+                    x:Name="buyBtn"
+                    Grid.Column="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                      Dark={StaticResource DarkSecondary}}"
+                    Clicked="OnTransactionTypeChanged"
+                    Text="Buy" />
+                <Button
+                    x:Name="sellBtn"
+                    Grid.Column="1"
+                    Clicked="OnTransactionTypeChanged"
+                    Text="Sell" />
+                <Button
+                    x:Name="transferBtn"
+                    Grid.Column="2"
+                    Clicked="OnTransactionTypeChanged"
+                    Text="Transfer" />
+            </Grid>
+        </Frame>
+
+        <!--  Token picker  -->
+        <Label
+            FontAttributes="Bold"
+            FontSize="16"
+            Text="Select token" />
+        <Picker Margin="0">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <Grid ColumnDefinitions="Auto,1*">
+                        <Label Text="sajt" />
+                        <Label Text="ostor" />
+                    </Grid>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
+            <!--  Quantity  -->
+            <VerticalStackLayout Grid.Column="0">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="Quantity" />
+                <Entry HorizontalOptions="Fill" Placeholder="0.00" />
+            </VerticalStackLayout>
+            <!--  Price per coin  -->
+            <VerticalStackLayout x:Name="PPCView" Grid.Column="1">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="Price per coin" />
+                <Entry Placeholder="0.00" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <BoxView Margin="0,10,0,10" Style="{StaticResource Separator}" />
+
+        <Grid
+            ColumnDefinitions="1*,1*"
+            ColumnSpacing="20"
+            RowDefinitions="Auto,Auto"
+            RowSpacing="10">
+            <!--  Date picker  -->
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                Text="Date" />
+            <DatePicker
+                Grid.Row="1"
+                Grid.Column="1"
+                Date="{Static sys:DateTime.Now}"
+                Format="yyyy/MM/dd"
+                MaximumDate="{Static sys:DateTime.Now}"
+                MinimumDate="01/01/1990"
+                VerticalOptions="StartAndExpand" />
+            <!--  Fee  -->
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                FontAttributes="Bold"
+                Text="Fee" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="0"
+                Placeholder="0.00" />
+        </Grid>
+        <!--  Note  -->
+        <Label FontAttributes="Bold" Text="Note" />
+        <Entry Placeholder="Put your note here..." />
+
+        <Button
+            Margin="0,10,0,0"
+            IsEnabled="True"
+            Text="Add transaction" />
+
+    </VerticalStackLayout>
+
+</mct:Popup>
