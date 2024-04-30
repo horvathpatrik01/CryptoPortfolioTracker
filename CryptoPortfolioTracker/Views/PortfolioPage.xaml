@@ -3,6 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.PortfolioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:model="clr-namespace:Shared;assembly=Shared"
     xmlns:templates="clr-namespace:CryptoPortfolioTracker.Views.Templates"

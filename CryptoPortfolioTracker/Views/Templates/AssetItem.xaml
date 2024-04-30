@@ -3,37 +3,71 @@
     x:Class="CryptoPortfolioTracker.Views.Templates.AssetItem"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:NumberToColorConverter x:Key="NumberToColor" />
+            <converters:NumberToArrowConverter x:Key="NumberToArrow" />
+            <converters:AbsoluteValueConverter x:Key="AbsoluteValue" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <VerticalStackLayout>
         <Grid
             Padding="10,0,10,0"
             ColumnDefinitions="4*,2*,1*,1*,1*,2*,2*"
             ColumnSpacing="20">
-            <Label Grid.Column="0" Text="{Binding}" />
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Text="{Binding Name, StringFormat='${0:F}'}" />
             <Label
                 Grid.Column="1"
                 HorizontalOptions="Start"
-                Text="{Binding}" />
+                Text="{Binding Price, StringFormat='${0:F}'}" />
             <Label
                 Grid.Column="2"
                 HorizontalOptions="End"
-                Text="{Binding}" />
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding HourlyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding HourlyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <Label
                 Grid.Column="3"
                 HorizontalOptions="End"
-                Text="{Binding}" />
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding DailyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <Label
                 Grid.Column="4"
                 HorizontalOptions="End"
-                Text="{Binding}" />
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding WeeklyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <Label
                 Grid.Column="5"
                 HorizontalOptions="End"
-                Text="{Binding}" />
+                Text="{Binding Amount, StringFormat='{0:F}'}" />
             <Label
                 Grid.Column="6"
                 HorizontalOptions="End"
-                Text="{Binding}" />
+                Text="{Binding Value, StringFormat='${0:F}'}" />
         </Grid>
         <BoxView Margin="0,10,0,10" Style="{x:StaticResource Separator}" />
     </VerticalStackLayout>
