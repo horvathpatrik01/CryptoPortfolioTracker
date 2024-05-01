@@ -8,7 +8,7 @@ namespace CryptoPortfolioTracker.Services.Portfolio
 
         Task<PortfolioDto?> GetPortfolio(int portfolioId);
 
-        Task<PortfolioDto?> ChangePortfolioName(int portfolioId, string newPortfolioName);
+        Task<PortfolioDto?> EditPortfolio(PortfolioToEditDto portfolioToEdit);
 
         Task<PortfolioDto?> AddPortfolio(PortfolioToAddDto portfolioToAddDto);
 

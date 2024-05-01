@@ -24,20 +24,36 @@ namespace CryptoPortfolioTracker.ViewModels
         [ObservableProperty]
         private string newPortfolioIcon = "";
 
+        [ObservableProperty]
+        private int newPortfolioIconColor = 0;
+
         public EditPortfolioViewModel(INavigationService navigationService,
             PortfolioViewModel portfolioViewModel) : base(navigationService)
         {
             this._portfolioId = portfolioViewModel.SelectedPortfolio.Id;
             NewPortfolioName = portfolioViewModel.SelectedPortfolio.Name;
             NewPortfolioIcon = portfolioViewModel.SelectedPortfolio.Icon;
+            newPortfolioIconColor = portfolioViewModel.SelectedPortfolio.IconColor;
             this._portfolioViewModel = portfolioViewModel;
         }
 
         [RelayCommand]
         private async Task EditPortfolio()
         {
-            await _portfolioViewModel.EditPortfolio(_portfolioId, NewPortfolioName, NewPortfolioIcon);
+            PortfolioToEditDto portfolioToEdit = new PortfolioToEditDto
+            {
+                Id = this._portfolioId,
+                Name = NewPortfolioName,
+                Icon = NewPortfolioIcon,
+                IconColor = NewPortfolioIconColor
+            };
+            await _portfolioViewModel.EditPortfolio(portfolioToEdit);
         }
 
+        [RelayCommand]
+        private void ChangeAvatar()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new AvatarPopup(new AvatarIconViewModel(editPortfolioViewModel: this)));
+        }
     }
 }

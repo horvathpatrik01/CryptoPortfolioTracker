@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.ViewModels.Base;
@@ -25,6 +26,12 @@ namespace CryptoPortfolioTracker.ViewModels
         private PortfolioToAddDto portfolioToAdd;
 
         [ObservableProperty]
+        private string newPortfolioIcon = "";
+
+        [ObservableProperty]
+        private int newPortfolioIconColor = 0;
+
+        [ObservableProperty]
         private bool walletPortfolioSelected = false;
 
         [ObservableProperty]
@@ -47,6 +54,7 @@ namespace CryptoPortfolioTracker.ViewModels
             popupHeight = 440;
             WalletAddressLabel = defaultAddressLabelText;
             isSelectorVisible = true;
+            NewPortfolioIcon = "🚀";
             this._portfolioViewModel = portfolioViewModel;
         }
 
@@ -59,13 +67,17 @@ namespace CryptoPortfolioTracker.ViewModels
                 PublicKey = null,
                 PrivateKey = null,
                 WalletAddress = null,
-                CexIdentifier = null
+                CexIdentifier = null,
+                Icon = "🚀",
+                IconColor = 0
             };
         }
 
         [RelayCommand]
         public async Task AddPortfolio()
         {
+            PortfolioToAdd.Icon = NewPortfolioIcon;
+            PortfolioToAdd.IconColor = NewPortfolioIconColor;
             await _portfolioViewModel.AddPortfolio(PortfolioToAdd);
         }
 
@@ -82,12 +94,14 @@ namespace CryptoPortfolioTracker.ViewModels
                     ExchangePortfolioSelected = true;
                     PopupHeight = 620;
                     break;
-                case PortfolioType.Wallet: 
+
+                case PortfolioType.Wallet:
                     WalletPortfolioSelected = true;
                     PopupHeight = 590;
                     break;
+
                 default:
-                    PopupHeight = 470; 
+                    PopupHeight = 470;
                     break;
             }
         }
@@ -100,6 +114,12 @@ namespace CryptoPortfolioTracker.ViewModels
             IsSelectorVisible = true;
             PopupHeight = 440;
             ResetPortfolioToAdd();
+        }
+
+        [RelayCommand]
+        private void ChangeAvatar()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new AvatarPopup(new AvatarIconViewModel(createPortfolioViewModel: this)));
         }
     }
 }

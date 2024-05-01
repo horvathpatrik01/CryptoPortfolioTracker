@@ -12,6 +12,9 @@
     x:DataType="viewmodels:PortfolioViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
+    </ContentPage.Resources>
     <Grid RowDefinitions="Auto,1*">
 
         <!--  Header  -->
@@ -53,7 +56,6 @@
                             <TapGestureRecognizer Command="{Binding ToggleEditCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
-
                 </Grid>
 
                 <!--  Portfolio list  -->
@@ -109,7 +111,6 @@
                                 <TapGestureRecognizer Command="{Binding CreatePortfolioCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
-
                     </VerticalStackLayout>
                 </ScrollView>
             </VerticalStackLayout>
@@ -132,16 +133,31 @@
                         <VerticalStackLayout
                             Grid.Column="0"
                             HorizontalOptions="StartAndExpand"
-                            Spacing="5"
+                            Spacing="10"
                             VerticalOptions="Start">
                             <HorizontalStackLayout Spacing="10">
                                 <!--  Portfolio icon  -->
-                                <Image
-                                    HeightRequest="20"
-                                    Source="{Binding SelectedPortfolio.Icon}"
-                                    WidthRequest="20" />
+                                <Grid HorizontalOptions="Center">
+                                    <Ellipse
+                                        HeightRequest="34"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        WidthRequest="34">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="{Binding SelectedPortfolio.IconColor, Converter={StaticResource IconColorConverter}}" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Label
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding SelectedPortfolio.Icon}"
+                                        VerticalOptions="Center" />
+                                </Grid>
                                 <!--  Portfolio name  -->
-                                <Label FontSize="18" Text="{Binding SelectedPortfolio.Name}" />
+                                <Label
+                                    FontSize="22"
+                                    Text="{Binding SelectedPortfolio.Name}"
+                                    VerticalOptions="Center" />
                             </HorizontalStackLayout>
                             <!--  Portfolio value  -->
                             <Label FontAttributes="Bold" FontSize="32">$214832.12</Label>
@@ -158,7 +174,6 @@
                             HorizontalOptions="End"
                             Text="+ Create Portfolio"
                             VerticalOptions="Start" />
-
                     </Grid>
 
                     <!--  Holding asset list  -->
@@ -209,6 +224,7 @@
                         <CollectionView
                             x:Name="PortfolioAssetView"
                             ItemsLayout="VerticalList"
+                            ItemsSource="{Binding AssetItemSource}"
                             SelectionMode="Single">
 
                             <!--  Element if empty  -->
@@ -227,8 +243,6 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-
-
                     </VerticalStackLayout>
                 </Grid>
             </ScrollView>

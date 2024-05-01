@@ -98,6 +98,9 @@
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
 	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Templates\EmojiColorItem.xaml.cs">
+	    <DependentUpon>EmojiColorItem.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Templates\Header.xaml.cs">
 	    <DependentUpon>Header.xaml</DependentUpon>
 	  </Compile>
@@ -126,6 +129,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Templates\AssetItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\EmojiColorItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\EmojiItem.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Templates\Header.xaml">

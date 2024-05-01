@@ -69,12 +69,11 @@ namespace Server.Controllers
         }
 
         [HttpPatch]
-        [Route("{portfolioId}/{newPortfolioName}")]
-        public async Task<ActionResult<PortfolioDto>> ChangePortfolioName(int portfolioId, string newPortfolioName)
+        public async Task<ActionResult<PortfolioDto>> EditPortFolio([FromBody] PortfolioToEditDto portfolioToEdit)
         {
             try
             {
-                var portfolio = await this.portfolioRepository.EditPortFolioName(portfolioId, newPortfolioName);
+                var portfolio = await this.portfolioRepository.EditPortFolio(portfolioToEdit);
 
                 if (portfolio == null)
                 {

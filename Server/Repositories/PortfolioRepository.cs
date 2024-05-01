@@ -14,10 +14,9 @@ namespace Server.Repositories
 
         public async Task<Portfolio?> AddPortfolio(Guid? id, PortfolioToAddDto portfolioToAddDto)
         {
+            User? user = await appDbContext.Users.FindAsync(id);
 
-            User? user= await appDbContext.Users.FindAsync(id);
-            
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -27,6 +26,8 @@ namespace Server.Repositories
                 User = user,
                 Name = portfolioToAddDto.Name,
                 PortfolioType = portfolioToAddDto.PortfolioType,
+                Icon = portfolioToAddDto.Icon,
+                IconColor = portfolioToAddDto.IconColor,
             };
 
             user.Portfolios.Add(portfolio);
@@ -35,10 +36,10 @@ namespace Server.Repositories
             {
                 case PortfolioType.Default:
                     portfolio.Assets = new List<Asset>();
-                    portfolio.Icon = "cheese";
                     break;
+
                 case PortfolioType.CexAccount:
-                    if(portfolioToAddDto.PublicKey != null && portfolioToAddDto.PrivateKey != null)
+                    if (portfolioToAddDto.PublicKey != null && portfolioToAddDto.PrivateKey != null)
                     {
                         portfolio.ApiKey = new ApiKey
                         {
@@ -46,26 +47,26 @@ namespace Server.Repositories
                             PrivateKey = portfolioToAddDto.PrivateKey,
                             CexIdentifier = portfolioToAddDto.CexIdentifier ?? CexIdentifier.Binance
                         };
-                        portfolio.Icon = "ship";
                         break;
                     }
                     return null;
+
                 case PortfolioType.Wallet:
-                    if(portfolioToAddDto.WalletAddress is not null)
+                    if (portfolioToAddDto.WalletAddress is not null)
                     {
                         portfolio.Address = new Address
                         {
                             WalletAddress = portfolioToAddDto.WalletAddress
                         };
-                        portfolio.Icon = "auto";
                         break;
                     }
                     return null;
+
                 default:
                     return null;
             }
 
-            var result=await this.appDbContext.AddAsync(portfolio);
+            var result = await this.appDbContext.AddAsync(portfolio);
             await this.appDbContext.SaveChangesAsync();
 
             return result.Entity;
@@ -83,13 +84,15 @@ namespace Server.Repositories
             return portfolio;
         }
 
-        public async Task<Portfolio?> EditPortFolioName(int? portfolioId, string newName)
+        public async Task<Portfolio?> EditPortFolio(PortfolioToEditDto portfolioToEdit)
         {
-            Portfolio? portfolio = await this.appDbContext.Portfolios.FirstOrDefaultAsync(p => p.Id == portfolioId);
+            Portfolio? portfolio = await this.appDbContext.Portfolios.FirstOrDefaultAsync(p => p.Id == portfolioToEdit.Id);
 
-            if(portfolio is not null) 
-            { 
-                portfolio.Name = newName;
+            if (portfolio is not null)
+            {
+                portfolio.Name = portfolioToEdit.Name;
+                portfolio.Icon = portfolioToEdit.Icon;
+                portfolio.IconColor = portfolioToEdit.IconColor;
                 await this.appDbContext.SaveChangesAsync();
             }
             return portfolio;
@@ -98,10 +101,10 @@ namespace Server.Repositories
         public async Task<Portfolio?> GetPortfolio(int? portfolioId)
         {
             return await this.appDbContext.Portfolios
-                .Include(p =>p.Address)
-                .Include(p=>p.Assets)
-                    .ThenInclude(a=>a.Transactions)
-                .Include(p =>p.ApiKey)
+                .Include(p => p.Address)
+                .Include(p => p.Assets)
+                    .ThenInclude(a => a.Transactions)
+                .Include(p => p.ApiKey)
                 .FirstOrDefaultAsync(p => p.Id == portfolioId);
         }
 

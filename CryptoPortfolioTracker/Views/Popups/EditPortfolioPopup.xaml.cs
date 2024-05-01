@@ -23,19 +23,10 @@ public partial class EditPortfolioPopup : Popup
             saveButton.IsEnabled = false;
     }
 
-
     private async void Close(object? sender, EventArgs e)
     {
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
         cts.Dispose();
     }
-
-
-    private void ChangeAvatar(object sender, EventArgs e)
-    {   
-        
-        Shell.Current.CurrentPage.ShowPopup(new AvatarPopup());
-    }
-
 }

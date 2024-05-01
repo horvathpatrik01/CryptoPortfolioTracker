@@ -6,11 +6,39 @@ namespace Shared
 {
     public class PortfolioDto : INotifyPropertyChanged
     {
-        private string _name;
-        public int Id { get; set; }
-        public string Icon { get; set; }
+        private string _name = null!;
 
-        [MaxLength(20)]
+        private int _iconcolor;
+        private string _icon = null!;
+        public int Id { get; set; }
+
+        public string Icon
+        {
+            get => _icon;
+            set
+            {
+                if (_icon != value)
+                {
+                    _icon = value;
+                    OnPropertyChanged(nameof(Icon));
+                }
+            }
+        }
+
+        public int IconColor
+        {
+            get => _iconcolor;
+            set
+            {
+                if (_iconcolor != value)
+                {
+                    _iconcolor = value;
+                    OnPropertyChanged(nameof(IconColor));
+                }
+            }
+        }
+
+        [MaxLength(32)]
         public string Name
         {
             get => _name;
@@ -28,7 +56,6 @@ namespace Shared
         public List<AssetDto>? Assets { get; set; }
         public AddressDto? Address { get; set; }
         public ApiKeyDto? ApiKey { get; set; }
-        // Other properties...
 
         public event PropertyChangedEventHandler PropertyChanged;
 

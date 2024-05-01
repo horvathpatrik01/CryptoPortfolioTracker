@@ -3,6 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.Popups.EditPortfolioPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
@@ -10,6 +11,9 @@
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
+    <mct:Popup.Resources>
+        <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
+    </mct:Popup.Resources>
     <VerticalStackLayout Padding="20" WidthRequest="500">
         <Grid ColumnDefinitions="Auto,1*">
             <Label
@@ -35,18 +39,30 @@
             FontSize="16"
             Text="Portfolio avatar" />
         <Grid ColumnDefinitions="1*,1*">
-            <Image
+            <Grid
                 Grid.Column="0"
                 Margin="10"
-                HeightRequest="60"
-                HorizontalOptions="Start"
-                Source="dotnet_bot.png"
-                VerticalOptions="Center" />
+                HorizontalOptions="Start">
+                <Ellipse
+                    HeightRequest="80"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="80">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="{Binding NewPortfolioIconColor, Converter={StaticResource IconColorConverter}}" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Label
+                    FontSize="36"
+                    HorizontalOptions="Center"
+                    Text="{Binding NewPortfolioIcon}"
+                    VerticalOptions="Center" />
+            </Grid>
             <Button
                 x:Name="changeAvatarButton"
                 Grid.Column="1"
                 Margin="10"
-                Clicked="ChangeAvatar"
+                Command="{Binding ChangeAvatarCommand}"
                 HorizontalOptions="End"
                 Text="Change avatar"
                 VerticalOptions="Center" />

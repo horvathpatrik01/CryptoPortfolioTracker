@@ -7,8 +7,9 @@ namespace CryptoPortfolioTracker.Views.Popups;
 
 public partial class AvatarPopup : Popup
 {
-    public AvatarPopup()
+    public AvatarPopup(AvatarIconViewModel avatarIconViewModel)
     {
+        BindingContext = avatarIconViewModel;
         InitializeComponent();
     }
 
@@ -21,7 +22,6 @@ public partial class AvatarPopup : Popup
 
     private async void SaveAvatar(object sender, EventArgs e)
     {
-
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await CloseAsync(token: cts.Token);
         cts.Dispose();

@@ -3,8 +3,14 @@
     x:Class="CryptoPortfolioTracker.Views.Templates.PortfolioItem"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels">
+    xmlns:models="clr-namespace:Shared;assembly=Shared"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+    x:DataType="models:PortfolioDto">
+    <ContentView.Resources>
+        <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
+    </ContentView.Resources>
     <ContentView.Content>
 
         <Frame
@@ -12,14 +18,28 @@
             BackgroundColor="Transparent"
             BorderColor="Transparent"
             CornerRadius="5"
-            HeightRequest="60">
+            HeightRequest="64">
             <Grid ColumnDefinitions="Auto,Auto,1*">
                 <!--  Icon  -->
-                <Image
+                <Grid
                     Grid.Column="0"
-                    HeightRequest="40"
-                    Source="{Binding Icon}"
-                    WidthRequest="40" />
+                    Margin="10"
+                    HorizontalOptions="Center">
+                    <Ellipse
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{Binding IconColor, Converter={StaticResource IconColorConverter}}" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="{Binding Icon}"
+                        VerticalOptions="Center" />
+                </Grid>
                 <Grid Grid.Column="1" RowDefinitions="Auto,1*">
                     <!--  Name  -->
                     <Label
@@ -94,6 +114,5 @@
                 </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
         </Frame>
-
     </ContentView.Content>
 </ContentView>

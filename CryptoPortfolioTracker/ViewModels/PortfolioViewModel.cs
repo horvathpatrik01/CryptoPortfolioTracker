@@ -131,27 +131,33 @@ namespace CryptoPortfolioTracker.ViewModels
                     Portfolios[index] = portfolio;
                     // Update SelectedPortfolio with the new data
                     SelectedPortfolio = portfolio;
+                    switch (selectedPortfolioParam.PortfolioType)
+                    {
+                        case PortfolioType.Default:
+                            // Get Asset Prices
+                            foreach (AssetDto asset in portfolio?.Assets)
+                            {
+                                AssetItemSource.Clear();
+                                if (!AssetItemSource.Contains(asset))
+                                    AssetItemSource.Add(asset);
+                            }
+
+                            break;
+
+                        case PortfolioType.CexAccount:
+                            // Get assets from exchange
+                            break;
+
+                        case PortfolioType.Wallet:
+                            // Get transactions and assets from
+                            break;
+
+                        default: break;
+                    }
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolios couldn't be retrieved from the server.", "Ok");
-                }
-
-                switch (selectedPortfolioParam.PortfolioType)
-                {
-                    case PortfolioType.Default:
-                        // Get Asset Prices
-                        break;
-
-                    case PortfolioType.CexAccount:
-                        // Get Profile from exchange
-                        break;
-
-                    case PortfolioType.Wallet:
-                        // Get transactions and assets from
-                        break;
-
-                    default: break;
+                    await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolio couldn't be retrieved from the server.", "Ok");
                 }
             }
         }
@@ -170,18 +176,20 @@ namespace CryptoPortfolioTracker.ViewModels
             }
         }
 
-        public async Task EditPortfolio(int portfolioId, string newPortfolioName, string newPortfolioIcon)
+        public async Task EditPortfolio(PortfolioToEditDto portfolioToEdit)
         {
             if (!IsEditing)
                 return;
 
-            PortfolioDto? editedPortfolio = await _portfolioSevice.ChangePortfolioName(portfolioId, newPortfolioName);
+            PortfolioDto? editedPortfolio = await _portfolioSevice.EditPortfolio(portfolioToEdit);
             if (editedPortfolio is not null)
             {
-                var p = Portfolios.FirstOrDefault(p => p.Id == portfolioId);
+                var p = Portfolios.FirstOrDefault(p => p.Id == portfolioToEdit.Id);
                 if (p != null)
                 {
                     p.Name = editedPortfolio.Name;
+                    p.Icon = editedPortfolio.Icon;
+                    p.IconColor = editedPortfolio.IconColor;
                 }
             }
             else
@@ -234,7 +242,6 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             Shell.Current.CurrentPage.ShowPopup(new EditPortfolioPopup(new EditPortfolioViewModel(_navigationService, this)));
         }
-
 
         [RelayCommand]
         private async Task Logout()

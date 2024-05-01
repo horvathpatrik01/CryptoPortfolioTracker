@@ -8,6 +8,7 @@ namespace CryptoPortfolioTracker.Views.Popups;
 public partial class AddTransactionPopup : Popup
 {
     private readonly TransactionViewModel _transactionViewModel;
+
     public AddTransactionPopup(TransactionViewModel transactionViewModel)
     {
         BindingContext = transactionViewModel;
@@ -26,11 +27,14 @@ public partial class AddTransactionPopup : Popup
     private void OnTransactionTypeChanged(object sender, EventArgs e)
     {
         // Show the selected view
+        var button = (Button)sender;
+
         switch (button.Text)
         {
             case ("Buy" or "Sell"):
                 PPCView.IsVisible = true;
                 break;
+
             case "Transfer":
                 PPCView.IsVisible = false;
                 break;
