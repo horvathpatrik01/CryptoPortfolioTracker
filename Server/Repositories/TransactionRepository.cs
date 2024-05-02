@@ -12,7 +12,7 @@ namespace Server.Repositories
             this.appDbContext = appDbContext;
         }
 
-        public async Task<Transaction?> AddTransaction(TransactionToAddDto transactionToAddDto)
+        public async Task<Asset?> AddTransaction(TransactionToAddDto transactionToAddDto)
         {
             var portfolio = await this.appDbContext.Portfolios.FindAsync(transactionToAddDto.PortfolioId);
 
@@ -31,7 +31,7 @@ namespace Server.Repositories
                     .Include(a => a.Transactions)
                     .FirstOrDefaultAsync(a => a.Symbol == transactionToAddDto.Symbol && a.PortfolioId == transactionToAddDto.PortfolioId); // If there is no assetId added to the query
 
-                if (asset == null && transactionToAddDto.Symbol is not null && transactionToAddDto.Name is not null) // If there are not assets in the portfolio
+                if (asset == null && transactionToAddDto.Symbol is not null && transactionToAddDto.Name is not null) // If there are no asset in the portfolio
                 {
                     asset = new Asset
                     {
@@ -43,6 +43,9 @@ namespace Server.Repositories
                         Amount = 0m,
                         AvrgBuyPrice = 0m
                     };
+                    var assetResult = await this.appDbContext.Assets.AddAsync(asset);
+                    if (assetResult == null)
+                        return null;
                 }
             }
 
@@ -63,23 +66,17 @@ namespace Server.Repositories
             else
                 transaction.Asset.Amount -= transaction.Amount;
 
-            var assetResult = await this.appDbContext.Assets.AddAsync(asset);
-            if (assetResult == null)
-                return null;
-
             var result = await this.appDbContext.Transactions.AddAsync(transaction);
             transaction = result?.Entity;
             if (transaction == null)
                 return null;
-
-            asset.Transactions.Add(transaction);
             asset.AvrgBuyPrice = CalculateAverageBuyPrice(asset.Transactions);
 
             await this.appDbContext.SaveChangesAsync();
-            return transaction;
+            return asset;
         }
 
-        public async Task<Transaction?> DeleteTransaction(int? transactionId)
+        public async Task<Asset?> DeleteTransaction(int? transactionId)
         {
             var transaction = await this.appDbContext.Transactions
                 .Include(t => t.Asset)
@@ -95,7 +92,7 @@ namespace Server.Repositories
                     this.appDbContext.Assets.Remove(transaction.Asset);
                     await this.appDbContext.SaveChangesAsync();
 
-                    return transaction;
+                    return null;
                 }
 
                 if (new[] { TransactionType.Buy, TransactionType.TransferIn }.Contains(transaction.TransactionType))
@@ -106,10 +103,10 @@ namespace Server.Repositories
                 transaction.Asset.AvrgBuyPrice = CalculateAverageBuyPrice(transaction.Asset.Transactions);
                 await this.appDbContext.SaveChangesAsync();
             }
-            return transaction;
+            return transaction?.Asset;
         }
 
-        public async Task<Transaction?> EditTransaction(TransactionDto transactionToEditDto)
+        public async Task<Asset?> EditTransaction(TransactionDto transactionToEditDto)
         {
             var t = await this.appDbContext.Transactions
                 .Include(t => t.Asset)
@@ -141,7 +138,7 @@ namespace Server.Repositories
             t.Asset.AvrgBuyPrice = CalculateAverageBuyPrice(t.Asset.Transactions);
 
             await this.appDbContext.SaveChangesAsync();
-            return t;
+            return t.Asset;
         }
 
         public async Task<Transaction?> GetTransaction(int? transactionId)
@@ -160,6 +157,11 @@ namespace Server.Repositories
             var Amount = transactions.Where(t => t.TransactionType == TransactionType.Buy).Sum(t => t.Amount);
 
             return Amount == 0m ? 0m : Cost / Amount;
+        }
+
+        public async Task<Asset?> GetAsset(int assetId)
+        {
+            return await this.appDbContext.Assets.FindAsync(assetId);
         }
     }
 }

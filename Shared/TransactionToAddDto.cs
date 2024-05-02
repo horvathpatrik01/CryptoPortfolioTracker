@@ -4,7 +4,7 @@
     {
         public int PortfolioId { get; set; }
         public int? AssetId { get; set; }
-        public string? Symbol {  get; set; }
+        public string? Symbol { get; set; }
         public string? Name { get; set; }
         public string? IconUrl { get; set; }
         public decimal Price { get; set; }

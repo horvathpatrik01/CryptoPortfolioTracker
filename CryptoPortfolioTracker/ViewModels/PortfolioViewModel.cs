@@ -12,12 +12,14 @@ using System.Diagnostics;
 using CryptoPortfolioTracker.Services.Exchange;
 using CommunityToolkit.Maui.Views;
 using CryptoPortfolioTracker.Views.Popups;
+using CryptoPortfolioTracker.Services.Transaction;
 
 namespace CryptoPortfolioTracker.ViewModels
 {
     public partial class PortfolioViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
+        private readonly ITransactionService transactionService;
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         private readonly IPortfolioSevice _portfolioSevice;
@@ -41,10 +43,11 @@ namespace CryptoPortfolioTracker.ViewModels
         public ObservableCollection<string> Errors { get; set; } = [];
 
         public ObservableCollection<PortfolioDto> Portfolios { get; set; }
-        public ObservableCollection<AssetDto> AssetItemSource { get; set; } = [];
+        public ObservableCollection<AssetDto> AssetItemSource { get; set; }
 
         public PortfolioViewModel(
             IAuthService authService,
+            ITransactionService transactionService,
             IUserService userService,
             INavigationService navigationService,
             IPortfolioSevice portfolioSevice,
@@ -54,9 +57,11 @@ namespace CryptoPortfolioTracker.ViewModels
             PortfolioToAdd = new();
             SelectedPortfolio = new();
             NewPortfolioName = "";
+            AssetItemSource = new ObservableCollection<AssetDto>();
             Portfolios = new ObservableCollection<PortfolioDto>();
 
             this._authService = authService;
+            this.transactionService = transactionService;
             this._userService = userService;
             this._navigationService = navigationService;
             this._portfolioSevice = portfolioSevice;
@@ -72,6 +77,8 @@ namespace CryptoPortfolioTracker.ViewModels
 
             await GetUserInfo();
             await GetPortfolios();
+            if (Portfolios.Any())
+                SelectedPortfolio = Portfolios[0];
         }
 
         public async Task GetUserInfo()
@@ -131,13 +138,13 @@ namespace CryptoPortfolioTracker.ViewModels
                     Portfolios[index] = portfolio;
                     // Update SelectedPortfolio with the new data
                     SelectedPortfolio = portfolio;
+                    AssetItemSource.Clear();
                     switch (selectedPortfolioParam.PortfolioType)
                     {
                         case PortfolioType.Default:
                             // Get Asset Prices
                             foreach (AssetDto asset in portfolio?.Assets)
                             {
-                                AssetItemSource.Clear();
                                 if (!AssetItemSource.Contains(asset))
                                     AssetItemSource.Add(asset);
                             }
@@ -158,6 +165,15 @@ namespace CryptoPortfolioTracker.ViewModels
                 else
                 {
                     await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolio couldn't be retrieved from the server.", "Ok");
+                }
+            }
+            else
+            {
+                AssetItemSource.Clear();
+                foreach (AssetDto asset in SelectedPortfolio.Assets)
+                {
+                    if (!AssetItemSource.Contains(asset))
+                        AssetItemSource.Add(asset);
                 }
             }
         }
@@ -235,7 +251,7 @@ namespace CryptoPortfolioTracker.ViewModels
         [RelayCommand]
         public void AddTransaction()
         {
-            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, this)));
+            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, transactionService, this)));
         }
 
         public void StartEditPortfolioPopup()

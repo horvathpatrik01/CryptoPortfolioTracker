@@ -14,6 +14,7 @@
     Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
         <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
+        <converters:PortfolioTypeToVisibilityConverter x:Key="PortfolioTypeConverter" />
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,1*">
 
@@ -173,6 +174,16 @@
                             HeightRequest="32"
                             HorizontalOptions="End"
                             Text="+ Create Portfolio"
+                            VerticalOptions="Start" />
+
+                        <Button
+                            Grid.Column="1"
+                            Padding="10,0,10,0"
+                            Command="{Binding AddTransactionCommand}"
+                            HeightRequest="32"
+                            HorizontalOptions="End"
+                            IsVisible="{Binding SelectedPortfolio.PortfolioType, Converter={StaticResource PortfolioTypeConverter}}"
+                            Text="+ Add transaction"
                             VerticalOptions="Start" />
                     </Grid>
 

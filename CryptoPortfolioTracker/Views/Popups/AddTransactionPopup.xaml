@@ -3,6 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.Popups.AddTransactionPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -13,6 +14,9 @@
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
+    <mct:Popup.Resources>
+        <converters:TextToDecimalConverter x:Key="DecimalConverter" />
+    </mct:Popup.Resources>
     <VerticalStackLayout
         Padding="20"
         HeightRequest="550"
@@ -47,39 +51,32 @@
                 <Button
                     x:Name="buyBtn"
                     Grid.Column="0"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                      Dark={StaticResource DarkSecondary}}"
                     Clicked="OnTransactionTypeChanged"
+                    Command="{Binding ChangeTransactionTypeCommand}"
+                    CommandParameter="{x:Static type:TransactionType.Buy}"
+                    Style="{StaticResource ButtonWithoutNormalStates}"
                     Text="Buy" />
+
                 <Button
                     x:Name="sellBtn"
                     Grid.Column="1"
                     Clicked="OnTransactionTypeChanged"
+                    Command="{Binding ChangeTransactionTypeCommand}"
+                    CommandParameter="{x:Static type:TransactionType.Sell}"
+                    Style="{StaticResource ButtonWithoutNormalStates}"
                     Text="Sell" />
+
                 <Button
                     x:Name="transferBtn"
                     Grid.Column="2"
                     Clicked="OnTransactionTypeChanged"
+                    Command="{Binding ChangeTransactionTypeCommand}"
+                    CommandParameter="{x:Static type:TransactionType.TransferIn}"
+                    Style="{StaticResource ButtonWithoutNormalStates}"
                     Text="Transfer" />
             </Grid>
         </Frame>
-
         <!--  Token picker  -->
-        <Label
-            FontAttributes="Bold"
-            FontSize="16"
-            Text="Select token" />
-        <Picker Margin="0">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <Grid ColumnDefinitions="Auto,1*">
-                        <Label Text="sajt" />
-                        <Label Text="ostor" />
-                    </Grid>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
-
         <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
             <!--  Quantity  -->
             <VerticalStackLayout Grid.Column="0">
@@ -87,7 +84,10 @@
                     FontAttributes="Bold"
                     FontSize="16"
                     Text="Quantity" />
-                <Entry HorizontalOptions="Fill" Placeholder="0.00" />
+                <Entry
+                    HorizontalOptions="Fill"
+                    Placeholder="0.00"
+                    Text="{Binding TransactionToAddDto.Amount, Converter={StaticResource DecimalConverter}}" />
             </VerticalStackLayout>
             <!--  Price per coin  -->
             <VerticalStackLayout x:Name="PPCView" Grid.Column="1">
@@ -95,7 +95,7 @@
                     FontAttributes="Bold"
                     FontSize="16"
                     Text="Price per coin" />
-                <Entry Placeholder="0.00" />
+                <Entry Placeholder="0.00" Text="{Binding TransactionToAddDto.Price, Converter={StaticResource DecimalConverter}}" />
             </VerticalStackLayout>
         </Grid>
 
@@ -115,7 +115,7 @@
             <DatePicker
                 Grid.Row="1"
                 Grid.Column="1"
-                Date="{Static sys:DateTime.Now}"
+                Date="{Binding TransactionToAddDto.Time, Mode=TwoWay}"
                 Format="yyyy/MM/dd"
                 MaximumDate="{Static sys:DateTime.Now}"
                 MinimumDate="01/01/1990"
@@ -129,14 +129,17 @@
             <Entry
                 Grid.Row="1"
                 Grid.Column="0"
-                Placeholder="0.00" />
+                Placeholder="0.00"
+                Text="{Binding TransactionToAddDto.Fee, Converter={StaticResource DecimalConverter}}" />
         </Grid>
         <!--  Note  -->
         <Label FontAttributes="Bold" Text="Note" />
-        <Entry Placeholder="Put your note here..." />
+        <Entry Placeholder="Put your note here..." Text="{Binding TransactionToAddDto.Note}" />
 
         <Button
             Margin="0,10,0,0"
+            Clicked="Close"
+            Command="{Binding AddTransactionCommand}"
             IsEnabled="True"
             Text="Add transaction" />
     </VerticalStackLayout>

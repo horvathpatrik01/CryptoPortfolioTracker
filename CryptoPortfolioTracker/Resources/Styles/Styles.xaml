@@ -13,7 +13,6 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
     </Style>
 
-
     <!--  Label buttons  -->
     <Style x:Key="LabelButton" TargetType="Label">
         <Setter Property="BackgroundColor" Value="Transparent" />
@@ -69,7 +68,7 @@
     </Style>
 
     <!--  Buttons  -->
-    <Style TargetType="Button">
+    <Style ApplyToDerivedTypes="False" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
         <Setter Property="FontFamily" Value="Roboto" />
         <Setter Property="FontSize" Value="16" />
@@ -92,6 +91,15 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+    <Style x:Key="ButtonWithoutNormalStates" TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="FontFamily" Value="Roboto" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkPrimary}}" />
+        <Setter Property="Padding" Value="14,10" />
     </Style>
 
     <!--  Entry  -->
@@ -150,7 +158,6 @@
         <Setter Property="MinimumWidthRequest" Value="44" />
     </Style>
 
-
     <!--  Separator  -->
     <Style x:Key="Separator" TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
@@ -163,7 +170,6 @@
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-
     </Style>
 
     <!--  ###########################################  -->
@@ -189,8 +195,6 @@
     <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
-
-
 
     <Style x:Key="NavigationButton" TargetType="Button">
         <Setter Property="FontFamily" Value="OpenSansRegular" />
@@ -248,8 +252,6 @@
         </Setter>
     </Style>
 
-
-
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
@@ -271,7 +273,6 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-
 
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
@@ -295,8 +296,6 @@
         </Setter>
     </Style>
 
-
-
     <Style TargetType="Span">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
     </Style>
@@ -314,10 +313,6 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>
-
-
-
-
 
     <Style TargetType="ProgressBar">
         <Setter Property="ProgressColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -486,7 +481,6 @@
         </Setter>
     </Style>
 
-
     <Style ApplyToDerivedTypes="True" TargetType="Shell">
         <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
         <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
@@ -512,8 +506,4 @@
         <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
-
-
-
-
 </ResourceDictionary>

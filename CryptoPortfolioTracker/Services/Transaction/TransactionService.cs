@@ -20,7 +20,7 @@ namespace CryptoPortfolioTracker.Services.Transaction
             this._authService = authService;
         }
 
-        public async Task<TransactionDto?> AddTransaction(TransactionToAddDto transactionToAddDto)
+        public async Task<AssetDto?> AddTransaction(TransactionToAddDto transactionToAddDto)
         {
             try
             {
@@ -31,8 +31,8 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TransactionDto? addedTransaction = await response.Content.ReadFromJsonAsync<TransactionDto>();
-                    return addedTransaction;
+                    AssetDto? assetWithaddedTransaction = await response.Content.ReadFromJsonAsync<AssetDto>();
+                    return assetWithaddedTransaction;
                 }
                 else
                 {
@@ -46,7 +46,7 @@ namespace CryptoPortfolioTracker.Services.Transaction
             }
         }
 
-        public async Task<TransactionDto?> EditTransaction(TransactionDto editedTransactionDto)
+        public async Task<AssetDto?> EditTransaction(TransactionDto editedTransactionDto)
         {
             try
             {
@@ -57,8 +57,8 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TransactionDto? editedTransaction = await response.Content.ReadFromJsonAsync<TransactionDto>();
-                    return editedTransaction;
+                    AssetDto? assetWithEditedTransaction = await response.Content.ReadFromJsonAsync<AssetDto>();
+                    return assetWithEditedTransaction;
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace CryptoPortfolioTracker.Services.Transaction
             }
         }
 
-        public async Task<TransactionDto?> RemoveTransaction(int transactionId)
+        public async Task<AssetDto?> RemoveTransaction(int transactionId)
         {
             try
             {
@@ -135,8 +135,17 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TransactionDto? deletedTransaction = await response.Content.ReadFromJsonAsync<TransactionDto>();
-                    return deletedTransaction;
+                    AssetDto? assetWithDeletedTransaction = await response.Content.ReadFromJsonAsync<AssetDto>();
+                    if (assetWithDeletedTransaction is null)
+                    {
+                        AssetDto dummyDto = new()
+                        {
+                            Id = 0
+                        };
+
+                        return dummyDto;
+                    }
+                    return assetWithDeletedTransaction;
                 }
                 else
                 {

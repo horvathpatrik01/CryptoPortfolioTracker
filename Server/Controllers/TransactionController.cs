@@ -69,20 +69,20 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route(nameof(EditTransaction))]
-        public async Task<ActionResult<TransactionDto>> EditTransaction(TransactionDto transactionToEditDto)
+        public async Task<ActionResult<AssetDto>> EditTransaction(TransactionDto transactionToEditDto)
         {
             try
             {
-                var portfolio = await this.transactionRepository.EditTransaction(transactionToEditDto);
+                var editedAsset = await this.transactionRepository.EditTransaction(transactionToEditDto);
 
-                if (portfolio == null)
+                if (editedAsset == null)
                 {
                     return NotFound();
                 }
 
-                var portfolioDto = portfolio.ConvertToDto();
+                var editedAssetDto = editedAsset.ConvertToDto();
 
-                return Ok(portfolioDto);
+                return Ok(editedAssetDto);
             }
             catch (Exception ex)
             {
@@ -92,18 +92,18 @@ namespace Server.Controllers
         }
 
         [HttpPost()]
-        public async Task<ActionResult<TransactionDto>> AddNewTransaction([FromBody] TransactionToAddDto transactionToAddDto)
+        public async Task<ActionResult<AssetDto>> AddNewTransaction([FromBody] TransactionToAddDto transactionToAddDto)
         {
             try
             {
-                var newTransaction = await this.transactionRepository.AddTransaction(transactionToAddDto);
+                var asset = await this.transactionRepository.AddTransaction(transactionToAddDto);
 
-                if (newTransaction == null)
+                if (asset == null)
                     return BadRequest("Transaction couldn't be added to the database!");
 
-                var newTransactionDto = newTransaction.ConvertToDto();
+                var assetDto = asset.ConvertToDto();
 
-                return Ok(newTransactionDto);
+                return Ok(assetDto);
             }
             catch (Exception ex)
             {
@@ -113,20 +113,26 @@ namespace Server.Controllers
         }
 
         [HttpDelete("{transactionId}")]
-        public async Task<ActionResult<TransactionDto>> DeleteTransaction(int transactionId)
+        public async Task<ActionResult<AssetDto>> DeleteTransaction(int transactionId)
         {
             try
             {
-                var deletedTransaction = await this.transactionRepository.DeleteTransaction(transactionId);
-
-                if (deletedTransaction == null)
+                var transaction = await this.transactionRepository.GetTransaction(transactionId);
+                if (transaction == null)
                 {
                     return NotFound();
                 }
+                var assetBeforeDelete = await this.transactionRepository.GetAsset(transaction.AssetId);
 
-                var deletedTransactionDto = deletedTransaction.ConvertToDto();
+                if (assetBeforeDelete == null)
+                {
+                    return NotFound();
+                }
+                var asset = await this.transactionRepository.DeleteTransaction(transactionId);
 
-                return Ok(deletedTransactionDto);
+                var assetDto = asset?.ConvertToDto();
+
+                return Ok(assetDto);
             }
             catch (Exception ex)
             {
