@@ -8,10 +8,11 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
         Task<TransactionDto?> GetTransaction(int transactionId);
 
-        Task<TransactionDto?> EditTransaction(TransactionDto editedTransactionDto);
+        Task<AssetDto?> EditTransaction(TransactionDto editedTransactionDto);
 
-        Task<TransactionDto?> AddTransaction(TransactionToAddDto transactionToAddDto);
+        Task<AssetDto?> AddTransaction(TransactionToAddDto transactionToAddDto);
 
-        Task<TransactionDto?> RemoveTransaction(int transactionId);
+        Task<AssetDto?> RemoveTransaction(int transactionId);
+        Task<AssetDto?> DeleteAsset(int assetId);
     }
 }

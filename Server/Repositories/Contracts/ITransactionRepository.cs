@@ -3,9 +3,13 @@
     public interface ITransactionRepository
     {
         Task<IEnumerable<Transaction>> GetTransactions(int? assetId);
+
         Task<Transaction?> GetTransaction(int? transactionId);
-        Task<Transaction?> EditTransaction(TransactionDto transactionToEditDto);
-        Task<Transaction?> DeleteTransaction(int? transactionId);
-        Task<Transaction?> AddTransaction(TransactionToAddDto transactionToAddDto);
+
+        Task<Asset?> EditTransaction(TransactionDto transactionToEditDto);
+
+        Task<Asset?> DeleteTransaction(int? transactionId);
+
+        Task<Asset?> AddTransaction(TransactionToAddDto transactionToAddDto);
     }
 }

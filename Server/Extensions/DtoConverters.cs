@@ -24,12 +24,14 @@
                 Id = portfolio.Id,
                 Name = portfolio.Name,
                 Icon = portfolio.Icon,
+                IconColor = portfolio.IconColor,
                 PortfolioType = portfolio.PortfolioType,
                 Assets = portfolio.Assets?.ConvertToDto().ToList(),
                 Address = portfolio.Address?.ConvertToDto(),
                 ApiKey = portfolio.ApiKey?.ConvertToDto()
             };
         }
+
         public static IEnumerable<AssetDto> ConvertToDto(this IEnumerable<Asset> assets)
         {
             return assets.Select(a => a.ConvertToDto());
@@ -53,7 +55,7 @@
         {
             return new AddressDto
             {
-                WalletAddress= address.WalletAddress
+                WalletAddress = address.WalletAddress
             };
         }
 
@@ -86,6 +88,5 @@
                 TransactionType = transaction.TransactionType
             };
         }
-
     }
 }
