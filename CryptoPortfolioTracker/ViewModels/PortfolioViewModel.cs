@@ -35,15 +35,24 @@ namespace CryptoPortfolioTracker.ViewModels
         private PortfolioToAddDto portfolioToAdd;
 
         [ObservableProperty]
+        private AssetDto selectedAsset;
+
+        [ObservableProperty]
         private string newPortfolioName;
 
         [ObservableProperty]
         private bool isEditing = false;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ShowAssets))]
+        private bool showTransactions;
+
+        public bool ShowAssets => !ShowTransactions;
         public ObservableCollection<string> Errors { get; set; } = [];
 
         public ObservableCollection<PortfolioDto> Portfolios { get; set; }
         public ObservableCollection<AssetDto> AssetItemSource { get; set; }
+        public ObservableCollection<TransactionDto> TransactionsSource { get; set; }
 
         public PortfolioViewModel(
             IAuthService authService,
@@ -56,9 +65,12 @@ namespace CryptoPortfolioTracker.ViewModels
             UserInfo = new();
             PortfolioToAdd = new();
             SelectedPortfolio = new();
+            SelectedAsset = new();
             NewPortfolioName = "";
-            AssetItemSource = new ObservableCollection<AssetDto>();
-            Portfolios = new ObservableCollection<PortfolioDto>();
+            AssetItemSource = [];
+            Portfolios = [];
+            TransactionsSource = [];
+            ShowTransactions = false;
 
             this._authService = authService;
             this.transactionService = transactionService;
@@ -176,6 +188,7 @@ namespace CryptoPortfolioTracker.ViewModels
                         AssetItemSource.Add(asset);
                 }
             }
+            ShowTransactions = false;
         }
 
         [RelayCommand]
@@ -185,6 +198,7 @@ namespace CryptoPortfolioTracker.ViewModels
             if (newlyAddedPortfolio is not null)
             {
                 Portfolios.Add(newlyAddedPortfolio);
+                ShowTransactions = false;
             }
             else
             {
@@ -237,6 +251,46 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
+        private void ShowTransactionsForAsset(AssetDto asset) 
+        {
+            ShowTransactions = true;
+            SelectedAsset.Name = asset.Name;
+            SelectedAsset.AvrgBuyPrice = asset.AvrgBuyPrice;
+            SelectedAsset.Symbol = asset.Symbol;
+            SelectedAsset.Amount = asset.Amount;
+            SelectedAsset.Id = asset.Id;
+            SelectedAsset.IconUrl = asset.IconUrl;
+
+            TransactionsSource.Clear();
+            foreach (TransactionDto transaction in asset.Transactions)
+            {
+                if (!TransactionsSource.Contains(transaction))
+                    TransactionsSource.Add(transaction);
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteAsset(int assetId)
+        {
+            try
+            {
+                var deletedAsset = await transactionService.DeleteAsset(assetId);
+                var localAsset = AssetItemSource.FirstOrDefault(a => a.Id.Equals(deletedAsset?.Id));
+                if (localAsset is not null)
+                {
+                    AssetItemSource.Remove(localAsset);
+                }
+                ShowTransactions = false;
+
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions
+                Debug.WriteLine($"Error during delete {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
         private void ChangeTheme()
         {
             Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Light ? AppTheme.Dark : AppTheme.Light;
@@ -251,12 +305,18 @@ namespace CryptoPortfolioTracker.ViewModels
         [RelayCommand]
         public void AddTransaction()
         {
-            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, transactionService, this)));
+            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, transactionService, this,(ShowTransactions == true) ? SelectedAsset : null)));
         }
 
         public void StartEditPortfolioPopup()
         {
             Shell.Current.CurrentPage.ShowPopup(new EditPortfolioPopup(new EditPortfolioViewModel(_navigationService, this)));
+        }
+
+        [RelayCommand]
+        private void Back()
+        {
+            ShowTransactions = false;
         }
 
         [RelayCommand]

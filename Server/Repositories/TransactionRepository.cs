@@ -158,10 +158,5 @@ namespace Server.Repositories
 
             return Amount == 0m ? 0m : Cost / Amount;
         }
-
-        public async Task<Asset?> GetAsset(int assetId)
-        {
-            return await this.appDbContext.Assets.FindAsync(assetId);
-        }
     }
 }

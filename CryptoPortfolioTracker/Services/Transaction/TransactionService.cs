@@ -158,5 +158,31 @@ namespace CryptoPortfolioTracker.Services.Transaction
                 return null;
             }
         }
+
+        public async Task<AssetDto?> DeleteAsset(int assetId)
+        {
+            try
+            {
+                var httpClient = await _authService.GetAuthenticatedHttpClient();
+                if (httpClient == null) return null;
+
+                var response = await httpClient.DeleteAsync($"{BaseApiEndpoint}/DeleteAsset/{assetId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    AssetDto? deletedAsset = await response.Content.ReadFromJsonAsync<AssetDto>();
+                    return deletedAsset;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

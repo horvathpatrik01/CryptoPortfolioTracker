@@ -12,12 +12,15 @@ namespace Server.Controllers
     {
         private readonly ILogger<TransactionController> logger;
         private readonly ITransactionRepository transactionRepository;
+        private readonly IAssetRepository assetRepository;
 
         public TransactionController(ILogger<TransactionController> logger,
-                                     ITransactionRepository transactionRepository)
+                                     ITransactionRepository transactionRepository,
+                                     IAssetRepository assetRepository)
         {
             this.logger = logger;
             this.transactionRepository = transactionRepository;
+            this.assetRepository = assetRepository;
         }
 
         [HttpGet]
@@ -122,7 +125,7 @@ namespace Server.Controllers
                 {
                     return NotFound();
                 }
-                var assetBeforeDelete = await this.transactionRepository.GetAsset(transaction.AssetId);
+                var assetBeforeDelete = await this.assetRepository.GetAsset(transaction.AssetId);
 
                 if (assetBeforeDelete == null)
                 {
@@ -133,6 +136,25 @@ namespace Server.Controllers
                 var assetDto = asset?.ConvertToDto();
 
                 return Ok(assetDto);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message);
+                return BadRequest("zsupsz");
+            }
+        }
+
+        [HttpDelete]
+        [Route(nameof(DeleteAsset) + "/{assetId:int}")]
+        public async Task<ActionResult<AssetDto>> DeleteAsset(int assetId)
+        {
+            try
+            {
+                var deletedAsset = await this.assetRepository.DeleteAsset(assetId);
+
+                var deletedAssetDto = deletedAsset?.ConvertToDto();
+
+                return Ok(deletedAssetDto);
             }
             catch (Exception ex)
             {

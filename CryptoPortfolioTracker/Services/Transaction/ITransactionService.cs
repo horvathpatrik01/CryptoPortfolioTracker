@@ -13,5 +13,6 @@ namespace CryptoPortfolioTracker.Services.Transaction
         Task<AssetDto?> AddTransaction(TransactionToAddDto transactionToAddDto);
 
         Task<AssetDto?> RemoveTransaction(int transactionId);
+        Task<AssetDto?> DeleteAsset(int assetId);
     }
 }

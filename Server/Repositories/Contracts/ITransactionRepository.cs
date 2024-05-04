@@ -11,7 +11,5 @@
         Task<Asset?> DeleteTransaction(int? transactionId);
 
         Task<Asset?> AddTransaction(TransactionToAddDto transactionToAddDto);
-
-        Task<Asset?> GetAsset(int assetId);
     }
 }

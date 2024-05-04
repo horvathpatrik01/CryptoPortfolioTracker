@@ -8,10 +8,58 @@ namespace Shared
         private List<TransactionDto> _transactions = null!;
         private decimal _avrgBuyPrice = 0m;
         private decimal _amount = 0m;
-        public int Id { get; set; }
-        public string Symbol { get; set; } = null!;
-        public string Name { get; set; } = null!;
-        public string? IconUrl { get; set; }
+        private int _id { get; set; }
+        private string _symbol { get; set; } = null!;
+        private string _name { get; set; } = null!;
+        private string? _iconUrl { get; set; }
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    OnPropertyChanged(nameof(Id));
+                }
+            }
+        }
+        public string Symbol
+        {
+            get => _symbol;
+            set
+            {
+                if (_symbol != value)
+                {
+                    _symbol = value;
+                    OnPropertyChanged(nameof(Symbol));
+                }
+            }
+        }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
+        public string? IconUrl
+        {
+            get => _iconUrl;
+            set
+            {
+                if (_iconUrl != value)
+                {
+                    _iconUrl = value;
+                    OnPropertyChanged(nameof(IconUrl));
+                }
+            }
+        }
 
         public decimal AvrgBuyPrice
         {
