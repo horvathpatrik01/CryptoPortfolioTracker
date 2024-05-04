@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="CryptoPortfolioTracker.Views.CreatePortfolioPopup.CreatePortfolioWalletPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    >
+    <VerticalStackLayout Padding="20" WidthRequest="500">
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <Label
+                Margin="0,0,10,0"
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="{mi:Material Icon=ArrowBack}"
+                VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Back" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="New wallet portfolio" />
+        </HorizontalStackLayout>
+        <Label
+            FontAttributes="Bold"
+            FontSize="16"
+            Text="Portfolio avatar" />
+        <Grid Margin="0,10,0,10" ColumnDefinitions="1*,1*">
+            <Image
+                Grid.Column="0"
+                Margin="10"
+                HeightRequest="60"
+                HorizontalOptions="Start"
+                Source="User.png"
+                VerticalOptions="Center" />
+            <Button
+                x:Name="changeAvatarButton"
+                Grid.Column="1"
+                Margin="10"
+                HorizontalOptions="End"
+                Text="Change avatar"
+                VerticalOptions="Center" />
+        </Grid>
+
+
+        <Label
+            Margin="0,0,0,5"
+            FontAttributes="Bold"
+            FontSize="16"
+            Text="Portfolio name" />
+        <Entry
+            x:Name="nameEntry"
+            
+            MaxLength="32"
+            Placeholder="Enter your portfolio name"
+            PlaceholderColor="{x:StaticResource Gray400}"
+            TextChanged="OnEntryChange" />
+        <Label
+            x:Name="nameEntryCharCount"
+            Margin="0,3,0,0"
+            FontSize="12"
+            Text="0/32 characters"
+            TextColor="DimGray" />
+        <Label
+            Margin="0,10,0,5"
+            FontAttributes="Bold"
+            FontSize="16"
+            Text="Portfolio address" />
+        <Entry
+            x:Name="addressEntry"
+            Placeholder="Enter your wallett address"
+            PlaceholderColor="{x:StaticResource Gray400}"
+            TextChanged="OnEntryChange" />
+        <Label
+            x:Name="addressEntryLabel"
+            Margin="0,3,0,0"
+            FontSize="12"
+            HeightRequest="34"
+            Text="Supported networks:  Bitcoin, Ethereum,BNB Smart Chain, Polygon, Arbitrum, Avalanche, Optimism, Fantom, and Cardano."
+            TextColor="DimGray" />
+
+        <BoxView
+            Margin="0,20,0,20"
+            BackgroundColor="{x:StaticResource Gray100}"
+            HeightRequest="1" />
+
+        <Grid ColumnDefinitions="Auto,1*">
+
+            <VerticalStackLayout Grid.Column="0">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="Included in total value" />
+                <Label
+                    FontSize="12"
+                    Text="Assets in this portfolio will be included in total value"
+                    TextColor="DimGray" />
+            </VerticalStackLayout>
+            <CheckBox
+                Grid.Column="1"
+                HorizontalOptions="End"
+                IsChecked="true"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Button
+            x:Name="createButton"
+            Margin="0,10,0,00"
+            Clicked="Create"
+            IsEnabled="False"
+            Text="Create" />
+    </VerticalStackLayout>
+</mct:Popup>
