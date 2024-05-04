@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Database.Entities.Address">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAEACAAA=</HashCode>
+      <FileName>Entities\Address.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portfolio" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Database.Entities.ApiKey">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Portfolio" Type="Database.Entities.Portfolio" FixedToPoint="true">
+      <Path>
+        <Point X="4.562" Y="1.988" />
+        <Point X="4.562" Y="3.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAAAAEACAAA=</HashCode>
+      <FileName>Entities\ApiKey.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portfolio" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Database.Entities.Asset">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAACAAIASAAAAAAAAAAAAAAEACCAA=</HashCode>
+      <FileName>Entities\Asset.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portfolio" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Transactions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Database.Entities.Portfolio">
+    <Position X="2.75" Y="3.75" Width="2.25" />
+    <AssociationLine Name="ApiKey" Type="Database.Entities.ApiKey" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.812" Y="3.75" />
+        <Point X="4.812" Y="1.988" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAAAgAwAAAEAAAACAAAgAAEAAAA=</HashCode>
+      <FileName>Entities\Portfolio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Address" />
+      <Property Name="ApiKey" />
+      <Property Name="User" />
+      <Property Name="PortfolioType" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Assets" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Database.Entities.Transaction">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAgAAAAAAAAAgAAAAEAAAAgAAEAAQA=</HashCode>
+      <FileName>Entities\Transaction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TransactionType" />
+      <Property Name="Asset" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Database.Entities.User">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portfolios" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="Database.Entities.PortfolioType">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAIAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Portfolio.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Database.Entities.TransactionType" Collapsed="true">
+    <Position X="8.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAARAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
