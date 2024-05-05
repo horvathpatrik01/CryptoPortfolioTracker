@@ -32,9 +32,6 @@
     <MauiXaml Update="Views\Templates\AssetItem.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Views\Templates\EmojiColorItem.xaml">
-      <SubType>Designer</SubType>
-    </MauiXaml>
     <MauiXaml Update="Views\Templates\Header.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

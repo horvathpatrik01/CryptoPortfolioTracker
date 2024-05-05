@@ -17,6 +17,35 @@
     <mct:Popup.Resources>
         <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
         <ResourceDictionary>
+            <!--  Color selector button  -->
+            <Style x:Key="selectableColor" TargetType="Ellipse">
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="StrokeThickness" Value="4" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkSecondary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkSecondary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
             <Style x:Key="emojiLabel" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -97,7 +126,11 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="x:Int32">
-                    <templates:EmojiColorItem />
+                    <Ellipse Style="{StaticResource selectableColor}">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{Binding Converter={StaticResource IconColorConverter}}" />
+                        </Ellipse.Fill>
+                    </Ellipse>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
