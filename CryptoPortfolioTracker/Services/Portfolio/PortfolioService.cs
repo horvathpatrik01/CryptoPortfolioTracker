@@ -45,14 +45,14 @@ namespace CryptoPortfolioTracker.Services.Portfolio
             }
         }
 
-        public async Task<PortfolioDto?> ChangePortfolioName(int portfolioId, string newPortfolioName)
+        public async Task<PortfolioDto?> EditPortfolio(PortfolioToEditDto portfolioToEdit)
         {
             try
             {
                 var httpClient = await _authService.GetAuthenticatedHttpClient();
                 if (httpClient is null) return null;
 
-                var response = await httpClient.PatchAsync($"api/Portfolio/{portfolioId}/{newPortfolioName}", null);
+                var response = await httpClient.PatchAsJsonAsync<PortfolioToEditDto>($"api/Portfolio", portfolioToEdit);
 
                 if (response.IsSuccessStatusCode)
                 {

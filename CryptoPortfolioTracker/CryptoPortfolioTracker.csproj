@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizene -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 
 		<!-- Note for MacCatalyst:
@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>CryptoPortfolioTracker</ApplicationTitle>
+		<ApplicationTitle>Crypto Portfolio Tracker</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.cryptoportfoliotracker</ApplicationId>
@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#00000000" />
 
-		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+    <!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\AppIcon\appicon.svg" Color="#ffffff" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -77,9 +77,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Handler\" />
 	  <Folder Include="Models\" />
 	  <Folder Include="Services\Transaction\" />
-	  <Folder Include="Services\Portfolio\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -87,52 +87,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml.cs">
-	    <DependentUpon>EditPortfolioExchangePopup.xaml</DependentUpon>
+	  <Compile Update="Views\Popups\CreateTransactionPopup.xaml.cs">
+	    <DependentUpon>CreateTransactionPopup.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml.cs">
-	    <DependentUpon>EditPortfolioManualPopup.xaml</DependentUpon>
+	  <Compile Update="Views\Popups\AvatarPopup.xaml.cs">
+	    <DependentUpon>AvatarPopup.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml.cs">
-	    <DependentUpon>EditPortfolioWalletPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioExchangePopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioManualPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioWalletPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml.cs">
-	    <DependentUpon>CreatePortfolioTypePopup.xaml</DependentUpon>
+	  <Compile Update="Views\Popups\EditPortfolioPopup.xaml.cs">
+	    <DependentUpon>EditPortfolioPopup.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\PortfolioPage.xaml.cs">
 	    <DependentUpon>PortfolioPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Templates\Header.xaml.cs">
+	    <DependentUpon>Header.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioExchangePopup.xaml">
+	  <MauiXaml Update="Views\Popups\CreateTransactionPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioManualPopup.xaml">
+	  <MauiXaml Update="Views\Popups\CreatePortfolioPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPortfolioPopup\EditPortfolioWalletPopup.xaml">
+	  <MauiXaml Update="Views\Popups\AvatarPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioExchangePopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioManualPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioWalletPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\CreatePortfolioPopup\CreatePortfolioTypePopup.xaml">
+	  <MauiXaml Update="Views\Popups\EditPortfolioPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
@@ -142,6 +124,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\AssetItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Templates\PortfolioItem.xaml">

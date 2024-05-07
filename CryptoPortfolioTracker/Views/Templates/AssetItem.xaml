@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CryptoPortfolioTracker.Views.Templates.AssetItem"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:models="clr-namespace:Shared;assembly=Shared"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+    x:DataType="models:AssetDto">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:NumberToColorConverter x:Key="NumberToColor" />
+            <converters:NumberToArrowConverter x:Key="NumberToArrow" />
+            <converters:AbsoluteValueConverter x:Key="AbsoluteValue" />
+            <converters:TextToDecimalConverter x:Key="DecimalConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid
+        Padding="10,0,10,0"
+        ColumnDefinitions="4*,2*,1*,1*,1*,2*,2*"
+        ColumnSpacing="20">
+        <Label
+            Grid.Column="0"
+            HorizontalOptions="Start"
+            Text="{Binding Name}" />
+        <!--
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                Text="{Binding Price, StringFormat='${0:F}'}" />
+        -->
+        <!--<Label
+                Grid.Column="2"
+                HorizontalOptions="End"
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding HourlyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding HourlyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>-->
+
+        <!--
+            <Label
+                Grid.Column="3"
+                HorizontalOptions="End"
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding DailyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        -->
+        <!--
+            <Label
+                Grid.Column="4"
+                HorizontalOptions="End"
+                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding WeeklyChange, Converter={StaticResource NumberToArrow}}" />
+                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        -->
+
+        <Label
+            Grid.Column="5"
+            HorizontalOptions="End"
+            Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" />
+        <Label
+            Grid.Column="6"
+            HorizontalOptions="End"
+            Text="{Binding AvrgBuyPrice, Converter={StaticResource DecimalConverter}}" />
+
+        <FlyoutBase.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=ShowTransactionsForAssetCommand}"
+                    CommandParameter="{Binding .}"
+                    Text="View transactions" />
+                <MenuFlyoutItem
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=DeleteAssetCommand}"
+                    CommandParameter="{Binding Id}"
+                    Text="Delete asset" />
+
+            </MenuFlyout>
+        </FlyoutBase.ContextFlyout>
+    </Grid>
+
+</ContentView>

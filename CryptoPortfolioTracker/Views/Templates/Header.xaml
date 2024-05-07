@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CryptoPortfolioTracker.Views.Templates.Header"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels">
+    <ContentView.Content>
+
+        <!--  Header  -->
+        <Grid RowDefinitions="Auto,1*">
+
+            <Grid
+                Grid.Row="0"
+                Padding="20,10,20,10"
+                ColumnDefinitions="Auto,1*"
+                RowDefinitions="Auto,Auto">
+
+                <!--  Logo  -->
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Spacing="15">
+                    <Label
+                        Text="{mi:Material Icon=Wallet,
+                                           IconSize=35}"
+                        TextColor="{AppThemeBinding Light={x:StaticResource Black},
+                                                    Dark={x:StaticResource White}}"
+                        VerticalOptions="Start" />
+                    <Label
+                        BackgroundColor="Transparent"
+                        FontAttributes="Bold"
+                        FontSize="30"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center">
+                        Portfolio Tracker
+                    </Label>
+                </HorizontalStackLayout>
+
+
+                <!--  Menu on headers right  -->
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    Spacing="10">
+                    <!--  Account button  -->
+                    <Label
+                        FontSize="35"
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=AccountBox,
+                                           IconSize=32}">
+                        <Label.GestureRecognizers>
+                            <!-- <TapGestureRecognizer Command="{Binding ChangeThemeCommand}" /> -->
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--  Settings button  -->
+                    <Label
+                        FontSize="35"
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=Settings,
+                                           IconSize=32}">
+                        <Label.GestureRecognizers>
+                            <!-- <TapGestureRecognizer Command="{Binding ChangeThemeCommand}" /> -->
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--  Theme change button  -->
+                    <Label
+                        FontSize="35"
+                        Style="{x:StaticResource LabelButton}"
+                        Text="{mi:Material Icon=Contrast,
+                                           IconSize=32}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangeThemeCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+            </Grid>
+
+            <!--  Separator  -->
+            <BoxView Grid.Row="1" Style="{x:StaticResource Separator}" />
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

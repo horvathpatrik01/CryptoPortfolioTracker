@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="CryptoPortfolioTracker.Views.Popups.CreatePortfolioPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:type="clr-namespace:Shared;assembly=Shared"
+    xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
+    x:DataType="viewmodels:CreatePortfolioViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <mct:Popup.Resources>
+        <converters:IconColorNumToColorConverter x:Key="IconColorConverter" />
+    </mct:Popup.Resources>
+    <VerticalStackLayout HeightRequest="{Binding PopupHeight}" WidthRequest="500">
+
+        <Grid x:Name="PopupGrid">
+            <VerticalStackLayout
+                x:Name="SelectorLayout"
+                Padding="20"
+                IsVisible="{Binding IsSelectorVisible}"
+                Spacing="10"
+                VerticalOptions="Center"
+                WidthRequest="500">
+                <Grid ColumnDefinitions="Auto,1*">
+                    <Label
+                        Grid.Column="0"
+                        Margin="10"
+                        FontAttributes="Bold"
+                        FontSize="25"
+                        HorizontalOptions="Start"
+                        Text="Create portfolio"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        Margin="0,0,10,0"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="End"
+                        Text="{mi:Material Icon=Close}"
+                        VerticalOptions="Center">
+
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Close" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.Wallet}" />
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            Text="Connect wallet"
+                            VerticalOptions="Center" />
+                        <Label
+                            HorizontalOptions="Start"
+                            Text="Enter your wallet address and sync it."
+                            VerticalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray100}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray400}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Frame>
+                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.Default}" />
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            Text="Add transactions manually"
+                            VerticalOptions="Center" />
+                        <Label
+                            HorizontalOptions="Start"
+                            Text="Enter your transaction details manually and track your portfolio."
+                            VerticalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray100}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray400}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Frame>
+                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.CexAccount}" />
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            Text="Connect exchange"
+                            VerticalOptions="Center" />
+                        <Label
+                            HorizontalOptions="Start"
+                            Text="Securely connect your exchange with an API key. (Not all exchanges supported)"
+                            VerticalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray100}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{x:StaticResource Gray400}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                x:Name="CreateLayout"
+                Padding="20"
+                IsVisible="{Binding IsSelectorNotVisible}"
+                VerticalOptions="Center"
+                WidthRequest="500">
+                <HorizontalStackLayout Margin="0,0,0,20">
+                    <Label
+                        Margin="0,0,10,0"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text="{mi:Material Icon=ArrowBack}"
+                        VerticalOptions="End">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BackCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text="New wallet portfolio" />
+                </HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="Portfolio avatar" />
+                <Grid Margin="0,10,0,10" ColumnDefinitions="1*,1*">
+                    <Grid
+                        Grid.Column="0"
+                        Margin="10"
+                        HorizontalOptions="Start">
+                        <Ellipse
+                            HeightRequest="80"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="80">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="{Binding NewPortfolioIconColor, Converter={StaticResource IconColorConverter}}" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Label
+                            FontSize="36"
+                            HorizontalOptions="Center"
+                            Text="{Binding NewPortfolioIcon}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <Button
+                        x:Name="changeAvatarButton"
+                        Grid.Column="1"
+                        Margin="10"
+                        Command="{Binding ChangeAvatarCommand}"
+                        HorizontalOptions="End"
+                        Text="Change avatar"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <Label
+                    Margin="0,0,0,5"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="Portfolio name" />
+                <Entry
+                    x:Name="nameEntry"
+                    MaxLength="32"
+                    Placeholder="Enter your portfolio name"
+                    PlaceholderColor="{x:StaticResource Gray400}"
+                    Text="{Binding PortfolioToAdd.Name}"
+                    TextChanged="OnEntryChange" />
+                <Label
+                    x:Name="nameEntryCharCount"
+                    Style="{x:StaticResource EntryHelp}"
+                    Text="0/32 characters" />
+                <VerticalStackLayout IsVisible="{Binding WalletPortfolioSelected}">
+                    <Label
+                        Margin="0,10,0,5"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Portfolio address" />
+                    <Entry
+                        x:Name="addressEntry"
+                        Placeholder="Enter your wallett address"
+                        PlaceholderColor="{x:StaticResource Gray400}"
+                        Text="{Binding PortfolioToAdd.WalletAddress}"
+                        TextChanged="OnEntryChange" />
+                    <Label
+                        x:Name="addressEntryLabel"
+                        HeightRequest="34"
+                        Style="{x:StaticResource EntryHelp}"
+                        Text="{Binding WalletAddressLabel, Mode=TwoWay}"
+                        TextColor="Red" />
+                </VerticalStackLayout>
+                <VerticalStackLayout IsVisible="{Binding ExchangePortfolioSelected}">
+                    <Label
+                        Margin="0,10,0,5"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="API key" />
+                    <Entry
+                        x:Name="apiEntry"
+                        Placeholder="Enter your public key"
+                        PlaceholderColor="{x:StaticResource Gray400}"
+                        Text="{Binding PortfolioToAdd.PublicKey}"
+                        TextChanged="OnEntryChange" />
+                    <Label
+                        Margin="0,10,0,5"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Secret phrase" />
+                    <Entry
+                        x:Name="secretEntry"
+                        Placeholder="Enter your secret key"
+                        PlaceholderColor="{x:StaticResource Gray400}"
+                        Text="{Binding PortfolioToAdd.PrivateKey}"
+                        TextChanged="OnEntryChange" />
+                </VerticalStackLayout>
+
+                <BoxView Margin="0,20,0,20" Style="{StaticResource Separator}" />
+
+                <Grid ColumnDefinitions="Auto,1*">
+
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Included in total value" />
+                        <Label
+                            FontSize="12"
+                            Style="{x:StaticResource EntryHelp}"
+                            Text="Assets in this portfolio will be included in total value" />
+                    </VerticalStackLayout>
+                    <CheckBox
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        IsChecked="true"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <Button
+                    x:Name="createButton"
+                    Margin="0,20,0,10"
+                    Clicked="Close"
+                    Command="{Binding AddPortfolioCommand}"
+                    IsEnabled="False"
+                    Text="Create" />
+            </VerticalStackLayout>
+        </Grid>
+    </VerticalStackLayout>
+</mct:Popup>

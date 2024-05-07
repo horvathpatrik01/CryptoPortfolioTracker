@@ -79,7 +79,6 @@ namespace CryptoPortfolioTracker
 
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddSingleton<MainViewModel>();
             mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
             mauiAppBuilder.Services.AddSingleton<RegisterViewModel>();
             mauiAppBuilder.Services.AddSingleton<PortfolioViewModel>();
@@ -89,7 +88,6 @@ namespace CryptoPortfolioTracker
 
         public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<MainPage>();
             mauiAppBuilder.Services.AddTransient<LoginPage>();
             mauiAppBuilder.Services.AddTransient<RegisterPage>();
             mauiAppBuilder.Services.AddTransient<PortfolioPage>();

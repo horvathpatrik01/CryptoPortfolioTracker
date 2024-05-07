@@ -10,12 +10,16 @@ using CryptoPortfolioTracker.Services.Navigation;
 using CryptoPortfolioTracker.Services.Portfolio;
 using System.Diagnostics;
 using CryptoPortfolioTracker.Services.Exchange;
+using CommunityToolkit.Maui.Views;
+using CryptoPortfolioTracker.Views.Popups;
+using CryptoPortfolioTracker.Services.Transaction;
 
 namespace CryptoPortfolioTracker.ViewModels
 {
     public partial class PortfolioViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
+        private readonly ITransactionService transactionService;
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         private readonly IPortfolioSevice _portfolioSevice;
@@ -25,45 +29,83 @@ namespace CryptoPortfolioTracker.ViewModels
         private UserInfoDto userInfo;
 
         [ObservableProperty]
+        private PortfolioDto selectedPortfolio;
+
+        [ObservableProperty]
         private PortfolioToAddDto portfolioToAdd;
+
+        [ObservableProperty]
+        private AssetDto selectedAsset;
 
         [ObservableProperty]
         private string newPortfolioName;
 
         [ObservableProperty]
-        private PortfolioDto selectedPortfolio;
+        private bool isEditing = false;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ShowAssets))]
+        private bool showTransactions;
+
+        public bool ShowAssets => !ShowTransactions;
         public ObservableCollection<string> Errors { get; set; } = [];
 
         public ObservableCollection<PortfolioDto> Portfolios { get; set; }
-        public ObservableCollection<AssetDto> AssetItemSource { get; set; } = [];
+        public ObservableCollection<AssetDto> AssetItemSource { get; set; }
+        public ObservableCollection<TransactionDto> TransactionsSource { get; set; }
 
         public PortfolioViewModel(
             IAuthService authService,
+            ITransactionService transactionService,
             IUserService userService,
             INavigationService navigationService,
             IPortfolioSevice portfolioSevice,
             IExchangeService exchangeService)
         {
-            Portfolios = new ObservableCollection<PortfolioDto>();
+            UserInfo = new();
+            PortfolioToAdd = new();
+            SelectedPortfolio = new();
+            SelectedAsset = new();
+            NewPortfolioName = "";
+            AssetItemSource = [];
+            Portfolios = [];
+            TransactionsSource = [];
+            ShowTransactions = false;
 
-            // Mock data
-            Portfolios = new ObservableCollection<PortfolioDto>
-            {
-                new PortfolioDto { Id = 0 , Name = "Portfolio 1", Icon="user.png", PortfolioType=PortfolioType.Default},
-                new PortfolioDto { Id = 1 , Name = "Portfolio 2", Icon = "user.png", PortfolioType = PortfolioType.Default },
-                new PortfolioDto { Id = 2 , Name = "Portfolio 3", Icon="user.png", PortfolioType=PortfolioType.Default},
-                new PortfolioDto { Id = 3 , Name = "Portfolio 4", Icon = "user.png", PortfolioType = PortfolioType.Default },
-                new PortfolioDto { Id = 4 , Name = "Portfolio 5", Icon = "user.png", PortfolioType = PortfolioType.Default }
-            };
             this._authService = authService;
+            this.transactionService = transactionService;
             this._userService = userService;
             this._navigationService = navigationService;
             this._portfolioSevice = portfolioSevice;
             this._exchangeService = exchangeService;
         }
 
-        [RelayCommand]
+        public async Task IsUserAuthenticated()
+        {
+            if (await _authService.IsTokenExpired())
+            {
+                await Logout();
+            }
+
+            await GetUserInfo();
+            await GetPortfolios();
+            if (Portfolios.Any())
+                SelectedPortfolio = Portfolios[0];
+        }
+
+        public async Task GetUserInfo()
+        {
+            try
+            {
+                UserInfo = await _userService.GetUserInformation();
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions
+                Debug.WriteLine($"Error during connection {ex.Message}");
+            }
+        }
+
         public async Task GetPortfolios()
         {
             try
@@ -71,15 +113,16 @@ namespace CryptoPortfolioTracker.ViewModels
                 IEnumerable<PortfolioDto>? portfolios = await _portfolioSevice.GetPortfolios();
                 if (portfolios is not null && portfolios.Any())
                 {
+                    Portfolios.Clear();
                     portfolios.ToList().ForEach(p =>
                     {
                         if (!Portfolios.Contains(p))
                             Portfolios.Add(p);
                     });
                 }
-                else
+                else if (portfolios is null)
                 {
-                    await Shell.Current.DisplayAlert("EditError", "The portfolios couldn't be retrieved from the server.", "Ok");
+                    await Shell.Current.DisplayAlert("GetPortfoliosError", "The portfolios couldn't be retrieved from the server.", "Ok");
                 }
             }
             catch (Exception ex)
@@ -90,67 +133,94 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
-        public async Task GetPortfolio()
+        public async Task GetPortfolio(PortfolioDto selectedPortfolioParam)
         {
-            if (SelectedPortfolio.Address is null && SelectedPortfolio.ApiKey is null && SelectedPortfolio.Assets is null)
+            if (IsEditing)
             {
-                PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(SelectedPortfolio.Id);
+                return;
+            }
+            if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
+            {
+                PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(selectedPortfolioParam.Id);
                 // Find the index of the existing SelectedPortfolio in the Portfolios collection
-                int index = Portfolios.IndexOf(SelectedPortfolio);
-
+                int index = Portfolios.IndexOf(selectedPortfolioParam);
                 // Update the Portfolios collection with the new portfolio data
-                if (index != -1 && portfolio is not null)
+                if (index != -1 && portfolio is not null && portfolio.Id.Equals(selectedPortfolioParam.Id))
                 {
                     Portfolios[index] = portfolio;
                     // Update SelectedPortfolio with the new data
                     SelectedPortfolio = portfolio;
+                    AssetItemSource.Clear();
+                    switch (selectedPortfolioParam.PortfolioType)
+                    {
+                        case PortfolioType.Default:
+                            // Get Asset Prices
+                            foreach (AssetDto asset in portfolio?.Assets)
+                            {
+                                if (!AssetItemSource.Contains(asset))
+                                    AssetItemSource.Add(asset);
+                            }
+
+                            break;
+
+                        case PortfolioType.CexAccount:
+                            // Get assets from exchange
+                            break;
+
+                        case PortfolioType.Wallet:
+                            // Get transactions and assets from
+                            break;
+
+                        default: break;
+                    }
                 }
-                switch (SelectedPortfolio.PortfolioType)
+                else
                 {
-                    case PortfolioType.Default:
-                        // Get Asset Prices
-                        break;
-
-                    case PortfolioType.CexAccount:
-                        // Get Profile from exchange
-                        break;
-
-                    case PortfolioType.Wallet:
-                        // Get transactions and assets from
-                        break;
-
-                    default: break;
+                    await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolio couldn't be retrieved from the server.", "Ok");
                 }
             }
             else
             {
-                await Shell.Current.DisplayAlert("EditError", "The portfolios couldn't be retrieved from the server.", "Ok");
+                AssetItemSource.Clear();
+                foreach (AssetDto asset in SelectedPortfolio.Assets)
+                {
+                    if (!AssetItemSource.Contains(asset))
+                        AssetItemSource.Add(asset);
+                }
             }
+            ShowTransactions = false;
         }
 
         [RelayCommand]
-        public async Task AddPortfolio()
+        public async Task AddPortfolio(PortfolioToAddDto portfolioToAdd)
         {
-            PortfolioDto? newlyAddedPortfolio = await _portfolioSevice.AddPortfolio(PortfolioToAdd);
+            PortfolioDto? newlyAddedPortfolio = await _portfolioSevice.AddPortfolio(portfolioToAdd);
             if (newlyAddedPortfolio is not null)
             {
                 Portfolios.Add(newlyAddedPortfolio);
+                ShowTransactions = false;
             }
             else
             {
-                await Shell.Current.DisplayAlert("EditError", "The portfolio couldn't be added to the server.", "Ok");
+                await Shell.Current.DisplayAlert("AddPortfolioError", "The portfolio couldn't be added to the server.", "Ok");
             }
         }
 
-        [RelayCommand]
-        public async Task EditPortfolio(int portfolioId)
+        public async Task EditPortfolio(PortfolioToEditDto portfolioToEdit)
         {
-            PortfolioDto? editedPortfolio = await _portfolioSevice.ChangePortfolioName(portfolioId, NewPortfolioName);
+            if (!IsEditing)
+                return;
+
+            PortfolioDto? editedPortfolio = await _portfolioSevice.EditPortfolio(portfolioToEdit);
             if (editedPortfolio is not null)
             {
-                var p = Portfolios.FirstOrDefault(p => p.Id == portfolioId);
+                var p = Portfolios.FirstOrDefault(p => p.Id == portfolioToEdit.Id);
                 if (p != null)
+                {
                     p.Name = editedPortfolio.Name;
+                    p.Icon = editedPortfolio.Icon;
+                    p.IconColor = editedPortfolio.IconColor;
+                }
             }
             else
             {
@@ -159,12 +229,15 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
-        public async Task RemovePortfolioAsync(int portfolioId)
+        public async Task RemovePortfolioAsync(PortfolioDto selectedPortfolioParam)
         {
-            PortfolioDto? deletedPortfolio = await _portfolioSevice.RemovePortfolio(portfolioId);
-            if (deletedPortfolio is not null && deletedPortfolio.Id.Equals(portfolioId))
+            if (!IsEditing)
+                return;
+
+            PortfolioDto? deletedPortfolio = await _portfolioSevice.RemovePortfolio(selectedPortfolioParam.Id);
+            if (deletedPortfolio is not null && deletedPortfolio.Id.Equals(selectedPortfolioParam.Id))
             {
-                var portfolioToRemove = Portfolios.FirstOrDefault(p => p.Id == portfolioId);
+                var portfolioToRemove = Portfolios.FirstOrDefault(p => p.Id == selectedPortfolioParam.Id);
 
                 if (portfolioToRemove != null)
                 {
@@ -173,7 +246,47 @@ namespace CryptoPortfolioTracker.ViewModels
             }
             else
             {
-                await Shell.Current.DisplayAlert("EditError", "The portfolio couldn't be removed from the server!", "Ok");
+                await Shell.Current.DisplayAlert("RemoveError", "The portfolio couldn't be removed from the server!", "Ok");
+            }
+        }
+
+        [RelayCommand]
+        private void ShowTransactionsForAsset(AssetDto asset) 
+        {
+            ShowTransactions = true;
+            SelectedAsset.Name = asset.Name;
+            SelectedAsset.AvrgBuyPrice = asset.AvrgBuyPrice;
+            SelectedAsset.Symbol = asset.Symbol;
+            SelectedAsset.Amount = asset.Amount;
+            SelectedAsset.Id = asset.Id;
+            SelectedAsset.IconUrl = asset.IconUrl;
+
+            TransactionsSource.Clear();
+            foreach (TransactionDto transaction in asset.Transactions)
+            {
+                if (!TransactionsSource.Contains(transaction))
+                    TransactionsSource.Add(transaction);
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteAsset(int assetId)
+        {
+            try
+            {
+                var deletedAsset = await transactionService.DeleteAsset(assetId);
+                var localAsset = AssetItemSource.FirstOrDefault(a => a.Id.Equals(deletedAsset?.Id));
+                if (localAsset is not null)
+                {
+                    AssetItemSource.Remove(localAsset);
+                }
+                ShowTransactions = false;
+
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions
+                Debug.WriteLine($"Error during delete {ex.Message}");
             }
         }
 
@@ -181,6 +294,29 @@ namespace CryptoPortfolioTracker.ViewModels
         private void ChangeTheme()
         {
             Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Light ? AppTheme.Dark : AppTheme.Light;
+        }
+
+        [RelayCommand]
+        public void CreatePortfolio()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new CreatePortfolioPopup(new CreatePortfolioViewModel(_navigationService, this)));
+        }
+
+        [RelayCommand]
+        public void AddTransaction()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, transactionService, this,(ShowTransactions == true) ? SelectedAsset : null)));
+        }
+
+        public void StartEditPortfolioPopup()
+        {
+            Shell.Current.CurrentPage.ShowPopup(new EditPortfolioPopup(new EditPortfolioViewModel(_navigationService, this)));
+        }
+
+        [RelayCommand]
+        private void Back()
+        {
+            ShowTransactions = false;
         }
 
         [RelayCommand]
@@ -193,17 +329,9 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
-        private async Task GetUserInfo()
+        private void ToggleEdit()
         {
-            try
-            {
-                UserInfo = await _userService.GetUserInformation();
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions
-                Debug.WriteLine($"Error during connection {ex.Message}");
-            }
+            IsEditing = !IsEditing;
         }
     }
 }
