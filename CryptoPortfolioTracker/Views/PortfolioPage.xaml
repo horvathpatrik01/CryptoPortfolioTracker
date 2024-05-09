@@ -57,7 +57,7 @@
                         Text="{mi:Material Icon=Edit,
                                            IconSize=20}">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  Command="{Binding ToggleEditCommand}" />
+                            <TapGestureRecognizer Command="{Binding ToggleEditCommand}" Tapped="TapGestureRecognizer_Tapped" />
                         </Label.GestureRecognizers>
                     </Label>
                 </Grid>
@@ -178,6 +178,7 @@
                                 Command="{Binding CreatePortfolioCommand}"
                                 HeightRequest="32"
                                 HorizontalOptions="End"
+                                Style="{StaticResource Button}"
                                 Text="+ Create Portfolio"
                                 VerticalOptions="Start" />
 
@@ -188,6 +189,7 @@
                                 HeightRequest="32"
                                 HorizontalOptions="End"
                                 IsVisible="{Binding SelectedPortfolio.PortfolioType, Converter={StaticResource PortfolioTypeConverter}}"
+                                Style="{StaticResource Button}"
                                 Text="+ Add transaction"
                                 VerticalOptions="Start" />
                         </Grid>
@@ -201,7 +203,7 @@
                             <BoxView Margin="0,10,0,20" Style="{x:StaticResource Separator}" />
                             <Grid
                                 Padding="10,0"
-                                ColumnDefinitions="2*,2*,2*,1*,1*,1*,2*,2*"
+                                ColumnDefinitions="3*,1*,1*,1*,1*,1*,2*,2*"
                                 ColumnSpacing="20">
                                 <Label
                                     Grid.Column="0"
@@ -285,34 +287,39 @@
                                 HorizontalOptions="StartAndExpand"
                                 Spacing="10"
                                 VerticalOptions="Start">
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Margin="0,0,0,10" Spacing="10">
                                     <!--  Back icon  -->
-                                    <Label
-                                        Margin="0,0,10,0"
-                                        FontAttributes="Bold"
-                                        FontSize="24"
-                                        Text="{mi:Material Icon=ArrowBack}"
-                                        VerticalOptions="End">
+                                    <Label Style="{StaticResource LabelButton}" Text="{mi:Material Icon=ArrowBack, IconSize=24}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BackCommand}" />
                                         </Label.GestureRecognizers>
                                     </Label>
+                                    <!--  Asset icon  -->
+                                    <Image
+                                        HeightRequest="30"
+                                        Source="{Binding SelectedAsset.IconUrl}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="30" />
+
                                     <!--  Asset name  -->
                                     <Label
+                                        FontAttributes="Bold"
                                         FontSize="22"
                                         Text="{Binding SelectedAsset.Name}"
-                                        VerticalOptions="Center" />
+                                        VerticalOptions="End" />
+                                    <!--  Asset name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="22"
+                                        Text="{Binding SelectedAsset.Symbol}"
+                                        TextColor="{StaticResource Gray500}"
+                                        VerticalOptions="End" />
                                 </HorizontalStackLayout>
-                                <!--  Amount  -->
-                                <Label
-                                    FontSize="14"
-                                    Text="{Binding SelectedAsset.Amount}"
-                                    TextColor="Green" />
                                 <!--  Avrg. buyprice value  -->
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    Text="{Binding SelectedAsset.AvrgBuyPrice}" />
+                                <Label FontSize="18" Text="{Binding SelectedAsset.Amount, StringFormat='Amount: {0:F2}'}" />
+                                <!--  Amount  -->
+                                <Label FontSize="14" Text="{Binding SelectedAsset.AvrgBuyPrice, StringFormat='Average buy price: $ {0:F2}'}" />
+
                             </VerticalStackLayout>
                             <Button
                                 Grid.Column="1"
@@ -320,12 +327,18 @@
                                 Command="{Binding AddTransactionCommand}"
                                 HeightRequest="32"
                                 HorizontalOptions="End"
+                                Style="{StaticResource Button}"
                                 Text="+ Add transaction"
                                 VerticalOptions="Start" />
                         </Grid>
 
                         <!--  Asset transaction list  -->
                         <VerticalStackLayout Grid.Row="2" Margin="20">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                Text="Transactions" />
+                            <BoxView Margin="0,10,0,20" Style="{x:StaticResource Separator}" />
                             <Grid
                                 Padding="10,0,10,0"
                                 ColumnDefinitions="1*,3*,2*,1*,1*,2*"
@@ -360,12 +373,12 @@
                                     HorizontalOptions="End"
                                     Text="Options" />
                             </Grid>
-                            <BoxView Margin="0,20" Style="{x:StaticResource Separator}" />
+                            <BoxView Margin="0,20,0,10" Style="{x:StaticResource Separator}" />
 
                             <CollectionView
                                 x:Name="PortfolioTransactionView"
                                 ItemsSource="{Binding TransactionsSource}"
-                                SelectionMode="Single">
+                                SelectionMode="None">
 
                                 <!--  Element if empty  -->
                                 <CollectionView.EmptyView>
@@ -377,7 +390,7 @@
                                 </CollectionView.EmptyView>
 
                                 <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="0" />
                                 </CollectionView.ItemsLayout>
 
                                 <!--  Portfolio template  -->

@@ -68,7 +68,7 @@
     </Style>
 
     <!--  Buttons  -->
-    <Style ApplyToDerivedTypes="False" TargetType="Button">
+    <Style x:Key="Button" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
         <Setter Property="FontFamily" Value="Roboto" />
         <Setter Property="FontSize" Value="16" />
@@ -92,6 +92,7 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+
     <Style x:Key="ButtonWithoutNormalStates" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
         <Setter Property="FontFamily" Value="Roboto" />

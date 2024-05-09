@@ -21,7 +21,7 @@
     <Grid Padding="0,0,0,-20" RowDefinitions="Auto,Auto">
 
         <Grid
-            ColumnDefinitions="2*,2*,2*,1*,1*,1*,2*,2*"
+            ColumnDefinitions="3*,1*,1*,1*,1*,1*,2*,2*"
             ColumnSpacing="20"
             ToolTipProperties.Text="Right click to more options!">
             <HorizontalStackLayout
@@ -46,6 +46,10 @@
                 </Image>
 
                 <Label Text="{Binding Name}" VerticalOptions="Center" />
+                <Label
+                    Text="{Binding Symbol}"
+                    TextColor="{StaticResource Gray500}"
+                    VerticalOptions="Center" />
             </HorizontalStackLayout>
             <Label
                 Grid.Column="1"
@@ -98,7 +102,7 @@
             <Label
                 Grid.Column="7"
                 HorizontalOptions="End"
-                Text="{Binding Value, StringFormat='{0:F2}'}"
+                Text="{Binding Value, StringFormat='$ {0:F2}'}"
                 VerticalOptions="Center" />
 
 

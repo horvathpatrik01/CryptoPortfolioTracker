@@ -58,6 +58,7 @@
                 </Grid>
 
                 <Button
+                    Style="{StaticResource Button}"
                     Command="{Binding LoginCommand}"
                     FontAttributes="Bold"
                     FontSize="20"

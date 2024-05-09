@@ -164,6 +164,7 @@
             Clicked="SaveAvatar"
             Command="{Binding SaveEmojiCommand}"
             IsEnabled="True"
+            Style="{StaticResource Button}"
             Text="Save" />
     </VerticalStackLayout>
 </mct:Popup>

@@ -205,6 +205,7 @@
                         Margin="10"
                         Command="{Binding ChangeAvatarCommand}"
                         HorizontalOptions="End"
+                        Style="{StaticResource Button}"
                         Text="Change avatar"
                         VerticalOptions="Center" />
                 </Grid>
@@ -296,6 +297,7 @@
                     Clicked="Close"
                     Command="{Binding AddPortfolioCommand}"
                     IsEnabled="False"
+                    Style="{StaticResource Button}"
                     Text="Create" />
             </VerticalStackLayout>
         </Grid>

@@ -148,6 +148,7 @@
             Clicked="Close"
             Command="{Binding AddTransactionCommand}"
             IsEnabled="True"
+            Style="{StaticResource Button}"
             Text="Add transaction" />
     </VerticalStackLayout>
 </mct:Popup>
