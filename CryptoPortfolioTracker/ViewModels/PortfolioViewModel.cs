@@ -13,13 +13,16 @@ using CryptoPortfolioTracker.Services.Exchange;
 using CommunityToolkit.Maui.Views;
 using CryptoPortfolioTracker.Views.Popups;
 using CryptoPortfolioTracker.Services.Transaction;
+using CryptoPortfolioTracker.Models;
+using System.Linq;
+using System;
 
 namespace CryptoPortfolioTracker.ViewModels
 {
     public partial class PortfolioViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
-        private readonly ITransactionService transactionService;
+        private readonly ITransactionService _transactionService;
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
         private readonly IPortfolioSevice _portfolioSevice;
@@ -51,8 +54,9 @@ namespace CryptoPortfolioTracker.ViewModels
         public ObservableCollection<string> Errors { get; set; } = [];
 
         public ObservableCollection<PortfolioDto> Portfolios { get; set; }
-        public ObservableCollection<AssetDto> AssetItemSource { get; set; }
+        public ObservableCollection<Asset> AssetItemSource { get; set; }
         public ObservableCollection<TransactionDto> TransactionsSource { get; set; }
+        public List<Coin> SupportedCoins { get; set; }
 
         public PortfolioViewModel(
             IAuthService authService,
@@ -69,11 +73,12 @@ namespace CryptoPortfolioTracker.ViewModels
             NewPortfolioName = "";
             AssetItemSource = [];
             Portfolios = [];
+            SupportedCoins = [];
             TransactionsSource = [];
             ShowTransactions = false;
 
             this._authService = authService;
-            this.transactionService = transactionService;
+            this._transactionService = transactionService;
             this._userService = userService;
             this._navigationService = navigationService;
             this._portfolioSevice = portfolioSevice;
@@ -89,8 +94,14 @@ namespace CryptoPortfolioTracker.ViewModels
 
             await GetUserInfo();
             await GetPortfolios();
+            await GetAssets();
             if (Portfolios.Any())
                 SelectedPortfolio = Portfolios[0];
+        }
+
+        public async Task GetAssets()
+        {
+            SupportedCoins = await _transactionService.GetSupportedCoins();
         }
 
         public async Task GetUserInfo()
@@ -135,10 +146,11 @@ namespace CryptoPortfolioTracker.ViewModels
         [RelayCommand]
         public async Task GetPortfolio(PortfolioDto selectedPortfolioParam)
         {
-            if (IsEditing)
+            if (IsEditing || selectedPortfolioParam is null)
             {
                 return;
             }
+            AssetItemSource.Clear();
             if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
             {
                 PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(selectedPortfolioParam.Id);
@@ -150,17 +162,13 @@ namespace CryptoPortfolioTracker.ViewModels
                     Portfolios[index] = portfolio;
                     // Update SelectedPortfolio with the new data
                     SelectedPortfolio = portfolio;
-                    AssetItemSource.Clear();
                     switch (selectedPortfolioParam.PortfolioType)
                     {
                         case PortfolioType.Default:
                             // Get Asset Prices
-                            foreach (AssetDto asset in portfolio?.Assets)
-                            {
-                                if (!AssetItemSource.Contains(asset))
-                                    AssetItemSource.Add(asset);
-                            }
 
+                            await RefreshCoinPrices(portfolio.Assets);
+                            PopulateAssetItemSource(portfolio.Assets);
                             break;
 
                         case PortfolioType.CexAccount:
@@ -181,14 +189,69 @@ namespace CryptoPortfolioTracker.ViewModels
             }
             else
             {
-                AssetItemSource.Clear();
-                foreach (AssetDto asset in SelectedPortfolio.Assets)
+                switch (selectedPortfolioParam.PortfolioType)
                 {
-                    if (!AssetItemSource.Contains(asset))
-                        AssetItemSource.Add(asset);
+                    case PortfolioType.Default:
+                        // Get Asset Prices
+                        await RefreshCoinPrices(SelectedPortfolio.Assets);
+                        PopulateAssetItemSource(SelectedPortfolio.Assets);
+
+                        break;
+
+                    case PortfolioType.CexAccount:
+                        // Get assets from exchange
+                        break;
+
+                    case PortfolioType.Wallet:
+                        // Get transactions and assets from
+                        break;
+
+                    default: break;
                 }
             }
             ShowTransactions = false;
+        }
+
+        private async Task RefreshCoinPrices(List<AssetDto>? assets)
+        {
+            List<int> coinIds = [];
+            if (SupportedCoins.Count == 0) return;
+            assets?.ForEach(asset => coinIds.Add(SupportedCoins.Find(a => a.Symbol == asset.Symbol)?.Id ?? -1));
+            if (coinIds.Count == 0) return;
+            var modifiedCoins = await _transactionService.GetCoinPrices(coinIds);
+            modifiedCoins?.ForEach(mc =>
+            {
+                var coin = SupportedCoins.Find(sc => sc.Id == mc.Id);
+                if (coin != null)
+                {
+                    coin.Quote = mc.Quote;
+                }
+            });
+        }
+
+        public void PopulateAssetItemSource(List<AssetDto>? assets)
+        {
+            if (assets is null) return;
+            foreach (var asset in assets.Where(asset => AssetItemSource.FirstOrDefault(a => a.Id == asset.Id) is null))
+            {
+                Asset dummyAsset = new Asset
+                {
+                    Id = asset.Id,
+                    IconUrl = asset.IconUrl,
+                    Amount = asset.Amount,
+                    Name = asset.Name,
+                    AvrgBuyPrice = asset.AvrgBuyPrice,
+                    Symbol = asset.Symbol,
+                    Transactions = asset.Transactions
+                };
+                Coin? matchedCoinForAsset = SupportedCoins.Find(a => a.Symbol == asset.Symbol);
+                SymbolQuote? coinPriceInfo = matchedCoinForAsset?.Quote["USD"];
+                dummyAsset.Price = coinPriceInfo?.Price ?? 0m;
+                dummyAsset.Percent_Change_1h = coinPriceInfo?.Percent_Change_1h ?? 0f;
+                dummyAsset.Percent_Change_24h = coinPriceInfo?.Percent_Change_24h ?? 0f;
+                dummyAsset.Percent_Change_7d = coinPriceInfo?.Percent_Change_7d ?? 0f;
+                AssetItemSource.Add(dummyAsset);
+            }
         }
 
         [RelayCommand]
@@ -251,7 +314,7 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
-        private void ShowTransactionsForAsset(AssetDto asset) 
+        private void ShowTransactionsForAsset(Asset asset)
         {
             ShowTransactions = true;
             SelectedAsset.Name = asset.Name;
@@ -274,14 +337,15 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             try
             {
-                var deletedAsset = await transactionService.DeleteAsset(assetId);
+                var deletedAsset = await _transactionService.DeleteAsset(assetId);
                 var localAsset = AssetItemSource.FirstOrDefault(a => a.Id.Equals(deletedAsset?.Id));
-                if (localAsset is not null)
+                var portfolioAsset = Portfolios.FirstOrDefault(p => p.Id.Equals(SelectedPortfolio.Id))?.Assets?.Find(a => a.Id.Equals(deletedAsset?.Id));
+                if (localAsset is not null && portfolioAsset is not null)
                 {
                     AssetItemSource.Remove(localAsset);
+                    Portfolios.FirstOrDefault(p => p.Id.Equals(SelectedPortfolio.Id))?.Assets?.Remove(portfolioAsset);
                 }
                 ShowTransactions = false;
-
             }
             catch (Exception ex)
             {
@@ -305,7 +369,7 @@ namespace CryptoPortfolioTracker.ViewModels
         [RelayCommand]
         public void AddTransaction()
         {
-            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, transactionService, this,(ShowTransactions == true) ? SelectedAsset : null)));
+            Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, _transactionService, this, (ShowTransactions == true) ? SelectedAsset : null)));
         }
 
         public void StartEditPortfolioPopup()

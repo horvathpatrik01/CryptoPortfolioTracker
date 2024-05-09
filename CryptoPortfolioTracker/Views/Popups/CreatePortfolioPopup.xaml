@@ -49,7 +49,10 @@
                     </Label>
                 </Grid>
 
-                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                <Frame
+                    BackgroundColor="Transparent"
+                    HeightRequest="100"
+                    IsEnabled="False">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.Wallet}" />
                     </Frame.GestureRecognizers>
@@ -113,7 +116,10 @@
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
                 </Frame>
-                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                <Frame
+                    BackgroundColor="Transparent"
+                    HeightRequest="100"
+                    IsEnabled="False">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.CexAccount}" />
                     </Frame.GestureRecognizers>

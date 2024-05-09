@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using CryptoPortfolioTracker.Models;
+using Shared;
 
 namespace CryptoPortfolioTracker.Services.Transaction
 {
@@ -10,9 +11,14 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
         Task<AssetDto?> EditTransaction(TransactionDto editedTransactionDto);
 
-        Task<AssetDto?> AddTransaction(TransactionToAddDto transactionToAddDto);
+        Task<AssetDto?> AddTransaction(TransactionToAddDto transactionToAddDto, int selectedCoinId);
 
         Task<AssetDto?> RemoveTransaction(int transactionId);
+
         Task<AssetDto?> DeleteAsset(int assetId);
+
+        Task<List<Coin>?> GetSupportedCoins();
+
+        Task<List<Coin>?> GetCoinPrices(List<int> ids);
     }
 }

@@ -5,9 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-    xmlns:models="clr-namespace:Shared;assembly=Shared"
+    xmlns:models="clr-namespace:CryptoPortfolioTracker.Models"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
-    x:DataType="models:AssetDto">
+    x:DataType="models:Asset">
 
     <ContentView.Resources>
         <ResourceDictionary>
@@ -20,65 +20,81 @@
 
     <Grid
         Padding="10,0,10,0"
-        ColumnDefinitions="4*,2*,1*,1*,1*,2*,2*"
-        ColumnSpacing="20">
-        <Label
+        ColumnDefinitions="Auto,*,*,*,*,*,*"
+        ColumnSpacing="20"
+        ToolTipProperties.Text="Right click to more options!">
+        <HorizontalStackLayout
             Grid.Column="0"
             HorizontalOptions="Start"
-            Text="{Binding Name}" />
-        <!--
-            <Label
-                Grid.Column="1"
-                HorizontalOptions="Start"
-                Text="{Binding Price, StringFormat='${0:F}'}" />
-        -->
-        <!--<Label
-                Grid.Column="2"
-                HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding HourlyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding HourlyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>-->
+            Spacing="5"
+            VerticalOptions="Center">
 
-        <!--
-            <Label
-                Grid.Column="3"
-                HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding DailyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        -->
-        <!--
-            <Label
-                Grid.Column="4"
-                HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding WeeklyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        -->
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="40"
+                HorizontalOptions="Center"
+                Source="{Binding IconUrl}"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="20,20"
+                        RadiusX="20"
+                        RadiusY="20" />
+                </Image.Clip>
+            </Image>
+
+            <Label Text="{Binding Name}" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+        <Label
+            Grid.Column="1"
+            HorizontalOptions="Start"
+            Text="{Binding Price, StringFormat='${0:F}'}" />
+
+        <Label
+            Grid.Column="2"
+            HorizontalOptions="End"
+            TextColor="{Binding Percent_Change_1h}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Percent_Change_1h}" />
+                    <Span Text="{Binding Percent_Change_1h, StringFormat='{0:F2} %'}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label
+            Grid.Column="3"
+            HorizontalOptions="End"
+            TextColor="{Binding Percent_Change_24h}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Percent_Change_24h}" />
+                    <Span Text="{Binding Percent_Change_24h, StringFormat='{0:F2} %'}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label
+            Grid.Column="4"
+            HorizontalOptions="End"
+            TextColor="{Binding Percent_Change_7d}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Percent_Change_7d}" />
+                    <Span Text="{Binding Percent_Change_7d, StringFormat='{0:F2} %'}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
 
         <Label
             Grid.Column="5"
             HorizontalOptions="End"
-            Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" />
+            Text="{Binding Amount, Converter={StaticResource DecimalConverter}}"
+            VerticalOptions="Center" />
         <Label
             Grid.Column="6"
             HorizontalOptions="End"
-            Text="{Binding AvrgBuyPrice, Converter={StaticResource DecimalConverter}}" />
+            Text="{Binding AvrgBuyPrice, Converter={StaticResource DecimalConverter}}"
+            VerticalOptions="Center" />
 
         <FlyoutBase.ContextFlyout>
             <MenuFlyout>
@@ -90,9 +106,7 @@
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=DeleteAssetCommand}"
                     CommandParameter="{Binding Id}"
                     Text="Delete asset" />
-
             </MenuFlyout>
         </FlyoutBase.ContextFlyout>
     </Grid>
-
 </ContentView>

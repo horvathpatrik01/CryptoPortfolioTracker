@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CryptoPortfolioTracker.Services.Portfolio
 {
-    internal class PortfolioService : IPortfolioSevice
+    public class PortfolioService : IPortfolioSevice
     {
         private readonly IAuthService _authService;
 

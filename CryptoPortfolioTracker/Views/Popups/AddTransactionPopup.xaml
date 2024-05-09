@@ -77,6 +77,13 @@
             </Grid>
         </Frame>
         <!--  Token picker  -->
+        <Picker
+            Title="Select a coin"
+            Margin="0"
+            ItemDisplayBinding="{Binding Name}"
+            ItemsSource="{Binding SupportedCoins}"
+            SelectedItem="{Binding SelectedCoin}"
+            VerticalTextAlignment="End" />
         <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
             <!--  Quantity  -->
             <VerticalStackLayout Grid.Column="0">
