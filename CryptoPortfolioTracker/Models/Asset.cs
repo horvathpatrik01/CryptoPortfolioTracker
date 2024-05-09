@@ -153,6 +153,11 @@ namespace CryptoPortfolioTracker.Models
             }
         }
 
+        public decimal Value
+        {
+            get => _amount * _price;
+        }
+
         public List<TransactionDto> Transactions
         {
             get => _transactions;
