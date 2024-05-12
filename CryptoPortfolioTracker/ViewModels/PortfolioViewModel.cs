@@ -16,10 +16,11 @@ using CryptoPortfolioTracker.Services.Transaction;
 using CryptoPortfolioTracker.Models;
 using System.Linq;
 using System;
+using CryptoPortfolioTracker.ViewModels.Base;
 
 namespace CryptoPortfolioTracker.ViewModels
 {
-    public partial class PortfolioViewModel : ObservableObject
+    public partial class PortfolioViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
         private readonly ITransactionService _transactionService;
@@ -64,7 +65,7 @@ namespace CryptoPortfolioTracker.ViewModels
             IUserService userService,
             INavigationService navigationService,
             IPortfolioSevice portfolioSevice,
-            IExchangeService exchangeService)
+            IExchangeService exchangeService) : base(navigationService)
         {
             UserInfo = new();
             PortfolioToAdd = new();
@@ -95,6 +96,22 @@ namespace CryptoPortfolioTracker.ViewModels
             await GetUserInfo();
             await GetPortfolios();
             await GetAssets();
+            if (Portfolios.Any())
+                SelectedPortfolio = Portfolios[0];
+        }
+
+        public override async Task InitializeAsync()
+        {
+            if (await _authService.IsTokenExpired())
+            {
+                await Logout();
+            }
+            await IsBusyFor(async () =>
+            {
+                await GetUserInfo();
+                await GetPortfolios();
+                await GetAssets();
+            });
             if (Portfolios.Any())
                 SelectedPortfolio = Portfolios[0];
         }
@@ -150,25 +167,54 @@ namespace CryptoPortfolioTracker.ViewModels
             {
                 return;
             }
-            AssetItemSource.Clear();
-            if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
+            await IsBusyFor(async () =>
             {
-                PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(selectedPortfolioParam.Id);
-                // Find the index of the existing SelectedPortfolio in the Portfolios collection
-                int index = Portfolios.IndexOf(selectedPortfolioParam);
-                // Update the Portfolios collection with the new portfolio data
-                if (index != -1 && portfolio is not null && portfolio.Id.Equals(selectedPortfolioParam.Id))
+                AssetItemSource.Clear();
+                if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
                 {
-                    Portfolios[index] = portfolio;
-                    // Update SelectedPortfolio with the new data
-                    SelectedPortfolio = portfolio;
+                    PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(selectedPortfolioParam.Id);
+                    // Find the index of the existing SelectedPortfolio in the Portfolios collection
+                    int index = Portfolios.IndexOf(selectedPortfolioParam);
+                    // Update the Portfolios collection with the new portfolio data
+                    if (index != -1 && portfolio is not null && portfolio.Id.Equals(selectedPortfolioParam.Id))
+                    {
+                        Portfolios[index] = portfolio;
+                        // Update SelectedPortfolio with the new data
+                        SelectedPortfolio = portfolio;
+                        switch (selectedPortfolioParam.PortfolioType)
+                        {
+                            case PortfolioType.Default:
+                                // Get Asset Prices
+
+                                await RefreshCoinPrices(portfolio.Assets);
+                                PopulateAssetItemSource(portfolio.Assets);
+                                break;
+
+                            case PortfolioType.CexAccount:
+                                // Get assets from exchange
+                                break;
+
+                            case PortfolioType.Wallet:
+                                // Get transactions and assets from
+                                break;
+
+                            default: break;
+                        }
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolio couldn't be retrieved from the server.", "Ok");
+                    }
+                }
+                else
+                {
                     switch (selectedPortfolioParam.PortfolioType)
                     {
                         case PortfolioType.Default:
                             // Get Asset Prices
+                            await RefreshCoinPrices(SelectedPortfolio.Assets);
+                            PopulateAssetItemSource(SelectedPortfolio.Assets);
 
-                            await RefreshCoinPrices(portfolio.Assets);
-                            PopulateAssetItemSource(portfolio.Assets);
                             break;
 
                         case PortfolioType.CexAccount:
@@ -182,33 +228,8 @@ namespace CryptoPortfolioTracker.ViewModels
                         default: break;
                     }
                 }
-                else
-                {
-                    await Shell.Current.DisplayAlert("GetPortfolioError", "The portfolio couldn't be retrieved from the server.", "Ok");
-                }
-            }
-            else
-            {
-                switch (selectedPortfolioParam.PortfolioType)
-                {
-                    case PortfolioType.Default:
-                        // Get Asset Prices
-                        await RefreshCoinPrices(SelectedPortfolio.Assets);
-                        PopulateAssetItemSource(SelectedPortfolio.Assets);
-
-                        break;
-
-                    case PortfolioType.CexAccount:
-                        // Get assets from exchange
-                        break;
-
-                    case PortfolioType.Wallet:
-                        // Get transactions and assets from
-                        break;
-
-                    default: break;
-                }
-            }
+            });
+            
             ShowTransactions = false;
         }
 
@@ -355,6 +376,45 @@ namespace CryptoPortfolioTracker.ViewModels
         }
 
         [RelayCommand]
+        private async Task DeleteTransaction(TransactionDto transaction)
+        {
+            try
+            {
+                var deletedTransactionAsset = await _transactionService.RemoveTransaction(transaction.Id);
+                if (deletedTransactionAsset?.Id != 0)
+                {
+                    var asset = AssetItemSource.FirstOrDefault(a => a.Id.Equals(deletedTransactionAsset?.Id));
+                    var portfolioAsset = Portfolios.FirstOrDefault(p => p.Id.Equals(SelectedPortfolio.Id))?.Assets?.Find(a => a.Id.Equals(deletedTransactionAsset?.Id));
+                    if (asset is not null && portfolioAsset is not null)
+                    {
+                        asset.Amount = deletedTransactionAsset.Amount;
+                        asset.AvrgBuyPrice = deletedTransactionAsset.AvrgBuyPrice;
+                        asset.Transactions = deletedTransactionAsset.Transactions;
+                        portfolioAsset.Amount = deletedTransactionAsset.Amount;
+                        portfolioAsset.AvrgBuyPrice = deletedTransactionAsset.AvrgBuyPrice;
+                        portfolioAsset.Transactions = deletedTransactionAsset.Transactions;
+                    }
+                }
+                else
+                {
+                    var assetToDelete = AssetItemSource.FirstOrDefault(a => a.Id.Equals(transaction.AssetId));
+                    var portfolioAssetToDelete = Portfolios.FirstOrDefault(p => p.Id.Equals(SelectedPortfolio.Id))?.Assets?.Find(a => a.Id.Equals(transaction.AssetId));
+                    if (assetToDelete is not null && portfolioAssetToDelete is not null)
+                    {
+                        AssetItemSource.Remove(assetToDelete);
+                        Portfolios.FirstOrDefault(p => p.Id.Equals(SelectedPortfolio.Id))?.Assets?.Remove(portfolioAssetToDelete);
+                    }
+                }
+                ShowTransactions = false;
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions
+                Debug.WriteLine($"Error during delete {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
         private void ChangeTheme()
         {
             Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Light ? AppTheme.Dark : AppTheme.Light;
@@ -370,6 +430,12 @@ namespace CryptoPortfolioTracker.ViewModels
         public void AddTransaction()
         {
             Shell.Current.CurrentPage.ShowPopup(new AddTransactionPopup(new TransactionViewModel(_navigationService, _transactionService, this, (ShowTransactions == true) ? SelectedAsset : null)));
+        }
+
+        [RelayCommand]
+        public void ShowEditTransactionPopup(TransactionDto transactionToEdit)
+        {
+            Shell.Current.CurrentPage.ShowPopup(new EditTransactionPopup(new EditTransactionViewModel(_navigationService, _transactionService, this, transactionToEdit)));
         }
 
         public void StartEditPortfolioPopup()

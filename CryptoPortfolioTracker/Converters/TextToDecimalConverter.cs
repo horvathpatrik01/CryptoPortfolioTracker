@@ -29,7 +29,8 @@ namespace CryptoPortfolioTracker.Converters
         public override string ConvertFrom(decimal value, CultureInfo? culture)
         {
             // Convert decimal to string
-            return value.ToString(CultureInfo.CurrentCulture);
+            string convertedValue = value.ToString(CultureInfo.InvariantCulture);
+            return convertedValue;
         }
     }
 }

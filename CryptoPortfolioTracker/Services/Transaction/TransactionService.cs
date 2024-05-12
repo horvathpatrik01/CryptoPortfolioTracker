@@ -152,6 +152,15 @@ namespace CryptoPortfolioTracker.Services.Transaction
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        AssetDto dummyDto = new()
+                        {
+                            Id = 0
+                        };
+
+                        return dummyDto;
+                    }
                     AssetDto? assetWithDeletedTransaction = await response.Content.ReadFromJsonAsync<AssetDto>();
                     if (assetWithDeletedTransaction is null)
                     {

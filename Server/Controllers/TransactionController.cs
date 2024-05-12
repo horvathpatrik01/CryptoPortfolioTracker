@@ -131,9 +131,9 @@ namespace Server.Controllers
                 {
                     return NotFound();
                 }
-                var asset = await this.transactionRepository.DeleteTransaction(transactionId);
-
-                var assetDto = asset?.ConvertToDto();
+                await this.transactionRepository.DeleteTransaction(transactionId);
+                var assetAfterDelete = await this.assetRepository.GetAsset(transaction.AssetId);
+                var assetDto = assetAfterDelete?.ConvertToDto();
 
                 return Ok(assetDto);
             }

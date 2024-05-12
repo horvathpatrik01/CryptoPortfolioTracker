@@ -11,6 +11,7 @@ namespace Shared
         private decimal _amount;
         private decimal _fee;
         private string? _note;
+        private TransactionType _transactionType;
         public int Id { get; set; }
 
         public DateTime Time
@@ -80,7 +81,18 @@ namespace Shared
 
         public int AssetId { get; set; }
 
-        public TransactionType TransactionType { get; set; }
+        public TransactionType TransactionType
+        {
+            get => _transactionType;
+            set
+            {
+                if (_transactionType != value)
+                {
+                    _transactionType = value;
+                    OnPropertyChanged(nameof(TransactionType));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

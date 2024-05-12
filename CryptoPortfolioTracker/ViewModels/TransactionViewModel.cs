@@ -96,6 +96,7 @@ namespace CryptoPortfolioTracker.ViewModels
                     _portfolioViewModel.SelectedPortfolio.Assets?.Add(assetWithNewTransaction);
                     _portfolioViewModel.PopulateAssetItemSource([assetWithNewTransaction]);
                 }
+                _portfolioViewModel.ShowTransactions = false;
             }
         }
     }

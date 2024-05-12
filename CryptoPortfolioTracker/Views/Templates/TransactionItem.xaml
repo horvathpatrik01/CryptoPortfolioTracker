@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:models="clr-namespace:Shared;assembly=Shared"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
@@ -57,7 +58,7 @@
                     Text="{mi:Material Icon=Edit,
                                        IconSize=20}">
                     <Label.GestureRecognizers>
-                        <!--<TapGestureRecognizer Tapped="OnEditTapped" />-->
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=ShowEditTransactionPopupCommand}" CommandParameter="{Binding .}" />
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -69,7 +70,7 @@
                     Text="{mi:Material Icon=Delete,
                                        IconSize=20}">
                     <Label.GestureRecognizers>
-                        <!--<TapGestureRecognizer Tapped="OnDeleteTapped" /> -->
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=DeleteTransactionCommand}" CommandParameter="{Binding .}" />
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>

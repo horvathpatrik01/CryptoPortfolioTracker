@@ -57,6 +57,7 @@ namespace CryptoPortfolioTracker.Models
                 {
                     _price = value;
                     OnPropertyChanged(nameof(Price));
+                    OnPropertyChanged(nameof(Value));
                 }
             }
         }
@@ -149,6 +150,7 @@ namespace CryptoPortfolioTracker.Models
                 {
                     _amount = value;
                     OnPropertyChanged(nameof(Amount));
+                    OnPropertyChanged(nameof(Value));
                 }
             }
         }

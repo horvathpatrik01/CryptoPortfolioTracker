@@ -76,7 +76,7 @@ namespace Server.Repositories
             return asset;
         }
 
-        public async Task<Asset?> DeleteTransaction(int? transactionId)
+        public async Task DeleteTransaction(int? transactionId)
         {
             var transaction = await this.appDbContext.Transactions
                 .Include(t => t.Asset)
@@ -92,7 +92,7 @@ namespace Server.Repositories
                     this.appDbContext.Assets.Remove(transaction.Asset);
                     await this.appDbContext.SaveChangesAsync();
 
-                    return null;
+                    return;
                 }
 
                 if (new[] { TransactionType.Buy, TransactionType.TransferIn }.Contains(transaction.TransactionType))
@@ -103,7 +103,7 @@ namespace Server.Repositories
                 transaction.Asset.AvrgBuyPrice = CalculateAverageBuyPrice(transaction.Asset.Transactions);
                 await this.appDbContext.SaveChangesAsync();
             }
-            return transaction?.Asset;
+            return;
         }
 
         public async Task<Asset?> EditTransaction(TransactionDto transactionToEditDto)

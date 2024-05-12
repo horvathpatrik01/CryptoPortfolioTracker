@@ -8,7 +8,7 @@
 
         Task<Asset?> EditTransaction(TransactionDto transactionToEditDto);
 
-        Task<Asset?> DeleteTransaction(int? transactionId);
+        Task DeleteTransaction(int? transactionId);
 
         Task<Asset?> AddTransaction(TransactionToAddDto transactionToAddDto);
     }
