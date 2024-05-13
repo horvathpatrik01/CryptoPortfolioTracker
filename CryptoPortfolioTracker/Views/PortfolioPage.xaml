@@ -3,6 +3,7 @@
     x:Class="CryptoPortfolioTracker.Views.PortfolioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behav="clr-namespace:CryptoPortfolioTracker.Behaviors"
     xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:localmodels="clr-namespace:CryptoPortfolioTracker.Models"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -126,6 +127,9 @@
             <ScrollView Grid.Row="1" Grid.Column="1">
                 <Grid>
                     <Grid IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+                        <Grid.Behaviors>
+                            <behav:GridAnimationBehavior />
+                        </Grid.Behaviors>
 
                         <Grid
                             ColumnDefinitions="1*"
