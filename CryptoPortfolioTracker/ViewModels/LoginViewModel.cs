@@ -31,7 +31,14 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             try
             {
-                var loginResult = await authService.Login(LoginModel);
+                var loginResult = new LoginResult
+                {
+                    Token = null,
+                    Error = null,
+                    Successful = false
+                };
+                await IsBusyFor(async () => loginResult = await authService.Login(LoginModel));
+
                 if (loginResult != null && loginResult.Successful)
                 {
                     await navigationService.NavigateToAsync($"{nameof(PortfolioPage)}");

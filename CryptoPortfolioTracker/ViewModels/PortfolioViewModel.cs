@@ -45,6 +45,9 @@ namespace CryptoPortfolioTracker.ViewModels
         private string newPortfolioName;
 
         [ObservableProperty]
+        private decimal selectedProtfolioValue;
+
+        [ObservableProperty]
         private bool isEditing = false;
 
         [ObservableProperty]
@@ -77,27 +80,13 @@ namespace CryptoPortfolioTracker.ViewModels
             SupportedCoins = [];
             TransactionsSource = [];
             ShowTransactions = false;
-
+            SelectedProtfolioValue = 0m;
             this._authService = authService;
             this._transactionService = transactionService;
             this._userService = userService;
             this._navigationService = navigationService;
             this._portfolioSevice = portfolioSevice;
             this._exchangeService = exchangeService;
-        }
-
-        public async Task IsUserAuthenticated()
-        {
-            if (await _authService.IsTokenExpired())
-            {
-                await Logout();
-            }
-
-            await GetUserInfo();
-            await GetPortfolios();
-            await GetAssets();
-            if (Portfolios.Any())
-                SelectedPortfolio = Portfolios[0];
         }
 
         public override async Task InitializeAsync()
@@ -188,6 +177,7 @@ namespace CryptoPortfolioTracker.ViewModels
 
                                 await RefreshCoinPrices(portfolio.Assets);
                                 PopulateAssetItemSource(portfolio.Assets);
+                                SelectedProtfolioValue = AssetItemSource.Sum(a => a.Value);
                                 break;
 
                             case PortfolioType.CexAccount:
@@ -214,7 +204,7 @@ namespace CryptoPortfolioTracker.ViewModels
                             // Get Asset Prices
                             await RefreshCoinPrices(SelectedPortfolio.Assets);
                             PopulateAssetItemSource(SelectedPortfolio.Assets);
-
+                            SelectedProtfolioValue = AssetItemSource.Sum(a => a.Value);
                             break;
 
                         case PortfolioType.CexAccount:
@@ -229,7 +219,7 @@ namespace CryptoPortfolioTracker.ViewModels
                     }
                 }
             });
-            
+
             ShowTransactions = false;
         }
 
@@ -283,6 +273,7 @@ namespace CryptoPortfolioTracker.ViewModels
             {
                 Portfolios.Add(newlyAddedPortfolio);
                 ShowTransactions = false;
+                SelectedPortfolio = Portfolios[^1]; // get the last item in the array which just got added to the Portfolios list
             }
             else
             {
@@ -326,6 +317,10 @@ namespace CryptoPortfolioTracker.ViewModels
                 if (portfolioToRemove != null)
                 {
                     Portfolios.Remove(portfolioToRemove);
+                    if (Portfolios.Count > 0)
+                        SelectedPortfolio = Portfolios[^1]; // get the last item in the array
+                    else
+                        SelectedPortfolio = new();
                 }
             }
             else

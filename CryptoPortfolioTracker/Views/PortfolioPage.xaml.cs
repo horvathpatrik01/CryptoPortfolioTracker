@@ -14,14 +14,6 @@ public partial class PortfolioPage : ContentPageBase
         InitializeComponent();
     }
 
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        var viewModel = (PortfolioViewModel)BindingContext;
-
-        //await viewModel.IsUserAuthenticated();
-    }
-
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         clickCounter++;

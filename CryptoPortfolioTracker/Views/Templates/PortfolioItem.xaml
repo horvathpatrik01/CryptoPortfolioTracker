@@ -40,23 +40,13 @@
                         Text="{Binding Icon}"
                         VerticalOptions="Center" />
                 </Grid>
-                <Grid Grid.Column="1" RowDefinitions="Auto,1*">
-                    <!--  Name  -->
-                    <Label
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="15"
-                        Text="{Binding Name}"
-                        VerticalOptions="Center" />
-                    <!--  Value  -->
-                    <Label
-                        Grid.Row="1"
-                        FontAttributes="None"
-                        FontSize="12"
-                        VerticalOptions="Center">
-                        123$
-                    </Label>
-                </Grid>
+                <!--  Name  -->
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
 
                 <Grid
                     Grid.Column="2"

@@ -126,7 +126,7 @@
             <!--  Content  -->
             <ScrollView Grid.Row="1" Grid.Column="1">
                 <Grid>
-                    <Grid IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+                    <Grid IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}" Opacity="0">
                         <Grid.Behaviors>
                             <behav:GridAnimationBehavior />
                         </Grid.Behaviors>
@@ -175,9 +175,10 @@
                                             VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                     <!--  Portfolio value  -->
-                                    <Label FontAttributes="Bold" FontSize="32">$214832.12</Label>
-                                    <!--  Value changing  -->
-                                    <Label FontSize="18" TextColor="Green">+ $14.11 +3.06% (24ó)</Label>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="26"
+                                        Text="{Binding SelectedProtfolioValue, StringFormat='${0:F2}'}" />
                                 </VerticalStackLayout>
 
                                 <!--  Create portfolio  -->
