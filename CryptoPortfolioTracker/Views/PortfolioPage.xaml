@@ -13,7 +13,6 @@
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
     xmlns:views="clr-namespace:CryptoPortfolioTracker.Views"
     x:Name="Portfolio"
-    Title="PortfolioPage"
     x:DataType="viewmodels:PortfolioViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">

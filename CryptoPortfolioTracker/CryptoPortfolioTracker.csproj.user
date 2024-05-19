@@ -26,6 +26,9 @@
     <MauiXaml Update="Views\Popups\EditTransactionPopup.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Popups\LoginPopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\PortfolioPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="CryptoPortfolioTracker.Views.Popups.LoginPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:templates="clr-namespace:CryptoPortfolioTracker.Views.Templates"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    Color="{StaticResource Gray100}">
+
+    <VerticalStackLayout
+        x:Name="CreateLayout"
+        Padding="40"
+        HeightRequest="150"
+        VerticalOptions="Center"
+        WidthRequest="300">
+        <ActivityIndicator
+            HorizontalOptions="Center"
+            IsRunning="True"
+            Opacity="1"
+            VerticalOptions="Center"
+            Color="{StaticResource Primary}">
+            <ActivityIndicator.WidthRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS, Android" Value="30" />
+                    <On Platform="WinUI" Value="50" />
+                </OnPlatform>
+            </ActivityIndicator.WidthRequest>
+            <ActivityIndicator.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS, Android" Value="30" />
+                    <On Platform="WinUI" Value="50" />
+                </OnPlatform>
+            </ActivityIndicator.HeightRequest>
+        </ActivityIndicator>
+        <Label
+            Margin="0,20"
+            FontAttributes="Bold"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="Logging in" />
+    </VerticalStackLayout>
+
+</mct:Popup>

@@ -6,18 +6,19 @@ namespace CryptoPortfolioTracker.Views;
 
 public partial class PortfolioPage : ContentPageBase
 {
-    private int clickCounter = 0;
+    private readonly PortfolioViewModel portfolioPageViewModel;
+
 
     public PortfolioPage(PortfolioViewModel portfolioPageViewModel)
     {
         BindingContext = portfolioPageViewModel;
         InitializeComponent();
+        this.portfolioPageViewModel = portfolioPageViewModel;
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        clickCounter++;
-        if (clickCounter % 2 == 1)
+        if (portfolioPageViewModel.IsEditing)
             EditBtn.Icon(MaterialIcons.EditOff);
         else
             EditBtn.Icon(MaterialIcons.Edit);

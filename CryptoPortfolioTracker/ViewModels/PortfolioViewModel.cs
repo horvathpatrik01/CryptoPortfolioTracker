@@ -159,6 +159,10 @@ namespace CryptoPortfolioTracker.ViewModels
             await IsBusyFor(async () =>
             {
                 AssetItemSource.Clear();
+                if(SupportedCoins?.Count == 0)
+                {
+                    await GetAssets();
+                }
                 if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
                 {
                     PortfolioDto? portfolio = await _portfolioSevice.GetPortfolio(selectedPortfolioParam.Id);
@@ -226,7 +230,7 @@ namespace CryptoPortfolioTracker.ViewModels
         private async Task RefreshCoinPrices(List<AssetDto>? assets)
         {
             List<int> coinIds = [];
-            if (SupportedCoins.Count == 0) return;
+            if (SupportedCoins?.Count == 0) return;
             assets?.ForEach(asset => coinIds.Add(SupportedCoins.Find(a => a.Symbol == asset.Symbol)?.Id ?? -1));
             if (coinIds.Count == 0) return;
             var modifiedCoins = await _transactionService.GetCoinPrices(coinIds);
@@ -317,10 +321,6 @@ namespace CryptoPortfolioTracker.ViewModels
                 if (portfolioToRemove != null)
                 {
                     Portfolios.Remove(portfolioToRemove);
-                    if (Portfolios.Count > 0)
-                        SelectedPortfolio = Portfolios[^1]; // get the last item in the array
-                    else
-                        SelectedPortfolio = new();
                 }
             }
             else
