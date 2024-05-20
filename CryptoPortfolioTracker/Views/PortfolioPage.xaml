@@ -419,8 +419,7 @@
                             HorizontalOptions="Center"
                             IsRunning="{Binding IsBusy}"
                             IsVisible="{Binding IsBusy}"
-                            VerticalOptions="Center"
-                            Color="{StaticResource Primary}">
+                            VerticalOptions="Center">
                             <ActivityIndicator.WidthRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="iOS, Android" Value="100" />

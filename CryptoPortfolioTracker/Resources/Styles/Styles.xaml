@@ -173,13 +173,8 @@
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
-    <!--  ###########################################  -->
-    <!--  ###########################################  -->
-    <!--  ###########################################  -->
-    <!--  Template styles  -->
-
     <Style TargetType="ActivityIndicator">
-        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkPrimary}}" />
     </Style>
 
     <Style TargetType="IndicatorView">

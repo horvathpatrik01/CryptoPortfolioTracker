@@ -40,6 +40,7 @@
                         FontAttributes="Bold"
                         FontSize="24"
                         HorizontalOptions="End"
+                        Style="{x:StaticResource LabelButton}"
                         Text="{mi:Material Icon=Close}"
                         VerticalOptions="Center">
 
@@ -164,6 +165,7 @@
                         Margin="0,0,10,0"
                         FontAttributes="Bold"
                         FontSize="24"
+                        Style="{x:StaticResource LabelButton}"
                         Text="{mi:Material Icon=ArrowBack}"
                         VerticalOptions="End">
                         <Label.GestureRecognizers>

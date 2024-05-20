@@ -9,7 +9,8 @@
     CanBeDismissedByTappingOutsideOfPopup="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
-    Color="{StaticResource Gray100}">
+    Color="{AppThemeBinding Light={StaticResource Light4},
+                            Dark={StaticResource Gray900}}">
 
     <VerticalStackLayout
         x:Name="CreateLayout"
@@ -21,8 +22,7 @@
             HorizontalOptions="Center"
             IsRunning="True"
             Opacity="1"
-            VerticalOptions="Center"
-            Color="{StaticResource Primary}">
+            VerticalOptions="Center">
             <ActivityIndicator.WidthRequest>
                 <OnPlatform x:TypeArguments="x:Double">
                     <On Platform="iOS, Android" Value="30" />
@@ -43,5 +43,4 @@
             HorizontalOptions="Center"
             Text="Logging in" />
     </VerticalStackLayout>
-
 </mct:Popup>

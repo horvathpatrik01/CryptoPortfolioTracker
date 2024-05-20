@@ -21,6 +21,7 @@
     <Grid Padding="0,0,0,-20" RowDefinitions="Auto,Auto">
 
         <Grid
+            Padding="10,0"
             ColumnDefinitions="3*,1*,1*,1*,1*,1*,2*,2*"
             ColumnSpacing="20"
             ToolTipProperties.Text="Right click to more options!">
