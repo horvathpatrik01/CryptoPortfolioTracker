@@ -33,7 +33,7 @@ namespace CryptoPortfolioTracker.ViewModels
         private UserInfoDto userInfo;
 
         [ObservableProperty]
-        private PortfolioDto selectedPortfolio;
+        private PortfolioDto? selectedPortfolio;
 
         [ObservableProperty]
         private PortfolioToAddDto portfolioToAdd;
@@ -72,7 +72,7 @@ namespace CryptoPortfolioTracker.ViewModels
         {
             UserInfo = new();
             PortfolioToAdd = new();
-            SelectedPortfolio = new();
+            SelectedPortfolio = null;
             SelectedAsset = new();
             NewPortfolioName = "";
             AssetItemSource = [];
