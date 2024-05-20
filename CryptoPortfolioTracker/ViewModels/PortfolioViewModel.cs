@@ -97,9 +97,12 @@ namespace CryptoPortfolioTracker.ViewModels
             }
             await IsBusyFor(async () =>
             {
-                await GetUserInfo();
-                await GetPortfolios();
-                await GetAssets();
+                var userTask = GetUserInfo();
+                var portfolioTask = GetPortfolios();
+                var assetTask = GetAssets();
+                await userTask;
+                await portfolioTask;
+                await assetTask;
             });
             if (Portfolios.Any())
                 SelectedPortfolio = Portfolios[0];
@@ -159,9 +162,10 @@ namespace CryptoPortfolioTracker.ViewModels
             await IsBusyFor(async () =>
             {
                 AssetItemSource.Clear();
+                Task assetTask = Task.CompletedTask;
                 if(SupportedCoins?.Count == 0)
                 {
-                    await GetAssets();
+                    assetTask = GetAssets();
                 }
                 if (selectedPortfolioParam.Address is null && selectedPortfolioParam.ApiKey is null && selectedPortfolioParam.Assets is null)
                 {
@@ -178,7 +182,7 @@ namespace CryptoPortfolioTracker.ViewModels
                         {
                             case PortfolioType.Default:
                                 // Get Asset Prices
-
+                                await assetTask;
                                 await RefreshCoinPrices(portfolio.Assets);
                                 PopulateAssetItemSource(portfolio.Assets);
                                 SelectedProtfolioValue = AssetItemSource.Sum(a => a.Value);
@@ -206,7 +210,8 @@ namespace CryptoPortfolioTracker.ViewModels
                     {
                         case PortfolioType.Default:
                             // Get Asset Prices
-                            await RefreshCoinPrices(SelectedPortfolio.Assets);
+                            await assetTask;
+                            await RefreshCoinPrices(SelectedPortfolio!.Assets);
                             PopulateAssetItemSource(SelectedPortfolio.Assets);
                             SelectedProtfolioValue = AssetItemSource.Sum(a => a.Value);
                             break;
