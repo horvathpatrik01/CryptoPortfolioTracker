@@ -131,9 +131,9 @@ namespace CryptoPortfolioTracker.ViewModels
             try
             {
                 IEnumerable<PortfolioDto>? portfolios = await _portfolioSevice.GetPortfolios();
-                if (portfolios is not null && portfolios.Any())
+                Portfolios.Clear();
+                if (portfolios is not null)
                 {
-                    Portfolios.Clear();
                     portfolios.ToList().ForEach(p =>
                     {
                         if (!Portfolios.Contains(p))
