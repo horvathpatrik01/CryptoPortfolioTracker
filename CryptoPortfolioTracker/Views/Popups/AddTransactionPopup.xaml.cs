@@ -14,10 +14,6 @@ public partial class AddTransactionPopup : Popup
 
     public AddTransactionPopup(TransactionViewModel transactionViewModel)
     {
-        BindingContext = transactionViewModel;
-        InitializeComponent();
-        this._transactionViewModel = transactionViewModel;
-
         if (App.Current?.UserAppTheme == AppTheme.Light)
         {
             color = (Color)App.Current?.Resources["LightSecondary"];
@@ -28,6 +24,9 @@ public partial class AddTransactionPopup : Popup
             color = (Color)App.Current?.Resources["DarkPrimary"];
             selectedColor = (Color)App.Current?.Resources["DarkSecondary"];
         }
+        BindingContext = transactionViewModel;
+        InitializeComponent();
+        this._transactionViewModel = transactionViewModel;
         buyBtn.BackgroundColor = selectedColor;
     }
 
