@@ -5,7 +5,7 @@ Alapadatok:
 - Csapattagok (név, neptun kód):
   - Berky Bence EHLXA6
   - Horváth Patrik JN50TD
-- Leadáshoz videó URL: TBA
+- Leadáshoz videó URL: https://www.youtube.com/watch?v=-jYN65zpwZg
 
 A videó későbbi evfolyamok számára bemutatható/felhasználható videó vágásra?
 - [ ] Igen, névtelenül
