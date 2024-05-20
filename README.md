@@ -98,14 +98,14 @@ Technológiák
 Módszertani szempontok
 - [ ] mintánként 5p: A tárgy keretében szereplő tervezési minta használata saját megvalósításban (videóban: forráskódban megmutatva). (Observer csak akkor, ha az esemény kiváltása is saját kód, pl. egy nyomógomb Click eseménykezelőjének megírása még nem elég ehhez.) A videóban minden tervezési mintára térjetek ki, hogy hol van, vagy írjátok le ide, hogy melyik és melyik fájlban található:
   - példa minta - pelda.cs
-- [x] 10p: Legalább 20% unit teszt lefedettség (Videóban: unit tesztek lefutnak és zöldek, coverage report 20% feletti számot mutat). Ha kisebb a lefedettség, arányosan kevesebb pontot ér. (UWP alkalmazásra macerás tesztet írni, a tesztelendő osztályokat egy .NET Standard 2.0 projektbe hozzátok létre és azt tudjátok hivatkozni xUnit Test projektből, ha a teszt projekt .NET Core 2.0-át céloz meg.)
+- [] 10p: Legalább 20% unit teszt lefedettség (Videóban: unit tesztek lefutnak és zöldek, coverage report 20% feletti számot mutat). Ha kisebb a lefedettség, arányosan kevesebb pontot ér. (UWP alkalmazásra macerás tesztet írni, a tesztelendő osztályokat egy .NET Standard 2.0 projektbe hozzátok létre és azt tudjátok hivatkozni xUnit Test projektből, ha a teszt projekt .NET Core 2.0-át céloz meg.)
 - [ ] 10p: DocFX segítségével, XML kommentárokkal generált dokumentáció legalább 3 áttekintő UML diagrammal. A dokumentáció fejlesztői dokumentáció. Olyan mértékben kell, hogy tartalmazza a rendszer működését, hogy abból kiderüljön, hogy egy adott funkció hogy működik és hol található a forráskódban. A repository értelemszerűen tartalmazza a dokumentáció minden forrását is. A DocFX által generált HTML dokumentáció ZIP-elve a github.com release funkciójával letölthető formában kell, hogy elérhető legyen a leadáskor. A generált dokumentációt semmiképp ne commitoljátok be a repositoryba! https://github.com/blog/1547-release-your-software 
 - [x] 3p: Határidőre leadott pull request az 1. code reviewra, szignifikáns mennyiségű fejlesztéssel.
 - [x] 2p: Határidőre leadott pull request a 2. code reviewra, szignifikáns mennyiségű fejlesztéssel.
 
 További lehetőségek, amik nem részei a tananyagnak, de pontot érnek:
 - [x] 8p: Behaviour használata (nem része a tananyagnak) (Videóban: xaml kód)
-- [ ] 8p: Animációk használata (nem része a tananyagnak) (Videóban: UI használat közben vagy xaml kód)
+- [x] 8p: Animációk használata (nem része a tananyagnak) (Videóban: UI használat közben vagy xaml kód)
 - [x] 5p: Style használata (nem része a tananyagnak) (Videóban: xaml kód) Az 5 pont saját definiált stílusra vonatkozik, ami legalább 2 propertyt beállít. Előre gyártott stílus használata 1p.
 - [ ] 5p: OpenCvSharp használata (Videóban: UI használat közben vagy forráskód részlet)
 - [ ] 3p: Statikus kódelemző használata a fejlesztés során (Videóban: az elemző visszajelzéseinek felvillantása)
