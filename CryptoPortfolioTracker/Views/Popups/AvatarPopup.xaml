@@ -86,6 +86,7 @@
                 Margin="0,0,10,0"
                 FontAttributes="Bold"
                 FontSize="24"
+                Style="{x:StaticResource LabelButton}"
                 Text="{mi:Material Icon=ArrowBack}"
                 VerticalOptions="End">
                 <Label.GestureRecognizers>
@@ -164,6 +165,7 @@
             Clicked="SaveAvatar"
             Command="{Binding SaveEmojiCommand}"
             IsEnabled="True"
+            Style="{StaticResource Button}"
             Text="Save" />
     </VerticalStackLayout>
 </mct:Popup>

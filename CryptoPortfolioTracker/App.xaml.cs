@@ -8,10 +8,9 @@ namespace CryptoPortfolioTracker
         public App(INavigationService navigationService,
             IAuthService authService)
         {
-
             InitializeComponent();
+            Current.UserAppTheme = Application.Current.RequestedTheme;
             MainPage = new AppShell(navigationService, authService);
         }
-
     }
 }

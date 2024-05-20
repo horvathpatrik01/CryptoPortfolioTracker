@@ -1,7 +1,8 @@
 using CommunityToolkit.Maui.Views;
 using CryptoPortfolioTracker.ViewModels;
-
+using Microsoft.Maui.Controls;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CryptoPortfolioTracker.Views.Popups;
 
@@ -9,11 +10,24 @@ public partial class AddTransactionPopup : Popup
 {
     private readonly TransactionViewModel _transactionViewModel;
 
+    private Color color, selectedColor;
+
     public AddTransactionPopup(TransactionViewModel transactionViewModel)
     {
+        if (App.Current?.UserAppTheme == AppTheme.Light)
+        {
+            color = (Color)App.Current?.Resources["LightSecondary"];
+            selectedColor = (Color)App.Current?.Resources["LightPrimary"];
+        }
+        else
+        {
+            color = (Color)App.Current?.Resources["DarkPrimary"];
+            selectedColor = (Color)App.Current?.Resources["DarkSecondary"];
+        }
         BindingContext = transactionViewModel;
         InitializeComponent();
         this._transactionViewModel = transactionViewModel;
+        buyBtn.BackgroundColor = selectedColor;
     }
 
     private async void Close(object? sender, EventArgs e)
@@ -24,34 +38,42 @@ public partial class AddTransactionPopup : Popup
         cts.Dispose();
     }
 
-    private void OnTransactionTypeChanged(object sender, EventArgs e)
+    private async void OnTransactionTypeChanged(object sender, EventArgs e)
     {
         // Show the selected view
         var button = (Button)sender;
-        Color lightPrimaryColor = (Color)App.Current?.Resources["LightPrimary"];
-        Color lightSecondaryColor = (Color)App.Current.Resources["LightSecondary"];
-        Color darkPrimaryColor = (Color)App.Current.Resources["DarkPrimary"];
-        Color darkSecondaryColor = (Color)App.Current.Resources["DarkSecondary"];
-        switch (button.Text)
+        if (App.Current?.UserAppTheme == AppTheme.Light)
         {
-            case "Buy":
-                PPCView.IsVisible = true;
-                sellBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                transferBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                break;
-
-            case "Sell":
-                PPCView.IsVisible = true;
-                buyBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                transferBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                break;
-
-            case "Transfer":
-                PPCView.IsVisible = false;
-                sellBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                buyBtn.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightSecondaryColor : darkPrimaryColor;
-                break;
+            color = (Color)App.Current?.Resources["LightSecondary"];
+            selectedColor = (Color)App.Current?.Resources["LightPrimary"];
         }
-        button.TextColor = App.Current?.UserAppTheme == AppTheme.Light ? lightPrimaryColor : darkSecondaryColor;
+        else
+        {
+            color = (Color)App.Current?.Resources["DarkPrimary"];
+            selectedColor = (Color)App.Current?.Resources["DarkSecondary"];
+        }
+        buyBtn.BackgroundColor = color;
+        sellBtn.BackgroundColor = color;
+        transferBtn.BackgroundColor = color;
+        button.BackgroundColor = selectedColor;
+        if ((button.Text == "Transfer") && (PPCView.IsVisible))
+        {
+            await Task.WhenAny<bool>
+            (
+                PPCView.TranslateTo(0, 15, 250, Easing.CubicIn),
+                PPCView.FadeTo(0, 300)
+            );
+            PPCView.IsVisible = false;
+        }
+        else if (!(PPCView.IsVisible))
+        {
+            PPCView.IsVisible = true;
+            PPCView.TranslationY = -15;
+            await Task.WhenAny<bool>
+            (
+                PPCView.TranslateTo(0, 0, 250, Easing.CubicOut),
+                PPCView.FadeTo(1, 300)
+            );
+        }
     }
 }

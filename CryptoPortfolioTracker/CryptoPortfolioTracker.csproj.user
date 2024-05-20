@@ -23,6 +23,12 @@
     <MauiXaml Update="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Popups\EditTransactionPopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Popups\LoginPopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\PortfolioPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
@@ -36,6 +42,9 @@
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Templates\PortfolioItem.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Templates\TransactionItem.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
   </ItemGroup>

@@ -67,6 +67,7 @@
                     </Grid>
 
                     <Button
+                        Style="{StaticResource Button}"
                         Command="{Binding RegisterCommand}"
                         FontAttributes="Bold"
                         FontSize="20"

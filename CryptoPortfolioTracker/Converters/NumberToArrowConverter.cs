@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Globalization;
 using Microsoft.Maui.Controls;
 using MauiIcons.Material;
+using MauiIcons.Core;
 
 namespace CryptoPortfolioTracker.Converters
 {
@@ -9,14 +10,14 @@ namespace CryptoPortfolioTracker.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is float Value)
+            if (value is double doubleValue)
             {
-                if (Value < 0)
-                    return MaterialIcons.ArrowDropDown;
-                if (Value > 0)
-                    return MaterialIcons.ArrowDropUp;
+                if (doubleValue <= 0)
+                    return "▼";
+                if (doubleValue > 0)
+                    return "▲";
             }
-            return null;  // No icon for zero or non-integer values
+            return "";  // No icon for zero or non-integer values
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

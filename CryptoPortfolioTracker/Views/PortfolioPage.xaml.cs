@@ -1,31 +1,26 @@
 ﻿using CryptoPortfolioTracker.ViewModels;
-using Microsoft.Maui.Controls.Shapes;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
-using CryptoPortfolioTracker.Services.Navigation;
-using CommunityToolkit.Maui.Views;
-using CryptoPortfolioTracker.Views.Popups;
-using CryptoPortfolioTracker.Services.Auth;
+using MauiIcons.Core;
+using MauiIcons.Material;
 
 namespace CryptoPortfolioTracker.Views;
 
-public partial class PortfolioPage : ContentPage
+public partial class PortfolioPage : ContentPageBase
 {
-    private readonly IAuthService authService;
+    private readonly PortfolioViewModel portfolioPageViewModel;
+
 
     public PortfolioPage(PortfolioViewModel portfolioPageViewModel)
     {
-        InitializeComponent();
         BindingContext = portfolioPageViewModel;
-        this.authService = authService;
+        InitializeComponent();
+        this.portfolioPageViewModel = portfolioPageViewModel;
     }
 
-    protected override async void OnAppearing()
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        base.OnAppearing();
-        var viewModel = (PortfolioViewModel)BindingContext;
-
-        await viewModel.IsUserAuthenticated();
+        if (portfolioPageViewModel.IsEditing)
+            EditBtn.Icon(MaterialIcons.EditOff);
+        else
+            EditBtn.Icon(MaterialIcons.Edit);
     }
 }

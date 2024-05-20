@@ -1,22 +1,28 @@
 using System;
 using System.Globalization;
+using System.Runtime.Intrinsics.X86;
 using CommunityToolkit.Maui.Converters;
 using Microsoft.Maui.Controls;
 
 namespace CryptoPortfolioTracker.Converters
 {
-    public class NumberToColorConverter : BaseConverterOneWay<float, Color>
+    public class NumberToColorConverter : IValueConverter
     {
-        public override Color DefaultConvertReturnValue { get; set; } =
-        Application.Current?.UserAppTheme == AppTheme.Light ? Colors.Black : Colors.White;
-
-        public override Color ConvertFrom(float value, CultureInfo? culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value < 0)
-                return Colors.Red;
-            if (value > 0)
-                return Colors.Green;
-            return Application.Current?.UserAppTheme == AppTheme.Light ? Colors.Black : Colors.White;
+            if (value is double doubleValue)
+            {
+                if (doubleValue <= 0)
+                    return Colors.Red;
+                if (doubleValue > 0)
+                    return Colors.Green;
+            }
+            return Colors.Black;
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,9 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:CryptoPortfolioTracker.Converters"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-    xmlns:models="clr-namespace:Shared;assembly=Shared"
+    xmlns:models="clr-namespace:CryptoPortfolioTracker.Models"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
-    x:DataType="models:AssetDto">
+    x:DataType="models:Asset">
 
     <ContentView.Resources>
         <ResourceDictionary>
@@ -18,81 +18,112 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
-    <Grid
-        Padding="10,0,10,0"
-        ColumnDefinitions="4*,2*,1*,1*,1*,2*,2*"
-        ColumnSpacing="20">
-        <Label
-            Grid.Column="0"
-            HorizontalOptions="Start"
-            Text="{Binding Name}" />
-        <!--
+    <Grid Padding="0,0,0,-20" RowDefinitions="Auto,Auto">
+
+        <Grid
+            Padding="10,0"
+            ColumnDefinitions="3*,1*,1*,1*,1*,1*,2*,2*"
+            ColumnSpacing="20"
+            ToolTipProperties.Text="Right click to more options!">
+            <HorizontalStackLayout
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Spacing="10"
+                VerticalOptions="Center">
+
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Source="{Binding IconUrl}"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Image.Clip>
+                        <EllipseGeometry
+                            Center="20,20"
+                            RadiusX="20"
+                            RadiusY="20" />
+                    </Image.Clip>
+                </Image>
+
+                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                <Label
+                    Text="{Binding Symbol}"
+                    TextColor="{StaticResource Gray500}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
             <Label
                 Grid.Column="1"
-                HorizontalOptions="Start"
-                Text="{Binding Price, StringFormat='${0:F}'}" />
-        -->
-        <!--<Label
-                Grid.Column="2"
-                HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding HourlyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding HourlyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>-->
+                HorizontalTextAlignment="End"
+                Text="{Binding Price, StringFormat='$ {0:F}'}"
+                VerticalOptions="Center" />
 
-        <!--
+
             <Label
                 Grid.Column="3"
                 HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding DailyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding DailyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                        <Span Text="{Binding Percent_Change_1h, Converter={StaticResource NumberToArrow}}" TextColor="{Binding Percent_Change_1h, Converter={StaticResource NumberToColor}}" />
+                        <Span Text="{Binding Percent_Change_1h, StringFormat=' {0:F2} %'}" TextColor="{Binding Percent_Change_1h, Converter={StaticResource NumberToColor}}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-        -->
-        <!--
             <Label
                 Grid.Column="4"
                 HorizontalOptions="End"
-                TextColor="{Binding NumberValue, Converter={StaticResource NumberToColor}}">
+                TextColor="{Binding Percent_Change_24h}"
+                VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding WeeklyChange, Converter={StaticResource NumberToArrow}}" />
-                        <Span Text="{Binding WeeklyChange, StringFormat='{0:F2} %', Converter={StaticResource AbsoluteValue}}" />
+                        <Span Text="{Binding Percent_Change_24h, Converter={StaticResource NumberToArrow}}" TextColor="{Binding Percent_Change_24h, Converter={StaticResource NumberToColor}}" />
+                        <Span Text="{Binding Percent_Change_24h, StringFormat=' {0:F2} %'}" TextColor="{Binding Percent_Change_24h, Converter={StaticResource NumberToColor}}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-        -->
+            <Label
+                Grid.Column="5"
+                HorizontalOptions="End"
+                TextColor="{Binding Percent_Change_7d}"
+                VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Percent_Change_7d, Converter={StaticResource NumberToArrow}}" TextColor="{Binding Percent_Change_7d, Converter={StaticResource NumberToColor}}" />
+                        <Span Text="{Binding Percent_Change_7d, StringFormat=' {0:F2} %'}" TextColor="{Binding Percent_Change_7d, Converter={StaticResource NumberToColor}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
-        <Label
-            Grid.Column="5"
-            HorizontalOptions="End"
-            Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" />
-        <Label
-            Grid.Column="6"
-            HorizontalOptions="End"
-            Text="{Binding AvrgBuyPrice, Converter={StaticResource DecimalConverter}}" />
+            <Label
+                Grid.Column="6"
+                HorizontalOptions="End"
+                Text="{Binding Amount, StringFormat='{0:F2}'}"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="7"
+                HorizontalOptions="End"
+                Text="{Binding Value, StringFormat='$ {0:F2}'}"
+                VerticalOptions="Center" />
 
-        <FlyoutBase.ContextFlyout>
-            <MenuFlyout>
-                <MenuFlyoutItem
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=ShowTransactionsForAssetCommand}"
-                    CommandParameter="{Binding .}"
-                    Text="View transactions" />
-                <MenuFlyoutItem
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=DeleteAssetCommand}"
-                    CommandParameter="{Binding Id}"
-                    Text="Delete asset" />
 
-            </MenuFlyout>
-        </FlyoutBase.ContextFlyout>
+
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=ShowTransactionsForAssetCommand}"
+                        CommandParameter="{Binding .}"
+                        Text="View transactions" />
+                    <MenuFlyoutItem
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PortfolioViewModel}}, Path=DeleteAssetCommand}"
+                        CommandParameter="{Binding Id}"
+                        Text="Delete asset" />
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+        </Grid>
+        <BoxView
+            Grid.Row="1"
+            Margin="0,10"
+            Style="{x:StaticResource Separator}" />
     </Grid>
-
 </ContentView>

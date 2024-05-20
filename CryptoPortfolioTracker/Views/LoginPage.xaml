@@ -3,18 +3,22 @@
     x:Class="CryptoPortfolioTracker.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:viewmodels="clr-namespace:CryptoPortfolioTracker.ViewModels"
     Title="LoginPage"
     x:DataType="viewmodels:LoginViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <mct:InvertedBoolConverter x:Key="InverseBoolConverter" />
+    </ContentPage.Resources>
     <Grid>
         <Grid.Shadow>
             <Shadow
-                    Brush="Black"
-                    Opacity="0.8"
-                    Radius="50"/>
+                Brush="Black"
+                Opacity="0.8"
+                Radius="50" />
         </Grid.Shadow>
         <Frame
             Margin="20"
@@ -29,39 +33,48 @@
                     FontAttributes="Bold"
                     FontSize="28"
                     Text="Sign In" />
-                <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
-                    <Label
-                        Text="{mi:Material Icon=Email,
-                                           IconSize=25}"
-                        TextColor="{AppThemeBinding Light={StaticResource Black},
-                                                    Dark={StaticResource White}}"
-                        VerticalOptions="Center" />
-                    <Entry
-                        Grid.Column="1"
-                        Placeholder="Email"
-                        Text="{Binding LoginModel.Email}"
-                        VerticalOptions="Center" />
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="15">
+                    <Grid
+                        Grid.Row="0"
+                        ColumnDefinitions="25,*"
+                        ColumnSpacing="10">
+                        <Label
+                            Text="{mi:Material Icon=Email,
+                                               IconSize=25}"
+                            TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                        Dark={StaticResource White}}"
+                            VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            Placeholder="Email"
+                            Text="{Binding LoginModel.Email}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="25,*"
+                        ColumnSpacing="10">
+                        <Label
+                            Text="{mi:Material Icon=Lock,
+                                               IconSize=25}"
+                            TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                        Dark={StaticResource White}}"
+                            VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            IsPassword="True"
+                            Placeholder="Password"
+                            Text="{Binding LoginModel.Password}"
+                            VerticalOptions="Center" />
+                    </Grid>
                 </Grid>
-                <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
-                    <Label
-                        Text="{mi:Material Icon=Lock,
-                                           IconSize=25}"
-                        TextColor="{AppThemeBinding Light={StaticResource Black},
-                                                    Dark={StaticResource White}}"
-                        VerticalOptions="Center" />
-                    <Entry
-                        Grid.Column="1"
-                        IsPassword="True"
-                        Placeholder="Password"
-                        Text="{Binding LoginModel.Password}"
-                        VerticalOptions="Center" />
-                </Grid>
-
                 <Button
                     Command="{Binding LoginCommand}"
                     FontAttributes="Bold"
                     FontSize="20"
+                    Style="{StaticResource Button}"
                     Text="Login" />
+
                 <Grid ColumnDefinitions="*,*">
                     <Label Text="Forgot password?" VerticalOptions="Center" />
                     <Label

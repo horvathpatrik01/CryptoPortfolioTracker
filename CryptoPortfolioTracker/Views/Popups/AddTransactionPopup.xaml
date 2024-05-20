@@ -29,6 +29,7 @@
                 Margin="0,0,10,0"
                 FontAttributes="Bold"
                 FontSize="24"
+                Style="{StaticResource LabelButton}"
                 Text="{mi:Material Icon=ArrowBack}"
                 VerticalOptions="End">
                 <Label.GestureRecognizers>
@@ -77,6 +78,13 @@
             </Grid>
         </Frame>
         <!--  Token picker  -->
+        <Picker
+            Title="Select a coin"
+            Margin="0"
+            ItemDisplayBinding="{Binding Name}"
+            ItemsSource="{Binding SupportedCoins}"
+            SelectedItem="{Binding SelectedCoin}"
+            VerticalTextAlignment="End" />
         <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
             <!--  Quantity  -->
             <VerticalStackLayout Grid.Column="0">
@@ -141,6 +149,7 @@
             Clicked="Close"
             Command="{Binding AddTransactionCommand}"
             IsEnabled="True"
+            Style="{StaticResource Button}"
             Text="Add transaction" />
     </VerticalStackLayout>
 </mct:Popup>

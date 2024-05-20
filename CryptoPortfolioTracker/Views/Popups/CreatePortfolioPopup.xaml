@@ -40,6 +40,7 @@
                         FontAttributes="Bold"
                         FontSize="24"
                         HorizontalOptions="End"
+                        Style="{x:StaticResource LabelButton}"
                         Text="{mi:Material Icon=Close}"
                         VerticalOptions="Center">
 
@@ -49,7 +50,10 @@
                     </Label>
                 </Grid>
 
-                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                <Frame
+                    BackgroundColor="Transparent"
+                    HeightRequest="100"
+                    IsEnabled="False">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.Wallet}" />
                     </Frame.GestureRecognizers>
@@ -113,7 +117,10 @@
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
                 </Frame>
-                <Frame BackgroundColor="Transparent" HeightRequest="100">
+                <Frame
+                    BackgroundColor="Transparent"
+                    HeightRequest="100"
+                    IsEnabled="False">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SelectPortfolioTypeCommand}" CommandParameter="{x:Static type:PortfolioType.CexAccount}" />
                     </Frame.GestureRecognizers>
@@ -158,6 +165,7 @@
                         Margin="0,0,10,0"
                         FontAttributes="Bold"
                         FontSize="24"
+                        Style="{x:StaticResource LabelButton}"
                         Text="{mi:Material Icon=ArrowBack}"
                         VerticalOptions="End">
                         <Label.GestureRecognizers>
@@ -199,6 +207,7 @@
                         Margin="10"
                         Command="{Binding ChangeAvatarCommand}"
                         HorizontalOptions="End"
+                        Style="{StaticResource Button}"
                         Text="Change avatar"
                         VerticalOptions="Center" />
                 </Grid>
@@ -290,6 +299,7 @@
                     Clicked="Close"
                     Command="{Binding AddPortfolioCommand}"
                     IsEnabled="False"
+                    Style="{StaticResource Button}"
                     Text="Create" />
             </VerticalStackLayout>
         </Grid>
